@@ -1,0 +1,8 @@
+{
+  "name": "HootonHeroics.DesignSystem.Editor",
+  "rootNamespace": "HootonHeroics.DesignSystem.Editor",
+  "references": ["HootonHeroics.DesignSystem"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "autoReferenced": true
+}

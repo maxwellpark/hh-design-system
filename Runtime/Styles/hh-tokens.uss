@@ -1,0 +1,28 @@
+/* Design tokens: the single source of truth for the look. Change here, everything follows.
+   Add this stylesheet to a root VisualElement (or via HHStyles.Apply). */
+:root {
+    --hh-color-bg: #0E0F20;
+    --hh-color-surface: #191B38;
+    --hh-color-violet: #8257FF;
+    --hh-color-violet-light: #A78BFA;
+    --hh-color-teal: #45D6C4;
+    --hh-color-pink: #FF5C8A;
+    --hh-color-peach: #FFB25C;
+    --hh-color-text: #F3F3FB;
+    --hh-color-text-dim: rgba(243, 243, 251, 0.62);
+
+    --hh-space-1: 4px;
+    --hh-space-2: 8px;
+    --hh-space-3: 12px;
+    --hh-space-4: 16px;
+    --hh-space-6: 24px;
+
+    --hh-radius-sm: 6px;
+    --hh-radius-md: 12px;
+    --hh-radius-lg: 20px;
+
+    --hh-font-size-sm: 12px;
+    --hh-font-size-md: 14px;
+    --hh-font-size-lg: 18px;
+    --hh-font-size-xl: 28px;
+}

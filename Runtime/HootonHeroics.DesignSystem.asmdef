@@ -1,0 +1,8 @@
+{
+  "name": "HootonHeroics.DesignSystem",
+  "rootNamespace": "HootonHeroics.DesignSystem",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "autoReferenced": true
+}

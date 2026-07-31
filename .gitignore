@@ -1,0 +1,8 @@
+# Unity (a package repo has no project, but ignore stray artifacts)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+*.csproj
+*.sln
+.DS_Store
