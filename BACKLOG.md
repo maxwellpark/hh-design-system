@@ -55,6 +55,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*ussClassName` Unity 6000.0's UI Toolkit assembly assigns (`Tools~/unity-classes.cs`, Mono.Cecil) and fails on a `.unity-*` class a stylesheet styles that isn't one (branch `max/unity-class-check`).
 - 2026-11-26: `HHScrollView` and `HHListView`: slim scrollers with a violet-light handle and no arrow buttons, rows with a track hover and a selection tint plus violet-light edge (branch `max/scroll-list`).
 - 2026-11-26: `HHTabs`: Unity 6's `TabView` with dim unselected labels, white selected labels, a teal underline on the `:checked` tab, and headers made focusable with submit selecting the tab (branch `max/tabs`).
 - 2026-11-26: `HHTooltip`: a manipulator that shows a label below its target after a 500ms hover or focus delay and hides on leave, blur, Escape or detach; `HHIconButton` carries one for its label (branch `max/tooltip`).
