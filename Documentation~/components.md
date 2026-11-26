@@ -139,15 +139,16 @@ A labelled choice list. Its open menu is drawn at the panel root, so its rules l
 
 ## HHTextField
 
-A single-line text input with a label. Extends `TextField`.
+A single-line text input with a label, and an optional placeholder hint drawn dim while it's empty. Extends `TextField`.
 
 ```xml
 <hh:HHTextField label="Name" value="Northwind" />
+<hh:HHTextField label="Callsign" placeholder-text="Pick a callsign" />
 ```
 
 - **Classes:** `.hh-text-field`
-- **States:** `:hover`, `:focus` (focus ring), `:disabled`.
-- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
+- **States:** `:hover`, `:focus` (focus ring), `:disabled`; an empty field with `placeholder-text` shows it in `--hh-color-text-dim`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
 ## HHRadioGroup
 
