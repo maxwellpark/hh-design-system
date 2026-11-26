@@ -10,6 +10,7 @@ namespace HootonHeroics.DesignSystem.Editor
     public class HHGallery : EditorWindow
     {
         public const string StylesPath = "Packages/com.hootonheroics.designsystem/Runtime/Styles";
+        public const string PageUssClassName = "hh-page";
 
         [MenuItem("Hooton Heroics/Design System/Gallery")]
         public static void Open()
@@ -36,20 +37,21 @@ namespace HootonHeroics.DesignSystem.Editor
             var page = new VisualElement();
             rootVisualElement.Add(picker);
             rootVisualElement.Add(page);
-            picker.RegisterValueChangedCallback(_ => Style(page, files.ElementAtOrDefault(picker.index)));
-            Style(page, files.FirstOrDefault());
+            // On the window root, so the tokens' :root and the dropdown list rules reach everything in it
+            picker.RegisterValueChangedCallback(_ => Style(rootVisualElement, files.ElementAtOrDefault(picker.index)));
+            Style(rootVisualElement, files.FirstOrDefault());
             Build(page);
         }
 
-        private static void Style(VisualElement page, string tokensPath)
+        private static void Style(VisualElement target, string tokensPath)
         {
-            page.styleSheets.Clear();
+            target.styleSheets.Clear();
             foreach (var path in new[] { tokensPath, $"{StylesPath}/hh-components.uss", $"{StylesPath}/hh-dropdown-menu.uss" })
             {
                 var sheet = path == null ? null : AssetDatabase.LoadAssetAtPath<StyleSheet>(path);
                 if (sheet != null)
                 {
-                    page.styleSheets.Add(sheet);
+                    target.styleSheets.Add(sheet);
                 }
             }
         }
@@ -58,7 +60,7 @@ namespace HootonHeroics.DesignSystem.Editor
         public static void Build(VisualElement page)
         {
             page.style.flexGrow = 1;
-            page.style.backgroundColor = new StyleColor(new Color32(0x0E, 0x0F, 0x20, 0xFF));
+            page.AddToClassList(PageUssClassName);
             var scroll = new HHScrollView();
             scroll.style.flexGrow = 1;
             page.Add(scroll);
@@ -99,12 +101,13 @@ namespace HootonHeroics.DesignSystem.Editor
             tabs.Add(new Tab("Video"));
             Section(scroll, "Tabs").Add(tabs);
 
+            var rows = new List<string> { "Northwind", "Outfitters", "Digital" };
             var list = new HHListView
             {
                 fixedItemHeight = 32,
-                itemsSource = new List<string> { "Northwind", "Outfitters", "Digital" },
+                itemsSource = rows,
                 makeItem = () => new Label(),
-                bindItem = (element, index) => ((Label)element).text = new[] { "Northwind", "Outfitters", "Digital" }[index],
+                bindItem = (element, index) => ((Label)element).text = rows[index],
             };
             list.style.height = 110;
             Section(scroll, "List").Add(list);

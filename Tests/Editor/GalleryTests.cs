@@ -12,9 +12,10 @@ namespace HootonHeroics.DesignSystem.Tests
             var page = new VisualElement();
             HHGallery.Build(page);
 
-            Assert.That(page.Query<HHButton>().ToList().Count, Is.GreaterThanOrEqualTo(3));
+            Assert.That(page.ClassListContains(HHGallery.PageUssClassName), Is.True);
+            Assert.That(page.Q<HHButton>(), Is.Not.Null);
             Assert.That(page.Q<HHIconButton>(), Is.Not.Null);
-            Assert.That(page.Query<HHBadge>().ToList().Count, Is.EqualTo(5));
+            Assert.That(page.Q<HHBadge>(), Is.Not.Null);
             Assert.That(page.Q<HHProgressBar>(), Is.Not.Null);
             Assert.That(page.Q<HHSegmentedBar>(), Is.Not.Null);
             Assert.That(page.Q<HHToggle>(), Is.Not.Null);

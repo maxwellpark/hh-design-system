@@ -92,7 +92,6 @@ const cases = [
   ["control named only in a test comment fails", (d) => {
     edit(d, "Tests/Editor/ControlTests.cs", "new HHTextField().ClassListContains(HHTextField.UssClassName)", 'new TextField().ClassListContains("hh-text-field")');
     edit(d, "Tests/Editor/ControlTests.cs", 'root.Q<HHTextField>("text-field")', '/* HHTextField */ root.Q<TextField>("text-field")');
-    edit(d, "Tests/Editor/GalleryTests.cs", "page.Q<HHTextField>()", "page.Q<TextField>()");
   }, 1, /HHTextField\.cs: HHTextField has no EditMode test/],
   ["control declared with extra attributes is still found", (d) => {
     cpSync(join(d, "Runtime/HHToggle.cs"), join(d, "Runtime/HHSwitch.cs"));
