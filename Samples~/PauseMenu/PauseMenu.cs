@@ -66,13 +66,26 @@ public class PauseMenu : MonoBehaviour
     {
         menu.style.display = DisplayStyle.Flex;
         pause.style.display = DisplayStyle.None;
-        // A just-displayed element can't take focus until styles resolve, so focus it on the next tick
-        resume.schedule.Execute(() => resume.Focus());
+        FocusOnceShown(resume);
     }
 
     private void Resume()
     {
         menu.style.display = DisplayStyle.None;
         pause.style.display = DisplayStyle.Flex;
+        FocusOnceShown(pause);
+    }
+
+    // A just-displayed element can't take focus until it has been laid out, so wait for its geometry,
+    // and skip it if it was hidden again first
+    private static void FocusOnceShown(VisualElement element)
+    {
+        element.RegisterCallbackOnce<GeometryChangedEvent>(_ =>
+        {
+            if (element.resolvedStyle.display != DisplayStyle.None)
+            {
+                element.Focus();
+            }
+        });
     }
 }
