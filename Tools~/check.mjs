@@ -305,15 +305,24 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
-// Every control built on a focusable Unity base shows focus: some :focus rule names one of its classes, on it or a part
-// (HHDialog takes focus outside the tab order on purpose, and isn't on a focusable base)
+// Every control built on a focusable Unity base shows focus. A rule counts when its selector starts with the control's own
+// class (not a variant, not inside another control) and :focus sits on that element or the part right after it, as the tab
+// headers' and radio choices' do. TabView stands for the headers HHTabs makes focusable; HHDialog takes focus outside the tab
+// order on purpose, on a base that isn't listed as focusable. A base in neither list fails, so a new one gets decided.
 const focusableBases = new Set(["Button", "Toggle", "Slider", "DropdownField", "TextField", "RadioButtonGroup", "ListView", "TabView"]);
-const focusSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).filter((sel) => sel.includes(":focus"));
+const unfocusableBases = new Set(["VisualElement", "Label", "ProgressBar", "ScrollView"]);
+const focusSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).map((sel) => sel.trim().split(/\s*>\s*|\s+/));
+const showsFocus = (compounds, className) =>
+  !compounds.some((c) => c.includes(":not(")) &&
+  new RegExp(`\\.${className}(?![\\w-])`).test(compounds[0]) &&
+  compounds.slice(0, 2).some((c) => /:focus(?![\w-])/.test(c));
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
   const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
-  const classes = [...classConstants(source).values()].filter((value) => value !== undefined);
+  const own = classConstants(source).get("UssClassName");
   for (const [, control, base] of source.matchAll(/\[\s*UxmlElement\b[^\]]*\][\s\S]*?\bclass\s+(\w+)\s*:\s*(\w+)/g)) {
-    if (focusableBases.has(base) && !focusSelectors.some((sel) => classes.some((c) => new RegExp(`\\.${c}(?![\\w-])`).test(sel)))) {
+    if (!focusableBases.has(base) && !unfocusableBases.has(base)) {
+      problems.push(`${name}: ${control}'s base ${base} isn't listed as focusable or not in check.mjs`);
+    } else if (focusableBases.has(base) && !focusSelectors.some((compounds) => own && showsFocus(compounds, own))) {
       problems.push(`${name}: ${control} can take focus (a ${base}) but no :focus rule in hh-components.uss shows it`);
     }
   }

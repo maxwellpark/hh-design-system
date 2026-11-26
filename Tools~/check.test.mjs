@@ -163,6 +163,10 @@ const cases = [
   ["a second modifier rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-reduced-motion {\n    --hh-duration-fast: 1s;\n}\n"); }, 1, /2 standalone \.hh-reduced-motion rules, needs exactly 1/],
   ["a focusable control with no focus rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view:focus {", ".hh-list-view:hover {"), 1, /HHListView\.cs: HHListView can take focus \(a ListView\) but no :focus rule/],
   ["a focus rule on a part of the control passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button .unity-text-element:focus {"), 0, /controls referenced/],
+  ["a focus rule written inside another control doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-dialog .hh-button:focus {"), 1, /HHButton can take focus \(a Button\) but no :focus rule/],
+  ["a focus rule on a variant only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button--ghost:focus {"), 1, /HHButton can take focus/],
+  ["a :not(:focus) rule doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button:not(:focus) {"), 1, /HHButton can take focus/],
+  ["a control on an unlisted base fails", (d) => edit(d, "Runtime/HHBadge.cs", "public partial class HHBadge : Label", "public partial class HHBadge : Image"), 1, /HHBadge's base Image isn't listed/],
 ];
 
 let failed = 0;
