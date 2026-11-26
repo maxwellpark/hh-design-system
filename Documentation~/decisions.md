@@ -107,3 +107,7 @@
 - Default 2026-11-26 [needs-review]: `HHTabs` makes each tab header focusable and selects its tab on
   submit, Enter or Space. Why: Unity 6000.0's headers aren't focusable, so a menu built on them was
   mouse-only. To change: `HHTabs.Wire`.
+- Default 2026-11-26 [needs-review]: Unity's class names are read from the static constructors of
+  `UnityEngine.UIElementsModule.dll` with Mono.Cecil, folding `ldstr`, `ldsfld` and `String.Concat`,
+  rather than kept as a hand list. Why: they follow the editor version the gate runs, and a
+  misspelt Unity part name otherwise styles nothing, silently. To change: `Tools~/unity-classes.cs`.
