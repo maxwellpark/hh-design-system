@@ -256,6 +256,14 @@ function classConstants(source) {
   return values;
 }
 
+// The settings sample must use the controls a settings screen needs
+const settingsSample = existsSync("Samples~/Settings/SettingsMenu.cs") ? stripComments(readFileSync("Samples~/Settings/SettingsMenu.cs", "utf8"), true) : null;
+for (const control of ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack"]) {
+  if (settingsSample !== null && !new RegExp(`\\b${control}\\b`).test(settingsSample)) {
+    problems.push(`Samples~/Settings/SettingsMenu.cs: doesn't use ${control}`);
+  }
+}
+
 let controls = 0;
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
   const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);

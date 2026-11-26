@@ -124,6 +124,10 @@ const cases = [
   ["a theme without its theme sheet fails", (d) => unlinkSync(join(d, "Runtime/Styles/hh-theme-high-contrast.tss")), 1, /hh-tokens-high-contrast\.uss: no hh-theme-high-contrast\.tss importing it/],
   ["a theme defining a token twice fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;", "    --hh-space-1: 4px;\n    --hh-space-1: 5px;"), 1, /a token is defined twice/],
   ["a theme value that doesn't parse fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "--hh-color-teal: #5EEAD4;", "--hh-color-teal: teal;"), 1, /hh-tokens-high-contrast\.uss: --hh-color-teal: can't parse teal/],
+  ["the settings sample dropping a control fails", (d) => {
+    const p = join(d, "Samples~/Settings/SettingsMenu.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/HHSlider/g, "Slider"));
+  }, 1, /SettingsMenu\.cs: doesn't use HHSlider/],
 ];
 
 let failed = 0;
