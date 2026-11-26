@@ -53,6 +53,7 @@ namespace HootonHeroics.DesignSystem.Tests
 
             Assert.That(HasDisabled<HHButton>(page), Is.True, "button");
             Assert.That(HasDisabled<HHIconButton>(page), Is.True, "icon button");
+            Assert.That(HasDisabled<HHHoldButton>(page), Is.True, "hold button");
             Assert.That(HasDisabled<HHToggle>(page), Is.True, "toggle");
             Assert.That(HasDisabled<HHSlider>(page), Is.True, "slider");
             Assert.That(HasDisabled<HHDropdown>(page), Is.True, "dropdown");

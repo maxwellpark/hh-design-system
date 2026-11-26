@@ -9,11 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
-   instance of each focusable control (button, icon button, hold button once merged, toggle, slider,
-   dropdown, text field, radio group, stepper, tabs, list, scroll view), found with
-   `page.Query<T>().Where(e => !e.enabledSelf)`, so the built page is held, not only its source.
-   Check: the test written, not run; `bash Tools~/unity-compile.sh`.
 
 ## Blocked on owner
 
@@ -52,6 +47,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: gallery disabled test: `GalleryTests.ThePageHoldsEveryFocusableControlDisabled` builds the gallery page and finds a disabled instance of each of the twelve focusable controls (branch `max/gallery-disabled-test`).
 - 2026-11-26: reference examples check: `check.mjs` builds the allowed attributes from each section's list, Unity base table and VisualElement's only, and holds `components.md`'s own examples to them; every example passes (branch `max/reference-examples`).
 - 2026-11-26: hold to confirm: `HHHoldButton` confirms after `hold-seconds` (an attribute, so reduced motion never shortens it), its foot bar filling linearly from a pure `Advance` that five tests drive with explicit times, on one cached scheduled item; reference, gallery (and disabled), focus and disabled rules, and a fill pair (branch `max/hold-button`).
 - 2026-11-26: tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, on the tab's one header, which Unity only reparents, found by class each call, and 0 removes it; two tests, two pairs, the reference and a gallery Items tab (branch `max/tab-badges`).
