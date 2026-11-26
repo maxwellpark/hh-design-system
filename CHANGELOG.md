@@ -3,6 +3,8 @@
 ## [Unreleased]
 - `HHHoldButton`: a button that confirms only after it is held for `hold-seconds`, with a bar
   filling along its foot; pointer, Space and Enter hold it. Reduced motion never shortens the hold.
+- Tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, updates it in
+  place, and removes it at 0. The gallery's Items tab shows one.
 - Theming guide: `Documentation~/theming.md` makes a theme in a game's own project (tokens, a
   theme sheet importing the package's components, a contrast check by hand against the pairs) and
   switches to it with `HHThemes`. The gate compiles its C#.

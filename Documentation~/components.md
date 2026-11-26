@@ -193,7 +193,7 @@ One value from an ordered list longer than a radio row suits (resolution, text s
 
 ## HHTabs
 
-Tabs whose headers take keyboard focus. Extends `TabView`.
+Tabs whose headers take keyboard focus. `SetBadge(tab, count)` puts a count on a tab's header (new items), and 0 removes it. Extends `TabView`.
 
 ```xml
 <hh:HHTabs>
@@ -202,7 +202,7 @@ Tabs whose headers take keyboard focus. Extends `TabView`.
 </hh:HHTabs>
 ```
 
-- **Classes:** `.hh-tabs`
+- **Classes:** `.hh-tabs`, `.hh-tabs__badge`
 - **States:** The selected header is `:checked`, with `:hover` and `:focus` on headers; `:disabled` fades the whole view.
 - **Tokens:** `--hh-color-focus`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-4`
 
