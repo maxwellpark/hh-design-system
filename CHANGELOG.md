@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` fails when GOAL.md's Numbers rows for controls, tokens and contrast pairs
+  disagree with what it counts.
 - Adding a control: `Documentation~/adding-a-control.md` lists what `check.mjs` and the gate hold
   a new control to, with a compiled minimal example.
 - Pause Menu sample: Quit is now a Hold to quit `HHHoldButton` in place of a confirm dialog.
