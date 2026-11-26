@@ -9,6 +9,18 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Adding a control guide: `Documentation~/adding-a-control.md`, linked from `index.md`, lists
+   what `check.mjs` and the gate hold a new control to (its `.meta`; a rule per class constant; a
+   reference section whose lists match exactly; a test outside `GalleryTests.cs`; a gallery entry,
+   and a disabled one if focusable; focus and disabled rules on its own class; tokens only, through
+   the modifiers; known USS properties and Unity classes; contrast pairs by convention), naming
+   `check.mjs` as the authority. Its C# example is a doc-only class with a name no real control has,
+   kept out of the guide's UXML. Check: the doc snippet gate compiles the example.
+2. Pause menu hold to quit: the Pause Menu sample's Quit becomes an `HHHoldButton` ("Hold to quit")
+   whose `Confirmed` shows the warning toast, in place of the confirm dialog. That touches
+   `PauseMenu.cs`, its README, the `package.json` description, the sample table in `check.mjs`
+   (`HHHoldButton` for `HHDialog`, which Settings still covers), its planted case and the sample's
+   pack. Check: the planted case fails without `HHHoldButton`, and the compile gate builds the sample.
 
 ## Blocked on owner
 
