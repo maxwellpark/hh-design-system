@@ -9,29 +9,27 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Tooltip: an `HHTooltip` manipulator that shows a label after a hover or focus delay and hides on
-   leave, blur or Escape. Check: tests written, gate.
-2. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
+1. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
    Check: contrast pairs for selected and unselected tab text, gate.
-3. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
+2. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
    for selected-row text, gate.
-4. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
+3. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
    sheet. Check: contrast pairs, gate.
-5. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
+4. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
    check can go. Check: tests written, gate.
-6. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+5. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
    theme sheet for each; the contrast check runs every pair against every theme. Check:
    `check.mjs` over all three, gate.
-7. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+6. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
    that cycles the three themes. Check: tests written, gate.
-8. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+7. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
    reference check to fail on a control missing from it.
-9. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+8. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
    compiles it; extend the reference check to fail on a form control it doesn't use.
-10. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
-    and tokens. Check: extend the reference check to fail on a control missing from it.
+9. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+   and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
 
@@ -61,6 +59,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHTooltip`: a manipulator that shows a label below its target after a 500ms hover or focus delay and hides on leave, blur, Escape or detach; `HHIconButton` carries one for its label (branch `max/tooltip`).
 - 2026-11-26: `HHToast` and `HHToastStack`: cards with info, success, warning and danger edges, stacked in a corner, newest last, capped by `max-visible`, each dismissing itself after its time (branch `max/toast`).
 - 2026-11-26: `HHDialog`: modal card on a `--hh-color-scrim` scrim, title, UXML body, `AddAction`; Escape, gamepad cancel and scrim clicks close it unless `require-choice`; focus moves to the first action and back on close (branch `max/dialog`).
 - 2026-11-26: stylesheet check: `Tools~/check.mjs` fails on a stylesheet that doesn't parse as flat rules (a missing or stray brace, a declaration without a colon or semicolon) or uses a property Unity 6000.0 doesn't know (branch `max/stylesheet-check`).

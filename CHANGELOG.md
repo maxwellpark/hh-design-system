@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- `HHTooltip`, a manipulator: `element.AddManipulator(new HHTooltip("Text"))` shows the text below
+  the element after a 500ms hover or focus, and hides it on leave, blur, Escape, a click or detach. It draws in the element's document root. With no
+  text it shows the element's `tooltip`. `HHIconButton` carries one, since runtime panels don't show
+  `tooltip` themselves.
 - `HHToastStack.Show(text, tone, seconds)` shows an `HHToast` in the bottom-right corner of its
   parent, newest last, and dismisses it after its time (0 keeps it). Past `max-visible` the oldest
   go. Tones are info, success, warning and danger, shown as a coloured edge on the card.
