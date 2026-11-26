@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` fails on a stylesheet with a missing or stray brace, a declaration without a
+  colon or final semicolon, or a property not in `Tools~/uss-properties.txt`, Unity 6000.0's list.
 - `HHProgressBar.Tone` (`tone` in UXML): violet, pink or peach fills; teal stays the default.
 - `HHSegmentedBar`: separate segments for health, ammo or charges, with `segments`, `filled` and
   `tone`.
