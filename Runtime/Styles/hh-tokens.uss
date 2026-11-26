@@ -1,5 +1,4 @@
-/* Design tokens: the single source of truth for the look. Change here, everything follows.
-   Add this stylesheet to a root VisualElement (or via HHStyles.Apply). */
+/* The single source of the look; HHTheme.cs mirrors it, enforced by Tools~/check.mjs */
 :root {
     --hh-color-bg: #0E0F20;
     --hh-color-surface: #191B38;
