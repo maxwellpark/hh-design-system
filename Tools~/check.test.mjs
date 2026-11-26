@@ -132,6 +132,14 @@ const cases = [
     const p = join(d, "Samples~/Settings/SettingsMenu.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/HHSlider/g, "Slider"));
   }, 1, /SettingsMenu\.cs: doesn't use HHSlider/],
+  ["the settings sample dropping the radio group fails", (d) => {
+    const p = join(d, "Samples~/Settings/SettingsMenu.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/HHRadioGroup/g, "RadioButtonGroup"));
+  }, 1, /SettingsMenu\.cs: doesn't use HHRadioGroup/],
+  ["the settings sample dropping the stepper fails", (d) => {
+    const p = join(d, "Samples~/Settings/SettingsMenu.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/HHStepper/g, "DropdownField"));
+  }, 1, /SettingsMenu\.cs: doesn't use HHStepper/],
   ["the HUD sample dropping a control fails", (d) => {
     const p = join(d, "Samples~/HUD/HudOverlay.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/HHSegmentedBar/g, "ProgressBar").replace("Segments = MaxLives, Tone = HHTone.Peach", "").replace("lives.Filled = livesLeft;", ""));
