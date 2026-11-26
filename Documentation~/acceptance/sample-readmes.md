@@ -7,12 +7,12 @@ Node 22. No Unity code changed.
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | Every sample `package.json` lists has a `README.md` naming every `*.cs` in its folder | the sample check in `check.mjs`, exit 0, over Basic UI, Settings, HUD and Pause Menu | pass | verified |
-| The check fails on a listed sample without a README, and on a script its README doesn't name | two planted cases | 2 of 2 | verified |
+| The check fails on a listed sample without a README, on a script its README doesn't name, and on one named only inside a longer name | three planted cases | 3 of 3 | verified |
 
 ## Coverage and complexity
 
 About 15 lines in `check.mjs`. It reads only the sample's top folder, which is where every sample
-keeps its scripts, and matches the file name anywhere in the README.
+keeps its scripts, and matches the file name as a whole word anywhere in the README.
 
 ## Behaviour transcript
 
@@ -26,7 +26,8 @@ ok   the pause menu sample dropping a control fails
 ok   a listed sample that's been deleted fails
 ok   a listed sample without a README fails
 ok   a sample script its README doesn't name fails
-96/96 passed
+ok   a script named only inside a longer name fails
+97/97 passed
 ```
 
 ## Unverified

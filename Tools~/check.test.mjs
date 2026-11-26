@@ -181,6 +181,7 @@ const cases = [
   ["a misspelt attribute is reported at its own line", (d) => writeFileSync(join(d, "Documentation~/planted.md"), "```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /planted\.md:4: hh:HHButton has no ghots/],
   ["a listed sample without a README fails", (d) => unlinkSync(join(d, "Samples~/HUD/README.md")), 1, /Samples~\/HUD: no README\.md/],
   ["a sample script its README doesn't name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/PauseExtras.cs"), "public class PauseExtras { }\n"), 1, /Samples~\/PauseMenu\/README\.md: doesn't name PauseExtras\.cs/],
+  ["a script named only inside a longer name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/Menu.cs"), "public class Menu { }\n"), 1, /PauseMenu\/README\.md: doesn't name Menu\.cs/],
 ];
 
 let failed = 0;

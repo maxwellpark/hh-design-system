@@ -271,7 +271,8 @@ for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ??
   }
   const readme = readFileSync(readmePath, "utf8");
   for (const script of readdirSync(sample.path).filter((file) => file.endsWith(".cs"))) {
-    if (!readme.includes(script)) {
+    // A whole name, so Menu.cs isn't found inside PauseMenu.cs
+    if (!new RegExp(`(?<![\\w.-])${script.replace(/\./g, "\\.")}(?![\\w])`).test(readme)) {
       problems.push(`${readmePath}: doesn't name ${script}`);
     }
   }
