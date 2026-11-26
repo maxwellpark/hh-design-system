@@ -180,7 +180,7 @@ A modal over a scrim, with a title, body and action buttons. Call `Open()`, `Clo
 - **Attributes:**
   - `title` (string, default empty): The heading.
   - `require-choice` (bool, default false): When true, Escape, cancel and scrim clicks leave it open; only an action closes it.
-- **States:** Open adds `.hh-dialog--open`; closed dialogs aren't displayed.
+- **States:** Open adds `.hh-dialog--open` and focuses the first action; closed dialogs aren't displayed. While open, Tab and Shift+Tab wrap inside it and focus that leaves comes back; Close returns focus to where it was.
 - **Tokens:** `--hh-color-card-edge`, `--hh-color-scrim`, `--hh-color-surface`, `--hh-color-text`, `--hh-font-size-lg`, `--hh-font-size-md`, `--hh-radius-lg`, `--hh-space-2`, `--hh-space-3`, `--hh-space-6`
 
 ## HHToast
