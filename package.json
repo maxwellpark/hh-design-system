@@ -20,6 +20,11 @@
       "displayName": "Settings",
       "description": "A settings screen built from tabs, form controls, a dialog and toasts.",
       "path": "Samples~/Settings"
+    },
+    {
+      "displayName": "HUD",
+      "description": "A game HUD: health and lives bars, a badge and toasts.",
+      "path": "Samples~/HUD"
     }
   ]
 }
