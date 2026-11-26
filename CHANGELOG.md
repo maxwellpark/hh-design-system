@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- HUD sample: the health and lives sit in a Player `HHCard`, so they read against any scene.
 - Adding a control: `Documentation~/adding-a-control.md` lists what `check.mjs` and the gate hold
   a new control to, with a compiled minimal example.
 - Pause Menu sample: Quit is now a Hold to quit `HHHoldButton` in place of a confirm dialog.

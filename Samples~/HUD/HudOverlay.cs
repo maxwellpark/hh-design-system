@@ -9,6 +9,7 @@ public class HudOverlay : MonoBehaviour
 {
     private const int MaxHealth = 100;
     private const int MaxLives = 3;
+    private const string PlayerName = "Player";
 
     private HHProgressBar health;
     private HHSegmentedBar lives;
@@ -39,7 +40,8 @@ public class HudOverlay : MonoBehaviour
     private VisualElement BuildTopBar()
     {
         var bar = Row(Justify.SpaceBetween);
-        var vitals = new VisualElement();
+        // The vitals sit on a card, so they read against any scene behind them
+        var vitals = new HHCard { Title = PlayerName };
         vitals.style.width = 260;
         health = new HHProgressBar { title = "Health", lowValue = 0, highValue = MaxHealth, Tone = HHTone.Pink };
         lives = new HHSegmentedBar { Segments = MaxLives, Tone = HHTone.Peach };

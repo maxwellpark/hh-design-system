@@ -279,7 +279,7 @@ for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ??
 }
 const sampleControls = {
   "Samples~/Settings/SettingsMenu.cs": ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack", "HHAccessibility", "HHRadioGroup", "HHStepper"],
-  "Samples~/HUD/HudOverlay.cs": ["HHProgressBar", "HHSegmentedBar", "HHBadge", "HHButton", "HHToastStack"],
+  "Samples~/HUD/HudOverlay.cs": ["HHProgressBar", "HHSegmentedBar", "HHBadge", "HHButton", "HHToastStack", "HHCard"],
   "Samples~/PauseMenu/PauseMenu.cs": ["HHCard", "HHButton", "HHHoldButton", "HHToastStack"],
 };
 for (const [path, needed] of Object.entries(sampleControls)) {

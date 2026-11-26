@@ -16,10 +16,6 @@ which fails on a control with no EditMode test.
    hand-kept. A branch adding a pair or token then edits that row, so the failure names the value
    expected. Check: planted cases in `Tools~/check.test.mjs`.
 
-2. HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const in the
-   sample), showing the card over gameplay. Check: the sample table requires `HHCard` for the HUD,
-   with a planted case that drops it, and the compile gate builds the sample.
-
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
@@ -57,6 +53,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const); the sample table requires `HHCard` for the HUD (branch `max/hud-card`).
 - 2026-11-26: adding a control guide: `Documentation~/adding-a-control.md` lists what the checks hold a new control to, naming `check.mjs` as the authority, with a doc-only example the gate compiles (branch `max/control-guide`).
 - 2026-11-26: pause menu hold to quit: the Pause Menu sample's Quit is a Hold to quit `HHHoldButton` whose `Confirmed` shows the warning toast, in place of the dialog; the sample table requires it; `HHHoldButton.Begin` and `Release` became public so a game can drive a pad hold (branch `max/pause-hold`).
 - 2026-11-26: gallery disabled test: `GalleryTests.ThePageHoldsEveryFocusableControlDisabled` builds the gallery page and finds a disabled instance of each of the twelve focusable controls (branch `max/gallery-disabled-test`).
