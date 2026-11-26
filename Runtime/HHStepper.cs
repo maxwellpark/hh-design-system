@@ -65,16 +65,17 @@ namespace HootonHeroics.DesignSystem
         /// Moves by delta, stopping at the ends.
         public void Step(int delta)
         {
-            value = this.value + delta;
+            // Clamped first, so a step against an end changes nothing and sends no change event
+            value = Clamp(this.value + delta);
         }
 
         public override void SetValueWithoutNotify(int newValue)
         {
             requested = newValue;
+            var clamped = Clamp(newValue);
             var last = choices == null ? -1 : choices.Count - 1;
-            var clamped = last < 0 ? 0 : newValue < 0 ? 0 : newValue > last ? last : newValue;
             base.SetValueWithoutNotify(clamped);
-            // Set during the base constructor, before the parts exist
+            // Before the constructor has built the parts
             if (valueLabel == null)
             {
                 return;
@@ -82,6 +83,12 @@ namespace HootonHeroics.DesignSystem
             valueLabel.text = last < 0 ? string.Empty : choices[clamped];
             previous.SetEnabled(clamped > 0);
             next.SetEnabled(clamped < last);
+        }
+
+        private int Clamp(int index)
+        {
+            var last = choices == null ? -1 : choices.Count - 1;
+            return last < 0 || index < 0 ? 0 : index > last ? last : index;
         }
 
         private void OnNavigationMove(NavigationMoveEvent e)
