@@ -35,7 +35,7 @@ The main action button, with a ghost style for secondary actions. Extends `Butto
 
 ## HHHoldButton
 
-A button that confirms only after it is held for `hold-seconds` (quit, skip a cutscene), raising `Confirmed`; a bar along its foot fills while held. Listen to `Confirmed`: it has no Clickable, so `clicked` never fires. The left pointer, Space and Enter hold it; letting go, leaving or losing focus cancels, and a confirmed hold waits for release before another. A pad's submit has no release, so it does nothing; a game drives a pad hold from its own binding with `Begin` and `Release`. It carries `.hh-button` too, so it looks like one, but keeps the button fill when hovered. Extends `Button`.
+A button that confirms only after it is held for `hold-seconds` (quit, skip a cutscene), raising `Confirmed`; a bar along its foot fills while held. Listen to `Confirmed`: it has no Clickable, so `clicked` never fires. The left pointer, Space and Enter hold it; letting go, leaving or losing focus cancels, and a confirmed hold waits for release before another. A pad's submit has no release, so it does nothing; a game drives a pad hold from its own binding with `Begin` and `Release` on an attached button, and moving focus away cancels it. It carries `.hh-button` too, so it looks like one, but keeps the button fill when hovered. Extends `Button`.
 
 ```xml
 <hh:HHHoldButton text="Hold to quit" hold-seconds="1.5" />
