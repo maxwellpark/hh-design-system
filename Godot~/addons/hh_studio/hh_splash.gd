@@ -13,8 +13,10 @@ signal finished
 const Tokens := preload("res://addons/hh_studio/hh_tokens.gd")
 const LOGO := preload("res://addons/hh_studio/hh-logo.png")
 
-## A long first frame (a synchronous load behind the splash) must not skip the fade or the splash.
-const MAX_STEP := 1.0 / 30.0
+## A hitch longer than this (a synchronous load behind the splash) counts as one ordinary frame, so it
+## cannot skip the fade or the splash, while a steady low frame rate still runs in real time.
+const HITCH := 0.25
+const HITCH_STEP := 1.0 / 30.0
 ## Above every game layer, so no game UI draws over it.
 const LAYER := 128
 const WORDMARK_SPACING := 4
@@ -107,14 +109,15 @@ func _ready() -> void:
 	var wordmark := Label.new()
 	wordmark.name = "Wordmark"
 	wordmark.text = Tokens.SPLASH_WORDMARK
-	var spaced := FontVariation.new()
-	spaced.base_font = ThemeDB.fallback_font
-	spaced.spacing_glyph = WORDMARK_SPACING
-	wordmark.add_theme_font_override("font", spaced)
 	wordmark.add_theme_color_override("font_color", Tokens.TEXT)
 	wordmark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	wordmark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(wordmark)
+	# The game's theme font, letter-spaced; read once the label is in the tree so the project theme applies.
+	var spaced := FontVariation.new()
+	spaced.base_font = wordmark.get_theme_font("font")
+	spaced.spacing_glyph = WORDMARK_SPACING
+	wordmark.add_theme_font_override("font", spaced)
 	frame.resized.connect(_layout)
 	_layout()
 	content.modulate.a = alpha_at(0.0, reduced_motion)
@@ -124,12 +127,12 @@ func _process(delta: float) -> void:
 	advance(delta)
 
 
-## Moves the splash on by a time step, capped at MAX_STEP; the game loop calls it each frame and tests
-## call it directly.
+## Moves the splash on by a time step, a hitch counting as one frame; the game loop calls it each frame
+## and tests call it directly.
 func advance(delta: float) -> void:
 	if done:
 		return
-	elapsed += minf(delta, MAX_STEP)
+	elapsed += HITCH_STEP if delta > HITCH else delta
 	if elapsed >= total_seconds():
 		finish()
 		return

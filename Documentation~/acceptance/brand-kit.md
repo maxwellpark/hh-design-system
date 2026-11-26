@@ -8,13 +8,15 @@ Regenerate: `GODOT=<godot 4.7> bash Tools~/verify.sh` (exit 0 required).
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| `Brand~/tokens.json` holds every token in `hh-tokens.uss` with the same value, in both directions, and a token in a group nobody mirrors fails | `node Tools~/check-tokens.mjs`; `Tools~/check-tokens.test.mjs` | exit 0; 12 of 12 | verified |
+| `Brand~/tokens.json` holds every token in `hh-tokens.uss` with the same value, in both directions, and a token in a group nobody mirrors fails | `node Tools~/check-tokens.mjs`; `Tools~/check-tokens.test.mjs` | exit 0; 14 of 14 | verified |
 | The Godot constants match `tokens.json`, translucent alpha compared unrounded; a commented-out line, an expression, an extra colour or a differing logo copy fails | same | exit 0; the test's ten failing cases each exit 1 | verified |
 | The check fails on drift | `--hh-color-focus` changed by one digit | exit 1, names the token | verified |
 | The splash lasts 2 s: fade in 0.35 s, hold 1.3 s, fade out 0.35 s | `test_the_splash_lasts_two_seconds_and_fades_in_holds_and_fades_out` | pass | verified |
 | Reduced motion cuts instead of fading | `test_reduced_motion_cuts_instead_of_fading` | pass | verified |
 | It emits `finished` once and frees itself | `test_it_finishes_once_after_its_time_and_frees_itself` | pass | verified |
-| A 2.2 s first frame neither skips the splash nor its fade (steps capped at 1/30 s) | `test_a_long_first_frame_neither_skips_the_fade_nor_the_splash` | pass | verified |
+| A 2.2 s first frame neither skips the splash nor its fade (a step over 0.25 s counts as 1/30 s) | `test_a_long_first_frame_neither_skips_the_fade_nor_the_splash` | pass | verified |
+| A steady 20 fps still takes 2 s, not longer | `test_a_steady_twenty_frames_a_second_still_takes_two_seconds` | pass | verified |
+| The wordmark uses the game's theme font, letter-spaced | `get_theme_font` once the label is in the tree | | unverified (render) |
 | Under a Node2D root it covers the viewport, on canvas layer 128 | `test_it_fills_the_screen_under_a_2d_scene_and_draws_above_game_layers` | pass | verified |
 | A key, click, touch or pad press skips it; a release, a key repeat, the wheel or mouse motion does not | `test_any_press_skips_but_a_release_repeat_wheel_or_motion_does_not` | pass | verified |
 | Landscape: Russell left of the mark with a quarter of its height clear, on screen | `test_landscape_puts_the_host_beside_the_mark_with_clear_space` | pass | verified (positions, not pixels) |
@@ -51,12 +53,13 @@ check-tokens: tokens.json and Godot match hh-tokens.uss
 ok   test_splash.gd test_the_splash_lasts_two_seconds_and_fades_in_holds_and_fades_out
 ok   test_splash.gd test_reduced_motion_cuts_instead_of_fading
 ok   test_splash.gd test_it_finishes_once_after_its_time_and_frees_itself
+ok   test_splash.gd test_a_steady_twenty_frames_a_second_still_takes_two_seconds
 ok   test_splash.gd test_a_long_first_frame_neither_skips_the_fade_nor_the_splash
 ok   test_splash.gd test_any_press_skips_but_a_release_repeat_wheel_or_motion_does_not
 ok   test_splash.gd test_it_fills_the_screen_under_a_2d_scene_and_draws_above_game_layers
 ok   test_splash.gd test_landscape_puts_the_host_beside_the_mark_with_clear_space
 ok   test_splash.gd test_portrait_and_square_screens_stack_the_host_above_the_mark_on_screen
-8 tests, 0 failed
+9 tests, 0 failed
 ```
 
 ## Hands-on checklist

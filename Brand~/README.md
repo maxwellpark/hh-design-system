@@ -14,7 +14,7 @@ Every HH game opens with the same splash before its own title.
 - Mark: `hh-logo.png` centred, `splash.logo-height-fraction` of the screen's shorter side, with a quarter of its height clear on every side.
 - Wordmark: `splash.wordmark` below the mark in `color.text`, letter-spaced, the game's own UI font is fine.
 - Host: when the game supplies Russell's studio-host master, he stands left of the mark at `splash.host-height-fraction` of the shorter side, facing it, with a quarter of the mark's height between them. On screens too narrow for that (portrait, square) he stands above the mark, shrunk if needed to keep the column on screen. The master stays in the private repo that owns it; the game copies a sized derivative in, and Russell's character bible governs its use.
-- Timing: fade in `fade-in-seconds`, hold `hold-seconds`, fade out `fade-out-seconds`, 2 seconds in all, counted in steps of at most a thirtieth of a second so a slow first frame cannot skip it. Any key, click, touch or pad button skips it; the mouse wheel does not. With reduced motion on, it cuts instead of fading.
+- Timing: fade in `fade-in-seconds`, hold `hold-seconds`, fade out `fade-out-seconds`, 2 seconds in all, in real time, with a single hitch over a quarter of a second counted as one frame so a slow first frame cannot skip it. Any key, click, touch or pad button skips it; the mouse wheel does not. With reduced motion on, it cuts instead of fading.
 - Layer: it draws on its own canvas layer above the game's, so it works under any root node.
 - Sound: none yet. A sound logo, when one exists, plays once at the start of the hold and is skipped with the splash.
 - Then the game's own title. The splash never shows a loading bar; load behind it or after it.

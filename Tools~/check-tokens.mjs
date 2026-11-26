@@ -91,7 +91,7 @@ for (const [key, value] of Object.entries(tokens.color)) {
 }
 const colourConstants = new Set(Object.keys(tokens.color).map(constantFor));
 for (const [constant, value] of Object.entries(gd)) {
-  if (value.startsWith("Color(") && !colourConstants.has(constant)) {
+  if (value.startsWith("Color") && !colourConstants.has(constant)) {
     errors.push(`hh_tokens.gd ${constant} is a colour tokens.json does not have`);
   }
 }

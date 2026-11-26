@@ -36,6 +36,17 @@ func test_it_finishes_once_after_its_time_and_frees_itself() -> bool:
 	return done()
 
 
+func test_a_steady_twenty_frames_a_second_still_takes_two_seconds() -> bool:
+	var splash: CanvasLayer = HHSplash.create()
+	Engine.get_main_loop().root.add_child(splash)
+	for _frame in 39:
+		splash.advance(0.05)
+	check(not splash.done, "still showing at 1.95 s")
+	splash.advance(0.05)
+	check(splash.done, "done at 2.0 s, not slowed down")
+	return done()
+
+
 func test_a_long_first_frame_neither_skips_the_fade_nor_the_splash() -> bool:
 	var splash: CanvasLayer = HHSplash.create()
 	Engine.get_main_loop().root.add_child(splash)

@@ -41,6 +41,8 @@ const failing = {
   "a Godot alpha changed in its fourth decimal": (e) => e(GD, (t) => t.replace("251 / 255.0, 0.62)", "251 / 255.0, 0.6215)")),
   "a Godot colour behind a commented-out old line": (e) => e(GD, (t) => t.replace('const PINK := Color("#FF5C8A")', '# const PINK := Color("#FF5C8A")\nconst PINK := Color("#000000")')),
   "a Godot colour tokens.json lacks": (e) => e(GD, (t) => t + 'const SHADOW := Color("#000000")\n'),
+  "an extra Godot colour written with Color8": (e) => e(GD, (t) => t + "const SHADOW := Color8(0, 0, 0)\n"),
+  "a mirrored colour rewritten with Color.html": (e) => e(GD, (t) => t.replace('const PINK := Color("#FF5C8A")', 'const PINK := Color.html("#FF5C8A")')),
   "a splash key with no Godot constant": (e) => e(JSON_FILE, json((d) => ({ ...d, splash: { ...d.splash, "sting-seconds": 0.5 } }))),
   "a splash constant written as an expression": (e) => e(GD, (t) => t.replace("const SPLASH_HOLD := 1.3", "const SPLASH_HOLD := 1.3 * 2")),
   "a Godot logo that differs from the brand logo": (e, dir) => writeFileSync(join(dir, "Godot~/addons/hh_studio/hh-logo.png"), "not the logo"),
