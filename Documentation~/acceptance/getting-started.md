@@ -6,7 +6,7 @@ Node 22 and Unity 6000.0.85f2's compiler, through the doc snippet gate.
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| Both C# blocks in the guide compile against the package, editor and player | the compile gate: `Docs.getting_started [editor]` and `[player]` | ok | verified |
+| Both C# blocks in the guide compile against the package, editor and player, each as its own assembly | the compile gate: `Docs.getting_started.1` and `.2`, `[editor]` and `[player]` | ok | verified |
 | Its UXML uses only `hh:` elements and attributes the component reference has | `check.mjs` guide UXML check, exit 0 | pass | verified |
 | The steps produce the screen described: a dark card titled Northwind, a Music toggle and a violet Play button that logs | | | unverified |
 | The menu paths (Panel Settings asset, Package Manager) match Unity 6000.0 | | | unverified |
@@ -20,9 +20,11 @@ Two C# blocks and one UXML block, all held by machine; the prose and menu paths 
 `node Tools~/unity-compile.mjs HEAD` (excerpt):
 
 ```
-ok   Docs.getting_started [editor] (2 files)
-ok   Docs.getting_started [player] (2 files)
-ok   HEAD compiles: 14 assembly builds with the compiler and generators of Unity 6000.0.85f2
+ok   Docs.getting_started.1 [editor] (1 files)
+ok   Docs.getting_started.2 [editor] (1 files)
+ok   Docs.getting_started.1 [player] (1 files)
+ok   Docs.getting_started.2 [player] (1 files)
+ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line):
