@@ -9,16 +9,13 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. HUD sample: `Samples~/HUD` with a health `HHProgressBar`, an `HHSegmentedBar` for lives, an
-   `HHBadge` and an `HHToastStack`, driven by its own buttons so it needs neither input system. Check: the compile gate builds `Sample.HUD`,
-   and `check.mjs` fails if the sample stops using any of them, as for Settings.
-2. Non-text contrast: WCAG 1.4.11 asks 3:1 for the parts that show a control's state. The focus
+1. Non-text contrast: WCAG 1.4.11 asks 3:1 for the parts that show a control's state. The focus
    ring, scroller and tab underline have pairs; the toggle box edge, the text field and dropdown
    edges, and the progress, segment and slider fills against their track don't yet. Check: those pairs in `Tools~/contrast.json` with
    `min: 3`; any that fail go to Blocked on owner as palette choices, accepted meanwhile.
-3. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
+2. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
    Check: its test, gallery and reference sections, which `check.mjs` already demands.
-4. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
+3. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
    both samples instead of hand-built cards. Check: the same checks, and the compile gate.
 
 ## Blocked on owner
@@ -57,6 +54,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: dialog focus trap: while an `HHDialog` is open, Tab past its last stop wraps to the first and Shift+Tab before the first wraps to the last; focus that leaves by any other route comes back on the next tick (branch `max/dialog-focus`).
+- 2026-11-26: HUD sample: `Samples~/HUD/HudOverlay.cs`, a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven by its own buttons so it needs neither input system; `check.mjs` fails if it stops using any of them (branch `max/hud-sample`).
 - 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).
 - 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
 - 2026-11-26: component gallery: `Editor/HHGallery.cs` (Hooton Heroics > Design System > Gallery) shows every control in its states under a picked token file; `check.mjs` fails on a control missing from it (branch `max/gallery`).

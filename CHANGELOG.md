@@ -4,6 +4,8 @@
 - `HHDialog` keeps focus inside while open: Tab past the last stop wraps to the first, and
   Shift+Tab before the first wraps to the last. Focus moved outside by a pointer or code, or
   cleared, comes back on the next tick. A dialog with no focusable stops doesn't trap.
+- HUD sample: a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven
+  by its own buttons so it runs under either input system.
 - Component reference: `Documentation~/components.md` lists each control's UXML, classes,
   attributes, states and tokens. `Tools~/check.mjs` fails when it falls out of step with the code
   or `hh-components.uss`.
