@@ -1,0 +1,24 @@
+{
+  "pairs": [
+    { "use": "Body text on the page", "text": "text", "on": "bg" },
+    { "use": "Body text on a card", "text": "text", "on": "surface" },
+    { "use": "Dim text on the page", "text": "text-dim", "on": "bg" },
+    { "use": "Dim text on a card", "text": "text-dim", "on": "surface" },
+    { "use": "Progress title above the bar, on a card", "text": "text", "on": "surface" },
+    { "use": "Ghost button text", "text": "violet-light", "on": "violet-ghost", "over": "surface" },
+    { "use": "Ghost button text, hovered", "text": "violet-light", "on": "violet-ghost-hover", "over": "surface" },
+    { "use": "Focus ring against a card", "text": "focus", "on": "surface", "min": 3 },
+    {
+      "use": "Button text",
+      "text": "text",
+      "on": "violet",
+      "accepted": "Palette from 0.1 (4.0:1); waits on the owner's choice in BACKLOG.md"
+    },
+    {
+      "use": "Button text, hovered",
+      "text": "text",
+      "on": "violet-light",
+      "accepted": "Palette from 0.1 (2.5:1); waits on the owner's choice in BACKLOG.md"
+    }
+  ]
+}

@@ -49,6 +49,13 @@ const cases = [
     git("add", "-A");
     git("rm", "-q", "--cached", "Runtime/HHButton.cs.meta");
   }, 1, /Runtime\/HHButton\.cs\.meta: not committed/],
+  ["contrast below AA fails", (d) => {
+    edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-text-dim: rgba(243, 243, 251, 0.62);", "--hh-color-text-dim: rgba(243, 243, 251, 0.30);");
+    edit(d, "Runtime/HHTheme.cs", "0xF3, 0xF3, 0xFB, 0x9E", "0xF3, 0xF3, 0xFB, 0x4C");
+  }, 1, /Dim text on a card: text-dim on surface is [\d.]+:1, needs 4\.5/],
+  ["accepted pair is reported, not failed", () => {}, 0, /accepted: Button text: text on violet is 4\.0\d:1/],
+  ["pair naming an unknown token fails", (d) => edit(d, "Tools~/contrast.json", '"text": "focus"', '"text": "focs"'), 1, /Focus ring against a card: no token --hh-color-focs/],
+  ["translucent background without over fails", (d) => edit(d, "Tools~/contrast.json", ', "over": "surface" }', " }"), 1, /Ghost button text: violet-ghost is translucent, say what it sits over/],
 ];
 
 let failed = 0;
