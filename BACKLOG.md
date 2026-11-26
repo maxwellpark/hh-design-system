@@ -9,21 +9,15 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Scroller focus: settle whether a scroll view's scrollers (sliders inside `Scroller`) take focus
-   in Unity 6000.0, by having `Tools~/unity-classes.cs` read it from the UI Toolkit assembly and
-   the gate print it, with a `decisions.md` line either way. If they do, `.hh-scroll-view` gains a
-   focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
-   output names the answer, with a planted case, and the focus check still passes.
-
-2. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
+1. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
    `.unity-base-text-field__input--placeholder`) is left to Unity's default colour. Style it in
    `--hh-color-text-dim`, add a "Placeholder text in a text field" pair (held in every theme), and
    show one in the gallery. Check: the pair, the gate's Unity class check, and the reference.
-3. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
+2. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
    toast, and `HHToastStack.Show` takes its label and callback as parameters after `seconds`, so
    existing calls compile; the gallery shows one. Check: EditMode tests written, "on a toast card"
    contrast pairs for the button, the reference, and the compile gate.
-4. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
+3. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
    button, toggle, slider, dropdown, text field, radio group, stepper, tabs, list) in a variable
    and calls `SetEnabled(false)` on it, and tabs and list gain the `:disabled` rule they lack.
    Check: `check.mjs` fails on a focusable control the gallery never disables (matched by the
@@ -66,6 +60,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: scroller focus: Unity 6000.0's IL shows a scroller is a plain `Slider`, so it takes focus (recorded in `decisions.md`); a focused scroller's handle in a scroll view or list turns the focus colour, with a 3:1 pair, and the focus check holds `ScrollView`. The IL was read once by hand rather than by the gate, since the lasting check is the focus rule (branch `max/scroller-focus`).
 - 2026-11-26: Settings sample shows the newer controls: a Resolution `HHStepper` on the Video tab and a Difficulty `HHRadioGroup` on the Player tab, in the saved settings; the sample check requires both (branch `max/settings-newer`).
 - 2026-11-26: `HHStepper`: an ordered list stepped with arrows or left and right when focused, clamped with the end arrow disabled; tests, gallery, reference, four contrast pairs, and `BaseField` added to the focus check's focusable bases (branch `max/stepper`).
 - 2026-11-26: sample README check: `check.mjs` fails on a listed sample with no `README.md`, or with a `*.cs` its README doesn't name; all four samples pass (branch `max/sample-readmes`).

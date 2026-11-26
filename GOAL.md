@@ -30,8 +30,8 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 | Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 18 |
 | Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 16 of 16 |
 | Tokens | `node Tools~/check.mjs` | 32 |
-| Check cases | `node Tools~/check.test.mjs` | 99/99 |
-| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 3 of 120, all owner decisions |
+| Check cases | `node Tools~/check.test.mjs` | 102/102 |
+| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 3 of 122, all owner decisions |
 | EditMode tests | unity-packages' `unity-verify` | 72 written, 0 run |
 
 ## Out of scope
