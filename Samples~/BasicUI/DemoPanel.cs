@@ -8,13 +8,29 @@ public class DemoPanel : MonoBehaviour
 {
     public StyleSheet tokens;      // Runtime/Styles/hh-tokens.uss
     public StyleSheet components;  // Runtime/Styles/hh-components.uss
+    public ThemeStyleSheet[] themes;  // hh-theme.tss, hh-theme-high-contrast.tss; empty hides the Theme button
 
     private HHProgressBar progress;
+    private UIDocument document;
+    private PanelSettings panelCopy;
+
+    private bool CyclesThemes => themes != null && themes.Length > 0;
 
     private void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-        HHStyles.Apply(root, tokens, components);
+        document = GetComponent<UIDocument>();
+        // A runtime copy before building, so cycling themes in Play mode doesn't rewrite the PanelSettings asset
+        if (CyclesThemes && panelCopy == null && document.panelSettings != null)
+        {
+            panelCopy = Instantiate(document.panelSettings);
+            document.panelSettings = panelCopy;
+        }
+        var root = document.rootVisualElement;
+        // Sheets on the root would outrank the panel's theme, so the theme alone styles a cycling panel
+        if (!CyclesThemes)
+        {
+            HHStyles.Apply(root, tokens, components);
+        }
         root.style.paddingTop = 40;
         root.style.paddingLeft = 40;
 
@@ -42,6 +58,20 @@ public class DemoPanel : MonoBehaviour
         card.Add(progress);
         card.Add(play);
         card.Add(back);
+        if (CyclesThemes)
+        {
+            var theme = new HHButton(() => HHThemes.Next(document.panelSettings, themes)) { text = "Theme", Ghost = true };
+            theme.style.marginTop = 8;
+            card.Add(theme);
+        }
         root.Add(card);
+    }
+
+    private void OnDestroy()
+    {
+        if (panelCopy != null)
+        {
+            Destroy(panelCopy);
+        }
     }
 }

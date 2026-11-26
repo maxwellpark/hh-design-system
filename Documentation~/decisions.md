@@ -132,3 +132,6 @@
   to `surface` in the default theme (invisible) and light in high contrast. Why: black page against a
   near-black card is 1.05:1, so cards vanish without an edge. No contrast pair holds the edge, since
   the default theme deliberately has none. To change: the token's value per theme.
+- Default 2026-11-26 [needs-review]: `HHThemes` changes the PanelSettings asset it's given rather than
+  copying it. Why: a game usually wants every panel on that asset to switch together. To change:
+  pass a runtime copy, as the sample does, to keep the asset untouched.
