@@ -194,8 +194,8 @@ A virtualised list with hoverable rows and slim scrollers. Extends `ListView`.
 ```
 
 - **Classes:** `.hh-list-view`
-- **States:** `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge.
-- **Tokens:** `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-track`, `--hh-color-violet-ghost-hover`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-3`
+- **States:** `:focus` rings the list, which takes focus and moves its selection with the arrows; `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge.
+- **Tokens:** `--hh-color-focus`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-track`, `--hh-color-violet-ghost-hover`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-3`
 
 ## HHDialog
 

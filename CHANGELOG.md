@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHListView` shows focus with a ring in the focus colour, and `check.mjs` now fails on any control
+  built on a focusable Unity base without a `:focus` rule.
 - Doc snippets: the compile gate compiles each fenced `csharp` block in `Documentation~/*.md`, with
   errors reported at the guide's line, and `check.mjs` fails on guide UXML using an `hh:` element
   or attribute the component reference doesn't have.
