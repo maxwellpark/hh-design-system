@@ -15,6 +15,10 @@ const TEXT := Color("#F3F3FB")
 const TEXT_DIM := Color(243 / 255.0, 243 / 255.0, 251 / 255.0, 0.62)
 const FOCUS := Color("#45D6C4")
 
+const DURATION_FAST := 0.12
+const DURATION_NORMAL := 0.2
+const EASING_STANDARD := "ease-out"
+
 const SPLASH_FADE_IN := 0.35
 const SPLASH_HOLD := 1.3
 const SPLASH_FADE_OUT := 0.35

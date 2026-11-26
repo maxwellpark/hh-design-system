@@ -86,7 +86,26 @@ for (const m of theme.matchAll(/public Color (\w+) = new Color32\(([^)]*)\);/g))
   fields.set(m[1], { type: "colour", value: m[2].split(",").map(byte) });
 }
 for (const m of theme.matchAll(/public float (\w+) = ([\d.]+)f;/g)) {
-  fields.set(m[1], { type: "px", value: +m[2] });
+  fields.set(m[1], { type: "number", value: +m[2] });
+}
+for (const m of theme.matchAll(/public string (\w+) = "([^"]*)";/g)) {
+  fields.set(m[1], { type: "keyword", value: m[2] });
+}
+
+// Colours as RGBA, durations in seconds as HHTheme holds them, easings as keywords, the rest in px
+function parseToken(name, raw) {
+  if (name.startsWith("color-")) {
+    return parseColour(raw);
+  }
+  if (name.startsWith("duration-")) {
+    const time = raw.match(/^(\d+(?:\.\d+)?)(ms|s)$/);
+    return time ? +time[1] / (time[2] === "ms" ? 1000 : 1) : null;
+  }
+  if (name.startsWith("easing-")) {
+    return /^[a-z-]+$/.test(raw) ? raw : null;
+  }
+  const px = raw.match(/^(\d+(?:\.\d+)?)px$/);
+  return px ? +px[1] : null;
 }
 
 const uss = readFileSync("Runtime/Styles/hh-tokens.uss", "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
@@ -100,8 +119,7 @@ for (const [name, raw] of tokens) {
     problems.push(`--hh-${name}: no HHTheme.${field}`);
     continue;
   }
-  const px = raw.match(/^(\d+(?:\.\d+)?)px$/);
-  const want = name.startsWith("color-") ? parseColour(raw) : px ? +px[1] : null;
+  const want = parseToken(name, raw);
   if (want === null) {
     problems.push(`--hh-${name}: can't parse ${raw}`);
   } else if (f.type === "colour" ? !Array.isArray(want) || want.some((c, i) => c !== f.value[i]) : f.value !== want) {
