@@ -179,6 +179,8 @@ const cases = [
   ["an = or > inside a value isn't read as an attribute", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"a=b > c\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
   ["a fence shown inside a longer fence isn't checked", (d) => append(d, "Documentation~/index.md", "\n````markdown\n```xml\n<hh:HHSwitch />\n```\n````\n"), 0, /controls referenced/],
   ["a misspelt attribute is reported at its own line", (d) => writeFileSync(join(d, "Documentation~/planted.md"), "```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /planted\.md:4: hh:HHButton has no ghots/],
+  ["a listed sample without a README fails", (d) => unlinkSync(join(d, "Samples~/HUD/README.md")), 1, /Samples~\/HUD: no README\.md/],
+  ["a sample script its README doesn't name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/PauseExtras.cs"), "public class PauseExtras { }\n"), 1, /Samples~\/PauseMenu\/README\.md: doesn't name PauseExtras\.cs/],
 ];
 
 let failed = 0;
