@@ -8,6 +8,7 @@ public class DemoPanel : MonoBehaviour
 {
     public StyleSheet tokens;      // Runtime/Styles/hh-tokens.uss
     public StyleSheet components;  // Runtime/Styles/hh-components.uss
+    public ThemeStyleSheet[] themes;  // hh-theme.tss, hh-theme-high-contrast.tss; empty hides the Theme button
 
     private HHProgressBar progress;
 
@@ -36,6 +37,16 @@ public class DemoPanel : MonoBehaviour
 
         var back = new HHButton(() => progress.value = progress.lowValue) { text = "Reset", Ghost = true };
         back.style.marginTop = 8;
+
+        if (themes != null && themes.Length > 0)
+        {
+            var document = GetComponent<UIDocument>();
+            // A runtime copy, so cycling in Play mode doesn't rewrite the PanelSettings asset
+            document.panelSettings = Instantiate(document.panelSettings);
+            var theme = new HHButton(() => HHThemes.Next(document.panelSettings, themes)) { text = "Theme", Ghost = true };
+            theme.style.marginTop = 8;
+            card.Add(theme);
+        }
 
         card.Add(title);
         card.Add(sub);
