@@ -53,7 +53,7 @@ const cases = [
     edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-text-dim: rgba(243, 243, 251, 0.62);", "--hh-color-text-dim: rgba(243, 243, 251, 0.30);");
     edit(d, "Runtime/HHTheme.cs", "0xF3, 0xF3, 0xFB, 0x9E", "0xF3, 0xF3, 0xFB, 0x4C");
   }, 1, /Dim text on a card: text-dim on surface is [\d.]+:1, needs 4\.5/],
-  ["accepted pair is reported, not failed", () => {}, 0, /accepted: Button text: text on violet is 4\.00:1, needs 4\.5 \(palette from 0\.1/],
+  ["accepted pair is reported, not failed", () => {}, 0, /accepted: Button text: text on button is 4\.00:1, needs 4\.5 \(palette from 0\.1/],
   ["pair naming an unknown token fails", (d) => edit(d, "Tools~/contrast.json", '"text": "focus"', '"text": "focs"'), 1, /Focus ring against a card: no token --hh-color-focs/],
   ["blended ratio is measured", (d) => {
     edit(d, "Runtime/Styles/hh-tokens.uss", "rgba(130, 87, 255, 0.22)", "rgba(130, 87, 255, 0.28)");
@@ -64,12 +64,12 @@ const cases = [
     edit(d, "Runtime/HHTheme.cs", "focus = new Color32(0x45, 0xD6, 0xC4, 0xFF)", "focus = new Color32(0x3A, 0x3D, 0x70, 0xFF)");
   }, 1, /Focus ring against a card: focus on surface is [\d.]+:1, needs 3$/m],
   ["accepted pair getting worse fails", (d) => {
-    edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-violet-light: #A78BFA;", "--hh-color-violet-light: #E0DAFF;");
-    edit(d, "Runtime/HHTheme.cs", "0xA7, 0x8B, 0xFA, 0xFF", "0xE0, 0xDA, 0xFF, 0xFF");
+    edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-button-hover: #A78BFA;", "--hh-color-button-hover: #E0DAFF;");
+    edit(d, "Runtime/HHTheme.cs", "buttonHover = new Color32(0xA7, 0x8B, 0xFA, 0xFF)", "buttonHover = new Color32(0xE0, 0xDA, 0xFF, 0xFF)");
   }, 1, /Button text, hovered: .*fell below its accepted 2\.47/],
   ["accepted pair that now passes fails", (d) => {
-    edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-violet: #8257FF;", "--hh-color-violet: #6E4AD9;");
-    edit(d, "Runtime/HHTheme.cs", "0x82, 0x57, 0xFF, 0xFF", "0x6E, 0x4A, 0xD9, 0xFF");
+    edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-button: #8257FF;", "--hh-color-button: #6E4AD9;");
+    edit(d, "Runtime/HHTheme.cs", "button = new Color32(0x82, 0x57, 0xFF, 0xFF)", "button = new Color32(0x6E, 0x4A, 0xD9, 0xFF)");
   }, 1, /Button text: .*passes now, drop its accepted entry/],
   ["accepted without a ratio fails", (d) => edit(d, "Tools~/contrast.json", '"accepted": { "ratio": 2.47, "why": "palette from 0.1, waits on the owner\'s choice in BACKLOG.md" }', '"accepted": "palette from 0.1"'), 1, /Button text, hovered: accepted needs a numeric ratio and a why/],
   ["pair missing a key fails readably", (d) => edit(d, "Tools~/contrast.json", '{ "use": "Body text on the page", "text": "text", "on": "bg" }', '{ "use": "Body text on the page", "text": "text" }'), 1, /Body text on the page: needs both text and on/],

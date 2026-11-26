@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `--hh-color-button` and `--hh-color-button-hover` (mirrored in `HHTheme`, `Brand~/tokens.json` and
+  Godot) now colour the button; they take today's violet values, so nothing changes on screen.
 - `HHTokens` reads the tokens an element resolves at runtime: `TryGetColor(element, "color-teal",
   out c)`, `TryGetFloat` for sizes, and `WhenResolved` to run code each time styles resolve, so
   code can follow the live theme.

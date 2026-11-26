@@ -22,7 +22,7 @@
 }
 
 .hh-button {
-    background-color: var(--hh-color-violet);
+    background-color: var(--hh-color-button);
     color: var(--hh-color-text);
     border-radius: var(--hh-radius-md);
     padding: var(--hh-space-3) var(--hh-space-6);
@@ -36,12 +36,12 @@
 }
 
 .hh-button:hover {
-    background-color: var(--hh-color-violet-light);
+    background-color: var(--hh-color-button-hover);
 }
 
 /* Unity's .unity-button:hover:active outranks .hh-button:hover, so pressed needs its own rule */
 .hh-button:hover:active {
-    background-color: var(--hh-color-violet);
+    background-color: var(--hh-color-button);
 }
 
 .hh-button:focus {
@@ -52,7 +52,7 @@
     opacity: 0.4;
 }
 
-/* Two classes so ghost outranks .hh-button:hover, which paints violet-light behind violet-light text */
+/* Two classes so ghost outranks .hh-button:hover, which paints button-hover behind violet-light text */
 .hh-button.hh-button--ghost {
     background-color: var(--hh-color-violet-ghost);
     color: var(--hh-color-violet-light);

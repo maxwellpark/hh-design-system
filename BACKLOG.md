@@ -30,10 +30,11 @@ which fails on a control with no EditMode test.
 - Open v0.2 in Unity 6: it compiles, the Basic UI sample runs, `hh-theme.tss` finds its two
   stylesheets, `HHProgressBar` takes `value` and `title` from UXML. Nothing here has run in Unity.
 - Tag `v0.2.0` once it opens cleanly; tags wait on an ask.
-- Button contrast, from the 0.1 palette: white on `violet` is 4.0:1 and on the `violet-light`
-  hover 2.5:1, both under AA's 4.5:1 (accepted in `Tools~/contrast.json` until decided). Options:
-  a darker button violet (`#754EE6`, 4.8:1) with a darker hover (`#6E4AD9`, 5.2:1); or dark text
-  (`bg`) on `violet-light` buttons, 7.0:1. Recommended: the darker violets, which keep the look.
+- Button contrast, from the 0.1 palette: white on `--hh-color-button` is 4.0:1 and on
+  `--hh-color-button-hover` 2.5:1, both under AA's 4.5:1 (accepted in `Tools~/contrast.json` until
+  decided). Options: set `button` to `#754EE6` (4.8:1) and `button-hover` to `#6E4AD9` (5.2:1), or
+  dark (`bg`) text on the current hover colour, 7.0:1. Recommended: the darker violets, which keep
+  the look. Since the button tokens are their own, this no longer touches accent text or borders.
 - A Unity licence for batch mode, so the gate can also import USS, TSS and UXML and run the tests:
   on Linux, 6000.0 exits 198 ("No valid Unity Editor license found") before importing anything.
   The house standards' route is a Unity account made for automation, activated through `op run`.
@@ -54,6 +55,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: button tokens: `--hh-color-button` and `--hh-color-button-hover` split from `violet` and `violet-light`, at the same values, so a theme can set the button apart from accent text (branch `max/button-tokens`).
 - 2026-11-26: `HHTokens`: read resolved token values (`TryGetColor`, `TryGetFloat`, `WhenResolved`) from a styled element at runtime (branch `max/runtime-tokens`).
 - 2026-11-26: dropdown lists: `hh-dropdown-menu.uss`, imported by `hh-theme.tss`, styles Unity's `GenericDropdownMenu` (card, track hover, teal checkmark, separators) (branch `max/dropdown-menu`).
 - 2026-11-26: Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*ussClassName` Unity 6000.0's UI Toolkit assembly assigns (`Tools~/unity-classes.cs`, Mono.Cecil) and fails on a `.unity-*` class a stylesheet styles that isn't one (branch `max/unity-class-check`).
