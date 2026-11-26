@@ -3,6 +3,7 @@ extends RefCounted
 
 const BG := Color("#0E0F20")
 const SURFACE := Color("#191B38")
+const CARD_EDGE := Color("#191B38")
 const TRACK := Color("#2E3166")
 const VIOLET := Color("#8257FF")
 const VIOLET_LIGHT := Color("#A78BFA")

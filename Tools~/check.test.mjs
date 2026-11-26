@@ -110,7 +110,7 @@ const cases = [
   ["a stray closing brace fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "}\n.hh-card {"), 1, /a closing brace with no rule open/],
 
   ["a semicolon or brace inside a quoted url passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-logo {\n    background-image: url("data:image/png;base64,AA}A");\n}\n\n.hh-card {'), 0, /controls referenced/],
-  ["a bad declaration is reported at its own line", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {\n    background-color: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);", ".hh-card {\n    background-color: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);\n    paddin: var(--hh-space-6);"), 1, /hh-components\.uss:5: unknown property paddin/],
+  ["a bad declaration is reported at its own line", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);\n}\n\n.hh-title", "    border-radius: var(--hh-radius-lg);\n    paddin: var(--hh-space-6);\n}\n\n.hh-title"), 1, /hh-components\.uss:7: unknown property paddin/],
   ["a rule with no selector fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "{\n}\n\n.hh-card {"), 1, /a rule has no selector/],
   ["a rule never closed fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-open {\n    color: red;\n"); }, 1, /1 rule\(s\) never closed/],
   ["text after the last rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\nstray"); }, 1, /"stray" after the last rule isn't an @import/],
@@ -118,6 +118,12 @@ const cases = [
   ["custom properties and an empty rule pass", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", ".hh-empty {\n}\n\n.hh-local {\n    --hh-local-gap: 4px;\n}\n\n.hh-card {"), 0, /controls referenced/],
   ["an @import missing its semicolon before a rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '@import url("x.uss")\n.hh-card {'), 1, /an @import runs into a rule; it needs a semicolon/],
   ["an unterminated quote fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-quote {\n    background-image: url("x.png);\n}\n\n.hh-card {'), 1, /never closed|after the last rule/],
+  ["a theme missing a token fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;\n", ""), 1, /hh-tokens-high-contrast\.uss: no --hh-space-1/],
+  ["a theme with an extra token fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;", "    --hh-space-1: 4px;\n    --hh-space-9: 36px;"), 1, /--hh-space-9 isn't a token in hh-tokens\.uss/],
+  ["a pair accepted in the default theme must pass in another", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "--hh-color-button: #5225C8;", "--hh-color-button: #8257FF;"), 1, /Button text \[high-contrast\]: text on button is [\d.]+:1, needs 4\.5/],
+  ["a theme without its theme sheet fails", (d) => unlinkSync(join(d, "Runtime/Styles/hh-theme-high-contrast.tss")), 1, /hh-tokens-high-contrast\.uss: no hh-theme-high-contrast\.tss importing it/],
+  ["a theme defining a token twice fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;", "    --hh-space-1: 4px;\n    --hh-space-1: 5px;"), 1, /a token is defined twice/],
+  ["a theme value that doesn't parse fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "--hh-color-teal: #5EEAD4;", "--hh-color-teal: teal;"), 1, /hh-tokens-high-contrast\.uss: --hh-color-teal: can't parse teal/],
 ];
 
 let failed = 0;

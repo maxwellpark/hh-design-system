@@ -29,9 +29,9 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 |---|---|---|
 | Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 15 |
 | Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 6 of 6 |
-| Tokens | `node Tools~/check.mjs` | 31 |
-| Check cases | `node Tools~/check.test.mjs` | 51/51 |
-| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 40, both owner decisions |
+| Tokens | `node Tools~/check.mjs` | 32 |
+| Check cases | `node Tools~/check.test.mjs` | 57/57 |
+| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 82, both owner decisions |
 | EditMode tests | unity-packages' `unity-verify` | 41 written, 0 run |
 
 ## Out of scope

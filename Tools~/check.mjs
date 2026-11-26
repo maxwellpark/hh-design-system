@@ -132,15 +132,13 @@ for (const field of fields.keys()) {
   }
 }
 
-// WCAG contrast for each pair in contrast.json, translucent colours blended onto what they sit over
-const colours = new Map(
-  tokens.filter(([name]) => name.startsWith("color-")).map(([name, raw]) => [name.slice(6), parseColour(raw)]),
-);
+// WCAG contrast for each pair in contrast.json, in every theme; translucent colours blend onto what they sit over
+const readColours = (list) => new Map(list.filter(([name]) => name.startsWith("color-")).map(([name, raw]) => [name.slice(6), parseColour(raw)]));
 const linear = (c) => (c / 255 <= 0.03928 ? c / 255 / 12.92 : ((c / 255 + 0.055) / 1.055) ** 2.4);
 const luminance = ([r, g, b]) => 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
 const blend = (top, under) => top.slice(0, 3).map((c, i) => Math.round((c * top[3] + under[i] * (255 - top[3])) / 255));
 
-function contrast(pair) {
+function contrast(pair, colours) {
   if (!pair.text || !pair.on) {
     return { problem: "needs both text and on" };
   }
@@ -160,29 +158,67 @@ function contrast(pair) {
   return { ratio: (hi + 0.05) / (lo + 0.05) };
 }
 
+// The default theme may hold accepted exceptions; every other theme defines the same tokens and passes outright
+const themeFiles = readdirSync("Runtime/Styles").filter((f) => /^hh-tokens-[\w-]+\.uss$/.test(f)).sort();
+const themes = [{ name: "default", tokens }];
+for (const file of themeFiles) {
+  const text = readFileSync(join("Runtime/Styles", file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+  const list = [...text.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]);
+  const names = new Set(list.map(([name]) => name));
+  if (names.size !== list.length) {
+    problems.push(`${file}: a token is defined twice`);
+  }
+  const sheet = `hh-theme-${file.slice("hh-tokens-".length, -".uss".length)}.tss`;
+  if (!existsSync(join("Runtime/Styles", sheet)) || !readFileSync(join("Runtime/Styles", sheet), "utf8").includes(`url("${file}")`)) {
+    problems.push(`${file}: no ${sheet} importing it`);
+  }
+  for (const [name] of tokens) {
+    if (!names.has(name)) {
+      problems.push(`${file}: no --hh-${name}, which hh-tokens.uss defines`);
+    }
+  }
+  for (const name of names) {
+    if (!tokens.some(([n]) => n === name)) {
+      problems.push(`${file}: --hh-${name} isn't a token in hh-tokens.uss`);
+    }
+  }
+  for (const [name, raw] of list) {
+    if (parseToken(name, raw) === null) {
+      problems.push(`${file}: --hh-${name}: can't parse ${raw}`);
+    }
+  }
+  themes.push({ name: file.slice("hh-tokens-".length, -".uss".length), tokens: list });
+}
+
 const accepted = [];
 let pairs = 0;
-for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pairs) {
-  const { problem, ratio } = contrast(pair);
-  if (problem) {
-    problems.push(`${pair.use}: ${problem}`);
-    continue;
-  }
-  pairs += 1;
-  const min = pair.min ?? 4.5;
-  const shown = ratio.toFixed(2);
-  const line = `${pair.use}: ${pair.text} on ${pair.on} is ${shown}:1, needs ${min}`;
-  // An accepted pair holds its recorded ratio, so it can't quietly get worse or outlive its reason
-  if (pair.accepted && (typeof pair.accepted.ratio !== "number" || typeof pair.accepted.why !== "string")) {
-    problems.push(`${pair.use}: accepted needs a numeric ratio and a why`);
-  } else if (pair.accepted && ratio >= min) {
-    problems.push(`${line}: passes now, drop its accepted entry`);
-  } else if (pair.accepted && Number(shown) < pair.accepted.ratio) {
-    problems.push(`${line}, and fell below its accepted ${pair.accepted.ratio}`);
-  } else if (pair.accepted) {
-    accepted.push(`accepted: ${line} (${pair.accepted.why})`);
-  } else if (ratio < min) {
-    problems.push(line);
+const pairList = JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pairs;
+for (const theme of themes) {
+  const colours = readColours(theme.tokens);
+  const isDefault = theme.name === "default";
+  const where = isDefault ? "" : ` [${theme.name}]`;
+  for (const pair of pairList) {
+    const { problem, ratio } = contrast(pair, colours);
+    if (problem) {
+      problems.push(`${pair.use}${where}: ${problem}`);
+      continue;
+    }
+    pairs += 1;
+    const min = pair.min ?? 4.5;
+    const shown = ratio.toFixed(2);
+    const line = `${pair.use}${where}: ${pair.text} on ${pair.on} is ${shown}:1, needs ${min}`;
+    // An accepted pair holds its recorded ratio, so it can't quietly get worse or outlive its reason
+    if (isDefault && pair.accepted && (typeof pair.accepted.ratio !== "number" || typeof pair.accepted.why !== "string")) {
+      problems.push(`${pair.use}: accepted needs a numeric ratio and a why`);
+    } else if (isDefault && pair.accepted && ratio >= min) {
+      problems.push(`${line}: passes now, drop its accepted entry`);
+    } else if (isDefault && pair.accepted && Number(shown) < pair.accepted.ratio) {
+      problems.push(`${line}, and fell below its accepted ${pair.accepted.ratio}`);
+    } else if (isDefault && pair.accepted) {
+      accepted.push(`accepted: ${line} (${pair.accepted.why})`);
+    } else if (ratio < min) {
+      problems.push(line);
+    }
   }
 }
 
@@ -373,5 +409,5 @@ if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);
 }
-const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked, ${controls} controls referenced`;
+const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked across ${themes.length} theme(s), ${controls} controls referenced`;
 console.log([...accepted, summary].join("\n"));
