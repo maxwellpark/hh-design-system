@@ -1,6 +1,6 @@
 # Hooton Heroics brand kit
 
-Engine-neutral source for every HH game, site and store page. `tokens.json` holds the values; each engine's copy is checked against it by `Tools~/check-tokens.mjs`.
+Engine-neutral source for every HH game, site and store page. How the studio uses it, with the lore and jam process, is in the studio kit guide (`Docs/STUDIO-KIT.md` in the website repo). `tokens.json` holds the values; each engine's copy is checked against it by `Tools~/check-tokens.mjs`.
 
 ## Logo
 
