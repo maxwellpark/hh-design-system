@@ -20,6 +20,7 @@ namespace HootonHeroics.DesignSystem
         public Color text = new Color32(0xF3, 0xF3, 0xFB, 0xFF);
         public Color textDim = new Color32(0xF3, 0xF3, 0xFB, 0x9E);
         public Color focus = new Color32(0x45, 0xD6, 0xC4, 0xFF);
+        public Color scrim = new Color32(0x0E, 0x0F, 0x20, 0xB8);
 
         [Header("Spacing (px)")]
         public float space1 = 4f;

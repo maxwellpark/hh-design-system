@@ -9,7 +9,12 @@
     <hh:HHIconButton name="icon-button" tooltip="Settings" />
     <hh:HHBadge name="badge" count="120" tone="Pink" />
     <hh:HHBadge name="dot" dot="true" count="4" />
+    <hh:HHDialog name="dialog" title="Quit?" require-choice="true">
+        <ui:Label name="dialog-body" text="Unsaved progress will be lost." />
+    </hh:HHDialog>
     <hh:HHProgressBar name="pink-progress" value="10" tone="Pink" />
     <hh:HHSegmentedBar name="health" segments="4" filled="3" tone="Pink" />
     <hh:HHSegmentedBar name="ammo" filled="8" segments="10" />
+    <hh:HHToastStack name="toasts" max-visible="2" />
+    <hh:HHToast name="toast" text="Saved" tone="Success" />
 </ui:UXML>

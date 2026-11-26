@@ -13,6 +13,7 @@
     --hh-color-text: #F3F3FB;
     --hh-color-text-dim: rgba(243, 243, 251, 0.62);
     --hh-color-focus: #45D6C4;
+    --hh-color-scrim: rgba(14, 15, 32, 0.72);
 
     --hh-space-1: 4px;
     --hh-space-2: 8px;

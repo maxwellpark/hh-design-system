@@ -243,6 +243,132 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// Each stylesheet parses as flat rules: selectors, then one brace block of known `property: value;` lines
+const knownProperties = new Set(readFileSync("Tools~/uss-properties.txt", "utf8").split(/\r?\n/).filter((l) => l && !l.startsWith("#")));
+
+// Splits on a character only outside quotes and parentheses, keeping each piece's starting line
+function splitTop(text, startLine, separator) {
+  const pieces = [];
+  let quote = null;
+  let parens = 0;
+  let line = startLine;
+  let piece = "";
+  let pieceLine = startLine;
+  for (const ch of text) {
+    if (!piece.trim() && ch.trim()) {
+      pieceLine = line;
+    }
+    if (quote) {
+      quote = ch === quote ? null : quote;
+    } else if (ch === '"' || ch === "'") {
+      quote = ch;
+    } else if (ch === "(") {
+      parens += 1;
+    } else if (ch === ")") {
+      parens -= 1;
+    } else if (ch === separator && parens === 0) {
+      pieces.push({ text: piece, line: pieceLine, closed: true });
+      piece = "";
+      continue;
+    }
+    piece += ch;
+    if (ch === "\n") {
+      line += 1;
+    }
+  }
+  pieces.push({ text: piece, line: pieceLine, closed: false });
+  return pieces;
+}
+
+function checkStylesheet(name, source) {
+  const text = stripComments(source);
+  let depth = 0;
+  let line = 1;
+  let chunk = "";
+  let chunkLine = 1;
+  let quote = null;
+  let parens = 0;
+  for (const ch of text) {
+    if (quote || parens > 0 || (ch !== "{" && ch !== "}")) {
+      if (quote) {
+        quote = ch === quote ? null : quote;
+      } else if (ch === '"' || ch === "'") {
+        quote = ch;
+      } else if (ch === "(") {
+        parens += 1;
+      } else if (ch === ")") {
+        parens -= 1;
+      }
+      chunk += ch;
+      if (ch === "\n") {
+        line += 1;
+      }
+      continue;
+    }
+    if (ch === "{") {
+      if (depth > 0) {
+        problems.push(`${name}:${line}: a rule opens inside another rule; a closing brace is missing above`);
+      } else {
+        // Before a selector only whole `@import url(...);` statements may sit
+        const parts = splitTop(chunk, chunkLine, ";");
+        const selector = parts.at(-1).text.trim();
+        for (const part of parts.slice(0, -1)) {
+          const piece = part.text.trim();
+          if (!piece) {
+            problems.push(`${name}:${part.line}: a stray ; before a rule`);
+          } else if (!/^@import\s+url\([^)]*\)$/.test(piece)) {
+            problems.push(`${name}:${part.line}: "${piece.replace(/\s+/g, " ")}" before a rule isn't an @import`);
+          }
+        }
+        if (selector.startsWith("@import")) {
+          problems.push(`${name}:${line}: an @import runs into a rule; it needs a semicolon`);
+        } else if (!selector) {
+          problems.push(`${name}:${line}: a rule has no selector`);
+        }
+      }
+      depth += 1;
+      chunk = "";
+      chunkLine = line;
+    } else {
+      if (depth === 0) {
+        problems.push(`${name}:${line}: a closing brace with no rule open`);
+      } else {
+        const declarations = splitTop(chunk, chunkLine, ";");
+        for (const { text: declaration, line: at, closed } of declarations) {
+          const trimmed = declaration.trim();
+          if (!trimmed) {
+            continue;
+          }
+          const match = trimmed.match(/^(-{0,2}[a-z][a-z0-9-]*)\s*:\s*(.+)$/s);
+          if (!match) {
+            problems.push(`${name}:${at}: "${trimmed.replace(/\s+/g, " ")}" isn't a property: value pair`);
+          } else if (!match[1].startsWith("--") && !knownProperties.has(match[1])) {
+            problems.push(`${name}:${at}: unknown property ${match[1]}`);
+          } else if (!closed) {
+            problems.push(`${name}:${at}: the last declaration has no semicolon`);
+          }
+        }
+      }
+      depth = Math.max(0, depth - 1);
+      chunk = "";
+      chunkLine = line;
+    }
+  }
+  if (depth !== 0) {
+    problems.push(`${name}: ${depth} rule(s) never closed`);
+  }
+  for (const part of splitTop(chunk, chunkLine, ";")) {
+    const trimmed = part.text.trim();
+    if (trimmed && !(part.closed && /^@import\s+url\([^)]*\)$/.test(trimmed))) {
+      problems.push(`${name}:${part.line}: "${trimmed.slice(0, 40)}" after the last rule isn't an @import`);
+    }
+  }
+}
+
+for (const name of styles) {
+  checkStylesheet(name, readFileSync(join("Runtime/Styles", name), "utf8"));
+}
+
 if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);

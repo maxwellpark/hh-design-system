@@ -282,6 +282,53 @@
     border-radius: 4px;
 }
 
+/* The dialog is its own scrim, covering its parent; it shows only while open */
+.hh-dialog {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--hh-color-scrim);
+}
+
+.hh-dialog.hh-dialog--open {
+    display: flex;
+}
+
+.hh-dialog .hh-dialog__panel {
+    min-width: 320px;
+    max-width: 560px;
+    padding: var(--hh-space-6);
+    border-radius: var(--hh-radius-lg);
+    background-color: var(--hh-color-surface);
+}
+
+.hh-dialog .hh-dialog__title {
+    margin-bottom: var(--hh-space-3);
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-lg);
+    -unity-font-style: bold;
+}
+
+.hh-dialog .hh-dialog__body {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+}
+
+.hh-dialog .hh-dialog__actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: var(--hh-space-6);
+}
+
+.hh-dialog .hh-dialog__actions .hh-button {
+    margin-left: var(--hh-space-2);
+}
+
 /* Segments share the progress bar's track and tones; violet fills use violet-light, as decisions.md records */
 .hh-segmented-bar {
     flex-direction: row;
@@ -325,4 +372,41 @@
     background-color: var(--hh-color-bg);
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-sm);
+}
+
+/* The stack lets clicks through to the game; only the toasts themselves take pointer input */
+.hh-toast-stack {
+    position: absolute;
+    right: var(--hh-space-4);
+    bottom: var(--hh-space-4);
+    width: 320px;
+    max-height: 80%;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hh-toast {
+    margin-top: var(--hh-space-2);
+    padding: var(--hh-space-3) var(--hh-space-4);
+    border-left-width: 4px;
+    border-left-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-md);
+    background-color: var(--hh-color-surface);
+}
+
+.hh-toast .hh-toast__text {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+}
+
+.hh-toast.hh-toast--success {
+    border-left-color: var(--hh-color-teal);
+}
+
+.hh-toast.hh-toast--warning {
+    border-left-color: var(--hh-color-peach);
+}
+
+.hh-toast.hh-toast--danger {
+    border-left-color: var(--hh-color-pink);
 }
