@@ -9,7 +9,7 @@ Node 22 and Unity 6000.0.85f2's compiler (the compile gate).
 | `HHTokens` and its tests compile, editor and player | the compile gate | 6 builds | verified |
 | Short and full token names name the same custom property | `ShortAndFullTokenNamesMeanTheSameProperty` | compiled, not run | unverified |
 | Nothing resolves before styles do, and a null element is safe | `NothingResolvesBeforeStylesDo` | compiled, not run | unverified |
-| On a styled element in a panel, `TryGetColor(element, "color-teal", out c)` returns the token's colour, and `WhenResolved` runs once styles resolve | `customStyle` reads in `HHTokens` | needs a live panel | unverified |
+| On a styled element in a panel, `TryGetColor(element, "color-teal", out c)` returns the token's colour, on the document root and on a deep child, and `WhenResolved` runs each time styles resolve | `customStyle` reads in `HHTokens` | needs a live panel | unverified |
 | `HHTheme`'s mirror is unchanged | `node Tools~/check.mjs` | 29 tokens match | verified |
 
 ## Coverage and complexity
@@ -37,7 +37,9 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
 
 1. On a `UIDocument` with the HH theme, call
    `HHTokens.WhenResolved(root, e => Debug.Log(HHTokens.TryGetColor(e, "color-teal", out var c) + " " + c))`
-   in `OnEnable`, and press Play: it logs `True` and teal (0.27, 0.84, 0.77, 1).
+   in `OnEnable`, and press Play: it logs `True` and teal (0.27, 0.84, 0.77, 1). Repeat with a
+   label nested two levels down: if it logs `False`, custom properties don't inherit and the docs
+   must say to read from the root.
 2. Run the EditMode tests: the two in `TokensTests` pass.
 
 ## Unverified

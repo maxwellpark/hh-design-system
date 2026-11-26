@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// Reads the tokens an element resolves from its stylesheets; they exist once styles resolve, as WhenResolved waits for.
+    /// Reads the tokens an element resolves; they exist only once its styles do.
     public static class HHTokens
     {
         /// "color-teal" and "--hh-color-teal" both name the token --hh-color-teal.
@@ -25,9 +26,13 @@ namespace HootonHeroics.DesignSystem
             return element != null && element.customStyle.TryGetValue(new CustomStyleProperty<float>(PropertyName(token)), out value);
         }
 
-        /// Runs the callback each time the element's styles resolve, with the element to read from.
-        public static void WhenResolved(VisualElement element, System.Action<VisualElement> callback)
+        /// Runs the callback each time the element's styles resolve from now on, with the element to read from.
+        public static void WhenResolved(VisualElement element, Action<VisualElement> callback)
         {
+            if (element == null || callback == null)
+            {
+                return;
+            }
             element.RegisterCallback<CustomStyleResolvedEvent>(e => callback((VisualElement)e.currentTarget));
         }
     }

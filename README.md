@@ -37,7 +37,7 @@ one-file change. `HHTheme` (a ScriptableObject) mirrors the palette for driving 
 colours from the same source. Create via **Assets → Create → Hooton Heroics → Design System → Theme**.
 
 ## What's in v0.2
-Tokens (colour, spacing, radius, type) · `hh-theme.tss` · `.hh-card` / `.hh-title` /
+Tokens (colour, spacing, radius, type, motion; read at runtime with `HHTokens`) · `hh-theme.tss` · `.hh-card` / `.hh-title` /
 `.hh-text[-dim]` / `.hh-button` (+ ghost, focus, disabled) / `.hh-progress-bar` and the form
 controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField` ·
 `HHTheme` asset · `HHStyles.Apply` helper · Basic UI sample.

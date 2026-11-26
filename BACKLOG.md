@@ -42,6 +42,9 @@ which fails on a control with no EditMode test.
   Unity repos do.
 - The open-core split: which controls stay MIT and which go in the paid Pro pack.
 - Publishing: an OpenUPM listing, then the Asset Store.
+- Drop `HHTheme`'s hand-kept mirror, as the runtime-token item first asked? `HHTokens` now reads
+  resolved tokens, but `HHTheme` also serves code with no styled element (sprites, materials),
+  so the mirror and its check were kept. Keep it, or drop `HHTheme`?
 - Captures of the component gallery and both samples in each theme, from an editor with graphics.
 
 ## Ideas
@@ -51,7 +54,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
-- 2026-11-26: `HHTokens`: read resolved token values (`TryGetColor`, `TryGetFloat`, `WhenResolved`) from a styled element at runtime; `HHTheme`'s mirror stays, for code outside UI Toolkit (branch `max/runtime-tokens`).
+- 2026-11-26: `HHTokens`: read resolved token values (`TryGetColor`, `TryGetFloat`, `WhenResolved`) from a styled element at runtime (branch `max/runtime-tokens`).
 - 2026-11-26: dropdown lists: `hh-dropdown-menu.uss`, imported by `hh-theme.tss`, styles Unity's `GenericDropdownMenu` (card, track hover, teal checkmark, separators) (branch `max/dropdown-menu`).
 - 2026-11-26: Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*ussClassName` Unity 6000.0's UI Toolkit assembly assigns (`Tools~/unity-classes.cs`, Mono.Cecil) and fails on a `.unity-*` class a stylesheet styles that isn't one (branch `max/unity-class-check`).
 - 2026-11-26: `HHScrollView` and `HHListView`: slim scrollers with a violet-light handle and no arrow buttons, rows with a track hover and a selection tint plus violet-light edge (branch `max/scroll-list`).
