@@ -20,7 +20,11 @@ Two C# blocks and one UXML block, all held by machine; the prose and menu paths 
 `node Tools~/unity-compile.mjs HEAD` (excerpt):
 
 ```
-
+ok   Docs.getting_started.1 [editor] (1 files)
+ok   Docs.getting_started.2 [editor] (1 files)
+ok   Docs.getting_started.1 [player] (1 files)
+ok   Docs.getting_started.2 [player] (1 files)
+ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line):
