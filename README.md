@@ -12,6 +12,8 @@ https://github.com/maxwellpark/hh-design-system.git
 Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
 
 ## Use
+`Documentation~/getting-started.md` walks through a first screen step by step.
+
 1. Add a **UIDocument** to a GameObject (with PanelSettings).
 2. Give it the styles, either way:
    - **Theme (simplest):** set the PanelSettings' **Theme Style Sheet** to
