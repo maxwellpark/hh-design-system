@@ -49,7 +49,8 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
 - `node Tools~/check.mjs` checks the `.meta` files and that `HHTheme`'s defaults still match
   `hh-tokens.uss`. Run it before every commit; change a token in both places.
   It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
-  control puts text on a new colour. `node Tools~/check.test.mjs` tests the check itself.
+  control puts text on a new colour. It also fails on undefined tokens, classes without rules and
+  controls without a test. `node Tools~/check.test.mjs` tests the check itself.
 - EditMode tests live in `Tests/Editor`. To run them in a project, add
   `"testables": ["com.hootonheroics.designsystem"]` to its `Packages/manifest.json`.
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,

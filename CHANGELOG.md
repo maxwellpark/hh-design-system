@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` fails on a stylesheet using an undefined token, a control's class with no
+  rule in `hh-components.uss`, or a control with no EditMode test.
 - `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField`, styled through the tokens, with hover,
   focus and disabled states. The dropdown's open list keeps Unity's default look for now.
 - New `--hh-color-track` token for slider and progress tracks, which were invisible on a card.

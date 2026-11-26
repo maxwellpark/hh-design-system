@@ -168,9 +168,43 @@ for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pair
   }
 }
 
+// Every token a stylesheet uses is defined, every control's class has rules, and every control has a test
+const styles = readdirSync("Runtime/Styles").filter((name) => /\.(uss|tss)$/.test(name));
+const defined = new Set(tokens.map(([name]) => name));
+for (const name of styles) {
+  const text = readFileSync(join("Runtime/Styles", name), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const [, token] of text.matchAll(/var\(--hh-([\w-]+)\)/g)) {
+    if (!defined.has(token)) {
+      problems.push(`${name}: var(--hh-${token}) is not a token`);
+    }
+  }
+}
+
+const componentRules = readFileSync("Runtime/Styles/hh-components.uss", "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+const testSource = readdirSync("Tests/Editor")
+  .filter((name) => name.endsWith(".cs"))
+  .map((name) => readFileSync(join("Tests/Editor", name), "utf8"))
+  .join("\n");
+let controls = 0;
+for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+  const source = readFileSync(join("Runtime", name), "utf8");
+  for (const [, constant, className] of source.matchAll(/const string (\w*UssClassName) = "([\w-]+)"/g)) {
+    if (!new RegExp(`\\.${className}(?![\\w-])`).test(componentRules)) {
+      problems.push(`${name}: ${constant} "${className}" has no rule in hh-components.uss`);
+    }
+  }
+  const control = source.match(/\[UxmlElement\]\s*public (?:partial )?class (\w+)/)?.[1];
+  if (control) {
+    controls += 1;
+    if (!new RegExp(`\\b${control}\\b`).test(testSource)) {
+      problems.push(`${name}: ${control} has no EditMode test in Tests/Editor`);
+    }
+  }
+}
+
 if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);
 }
-const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked`;
+const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked, ${controls} controls referenced`;
 console.log([...accepted, summary].join("\n"));
