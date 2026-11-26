@@ -202,7 +202,7 @@ A scroll view with thin, token-coloured scrollers. Extends `ScrollView`.
 
 - **Classes:** `.hh-scroll-view`
 - **States:** Its scrollers are sliders Unity puts in the tab order; a focused one's handle turns the focus colour.
-- **Tokens:** `--hh-color-track`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`
+- **Tokens:** `--hh-color-focus`, `--hh-color-track`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`
 
 ## HHListView
 

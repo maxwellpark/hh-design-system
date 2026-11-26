@@ -510,6 +510,12 @@
     background-color: var(--hh-color-violet-light);
 }
 
+/* A scroller is a slider, which Unity puts in the tab order, so a focused one shows it on its handle */
+.hh-scroll-view .unity-scroller .unity-slider:focus .unity-base-slider__dragger,
+.hh-list-view .unity-scroller .unity-slider:focus .unity-base-slider__dragger {
+    background-color: var(--hh-color-focus);
+}
+
 /* The list takes focus itself and moves its selection with the arrows, so its edge shows focus */
 .hh-list-view {
     border-width: 2px;
