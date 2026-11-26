@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- `HHToastStack.Show(text, tone, seconds)` shows an `HHToast` in the bottom-right corner of its
+  parent, newest last, and dismisses it after its time (0 keeps it). Past `max-visible` the oldest
+  go. Tones are info, success, warning and danger, shown as a coloured edge on the card.
 - `HHProgressBar.Tone` (`tone` in UXML): violet, pink or peach fills; teal stays the default.
 - `HHSegmentedBar`: separate segments for health, ammo or charges, with `segments`, `filled` and
   `tone`.

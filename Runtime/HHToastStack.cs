@@ -2,8 +2,7 @@ using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// Toasts in the bottom-right corner of its parent, newest at the bottom pushing older ones up.
-    /// UXML: <hh:HHToastStack max-visible="3" />
+    /// Toasts in its parent's bottom-right corner, newest last. UXML: <hh:HHToastStack max-visible="3" />
     [UxmlElement]
     public partial class HHToastStack : VisualElement
     {
