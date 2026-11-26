@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- Motion tokens `--hh-duration-fast` (0.12s), `--hh-duration-normal` (0.2s) and
+  `--hh-easing-standard` (ease-out), mirrored in `HHTheme`. Buttons and inputs ease their colour
+  changes, and the progress fill eases its width.
 - `Tools~/check.mjs` fails on a stylesheet using an undefined token, a control's class with no
   rule in `hh-components.uss`, or a control with no EditMode test.
 - `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField`, styled through the tokens, with hover,
