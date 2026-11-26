@@ -133,9 +133,13 @@
     -unity-background-image-tint-color: var(--hh-color-text);
 }
 
+/* The fill stays violet on hover, since the white tick on violet-light is 2.5:1 */
 .hh-toggle.unity-base-field:checked:hover:enabled .unity-toggle__checkmark {
-    background-color: var(--hh-color-violet-light);
-    border-color: var(--hh-color-violet-light);
+    border-color: var(--hh-color-text);
+}
+
+.hh-toggle.unity-base-field:checked:focus:enabled .unity-toggle__checkmark {
+    border-color: var(--hh-color-focus);
 }
 
 .hh-toggle.unity-base-field:focus:enabled .unity-toggle__checkmark {
