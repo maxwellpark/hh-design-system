@@ -87,4 +87,4 @@ Anything missing, unstyled, mis-coloured or throwing counts as broken.
 ## Unverified
 
 Everything that needs Unity: compile, import, rendering, UXML attributes, the theme sheet's
-relative imports. The checklist proves them; an EditMode suite (Ready item 2) would keep them proved.
+relative imports. The checklist proves them; an EditMode suite (since added in `Tests/Editor`) would keep them proved.

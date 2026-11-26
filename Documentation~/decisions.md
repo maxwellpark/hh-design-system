@@ -12,7 +12,7 @@
   `Documentation~/` and point the tooling there.
 - Default 2026-11-26 [needs-review]: `HHTheme` mirrors the tokens and `Tools~/check.mjs` fails on
   drift. Why: reading USS variables from C# needs an element on a panel with its styles resolved,
-  which a ScriptableObject used outside UI Toolkit doesn't have. To change: Ready item 8.
+  which a ScriptableObject used outside UI Toolkit doesn't have. To change: the backlog item for reading tokens at runtime.
 - Default 2026-11-26 [needs-review]: the progress fill is teal and the focus ring is a 2px teal
   border, transparent when unfocused. Why: teal is the palette's accent, and an always-present
   border means focus doesn't shift layout. To change: the `--hh-color-focus` token and

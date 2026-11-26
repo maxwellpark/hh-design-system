@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` fails on a stylesheet using an undefined token, a control's class with no
+  rule in `hh-components.uss`, or a control with no EditMode test.
 - `Brand~/`: the engine-neutral brand kit. `tokens.json` mirrors `hh-tokens.uss` for engines other than Unity and adds the studio splash timing; `hh-logo.png` is the studio mark; `README.md` has the splash, logo and credits rules.
 - `Godot~/addons/hh_studio`: the studio splash for Godot 4 (`hh_splash.gd`) and the tokens as GDScript constants, with a headless test harness.
 - `Tools~/check-tokens.mjs` fails when `tokens.json` or the Godot constants drift from `hh-tokens.uss`; `Tools~/verify.sh` runs it, `Tools~/check.mjs` and the Godot tests. Unity ignores folders ending in `~`, so Unity projects see no change.
