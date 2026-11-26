@@ -43,7 +43,7 @@ ok   HEAD compiles: 12 assembly builds with the compiler and generators of Unity
 
 ```
 66 .meta files ok, 32 tokens match HHTheme, 110 contrast pairs checked across 2 theme(s), 17 controls referenced, 19 types in the component reference
-80/80 passed
+94/94 passed
 ```
 
 ## Hands-on checklist (Unity 6, five minutes)
