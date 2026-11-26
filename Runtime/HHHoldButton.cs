@@ -18,6 +18,8 @@ namespace HootonHeroics.DesignSystem
         private IVisualElementScheduledItem ticker;
         private float holdSeconds = 1f;
         private float held;
+        // The scheduler's clock at the last tick of this hold, or -1 before its first; a resumed item's own delta can span the pause
+        private long lastTickMs = -1;
 
         /// Raised once each time a hold reaches HoldSeconds.
         public event Action Confirmed;
@@ -73,9 +75,19 @@ namespace HootonHeroics.DesignSystem
             if (panel != null)
             {
                 // One scheduled item for the button's life, paused between holds, so holding allocates nothing per frame
-                ticker ??= schedule.Execute(state => Advance(state.deltaTime / 1000f)).Every(TickMs);
+                lastTickMs = -1;
+                ticker ??= schedule.Execute(Tick).Every(TickMs);
                 ticker.Resume();
             }
+        }
+
+        private void Tick(TimerState state)
+        {
+            if (lastTickMs >= 0)
+            {
+                Advance((state.now - lastTickMs) / 1000f);
+            }
+            lastTickMs = state.now;
         }
 
         /// Moves the hold on by elapsedSeconds; true when that completes it, which raises Confirmed once.
