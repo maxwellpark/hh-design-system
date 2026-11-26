@@ -1,0 +1,41 @@
+# Goal
+
+Status: draft, not confirmed
+
+## Outcome
+
+A themeable UI Toolkit design system for Unity 6 that a game installs from its git URL and restyles
+from one tokens file, with the controls a game's menus, settings screens and HUD need.
+
+## Done when
+
+- [ ] It installs from the git URL into a clean Unity 6 project with no import warnings, and the
+  Basic UI sample runs. Check: a clean project in Unity 6, console empty after import.
+- [x] 2026-11-26, `Tools~/check.mjs`: every imported asset has a `.meta`, and `HHTheme` matches
+  the tokens. Check: `node Tools~/check.mjs` exits 0.
+- [ ] Menus, settings and HUD are covered: button, toggle, slider, dropdown, text field, dialog,
+  tabs, tooltip, toast and progress bar each have a control and styles. Check: the Numbers line.
+- [ ] Every text colour meets WCAG AA contrast on the surfaces it sits on. Check:
+  `node Tools~/check.mjs`.
+- [ ] Switching between dark, light and high-contrast themes at runtime restyles every control.
+  Check: a capture of the sample in each theme.
+- [ ] EditMode tests pass through unity-verify. Check: its exit code.
+
+## Numbers
+
+| What | Command | Latest |
+|---|---|---|
+| Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 2 |
+| Tokens | `node Tools~/check.mjs` | 24 |
+| Check cases | `node Tools~/check.test.mjs` | 11/11 |
+| EditMode tests | unity-verify | 0 |
+
+## Out of scope
+
+- uGUI and IMGUI controls.
+- Paid Pro components, until the open-core split is decided.
+- The planned sibling packages (`com.hootonheroics.ai`, `...procgen`).
+
+## Last checked
+
+2026-11-26, branch `max/unity6-progress-bar`.
