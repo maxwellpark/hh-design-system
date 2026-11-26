@@ -35,6 +35,9 @@ test("the committed files pass", () => {
 
 const failing = {
   "a USS space token tokens.json lacks": (e) => e(USS, (t) => t.replace("--hh-space-6: 24px;", "--hh-space-6: 24px;\n    --hh-space-8: 32px;")),
+  "a motion token tokens.json lacks": (e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "duration-normal": undefined } }))),
+  "a Godot duration that drifted": (e) => e(GD, (t) => t.replace("const DURATION_FAST := 0.12", "const DURATION_FAST := 0.15")),
+  "an easing that drifted in tokens.json": (e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "easing-standard": "linear" } }))),
   "a USS token in a group nobody mirrors": (e) => e(USS, (t) => t.replace("--hh-space-1: 4px;", "--hh-space-1: 4px;\n    --hh-border-width: 2px;")),
   "a drift hidden behind a commented-out old value": (e) => e(USS, (t) => t.replace("--hh-space-1: 4px;", "/* was --hh-space-1: 4px; */ --hh-space-1: 6px;")),
   "a translucent alpha changed in its third decimal": (e) => e(USS, (t) => t.replace("rgba(130, 87, 255, 0.14)", "rgba(130, 87, 255, 0.141)")),
