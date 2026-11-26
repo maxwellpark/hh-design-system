@@ -1,15 +1,17 @@
-/* Design tokens: the single source of truth for the look. Change here, everything follows.
-   Add this stylesheet to a root VisualElement (or via HHStyles.Apply). */
+/* The single source of the look; HHTheme.cs mirrors it, enforced by Tools~/check.mjs */
 :root {
     --hh-color-bg: #0E0F20;
     --hh-color-surface: #191B38;
     --hh-color-violet: #8257FF;
     --hh-color-violet-light: #A78BFA;
+    --hh-color-violet-ghost: rgba(130, 87, 255, 0.14);
+    --hh-color-violet-ghost-hover: rgba(130, 87, 255, 0.28);
     --hh-color-teal: #45D6C4;
     --hh-color-pink: #FF5C8A;
     --hh-color-peach: #FFB25C;
     --hh-color-text: #F3F3FB;
     --hh-color-text-dim: rgba(243, 243, 251, 0.62);
+    --hh-color-focus: #45D6C4;
 
     --hh-space-1: 4px;
     --hh-space-2: 8px;
