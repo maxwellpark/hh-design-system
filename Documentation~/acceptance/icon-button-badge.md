@@ -9,7 +9,7 @@ Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh` from the com
 | `HHIconButton`, `HHBadge` and `HHTone` compile with Unity's compiler and UI Toolkit generator, as do their tests | the compile gate | 4 of 4 assemblies | verified |
 | The icon reads against its tint (3:1), and badge text reads on every tone (4.5:1) | `node Tools~/check.mjs`, seven new pairs | 24 pairs pass | verified |
 | An icon button's label becomes its tooltip and its icon its background, removable with `null` | `IconButtonUsesItsLabelAsTooltipAndShowsTheIcon` | compiled, not run | unverified |
-| A badge shows its count capped at `99+`, never negative; a dot hides the count and restores it | `BadgeShowsItsCountCappedAt99`, `DotBadgeHidesItsCountAndShowsItAgain` | compiled, not run | unverified |
+| A badge shows nothing until given a count, then the count capped at `99+`, never negative; a dot hides the count and restores it | `BadgeShowsItsCountCappedAt99`, `DotBadgeHidesItsCountAndShowsItAgain` | compiled, not run | unverified |
 | Exactly one tone class is set at a time, none for violet | `ToneSetsExactlyOneToneClass` | compiled, not run | unverified |
 | `icon`, `tooltip`, `count`, `tone` and `dot` work from UXML | `UxmlAttributesReachTheBadgeAndIconButton` with the fixture | compiled, not run | unverified |
 | Both controls have rules and tests | the reference check | 8 controls | verified |
@@ -24,7 +24,7 @@ Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh` from the com
 
 ## Coverage and complexity
 
-Needs a Unity test run; not measured. Every member is under 10 lines with at most two branches.
+Needs a Unity test run; not measured. Every member is under 10 lines; `Count`'s setter has three conditions.
 
 ## Behaviour transcript
 

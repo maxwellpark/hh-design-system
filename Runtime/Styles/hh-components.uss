@@ -249,7 +249,7 @@
     opacity: 0.4;
 }
 
-/* Dark text on every tone: white is under 3:1 on all four */
+/* Dark text on every tone: white is under 3:1 on all four. Radii are half the height, so pills stay round */
 .hh-badge {
     min-width: 20px;
     height: 20px;
