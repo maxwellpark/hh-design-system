@@ -362,7 +362,7 @@
     background-color: var(--hh-color-peach);
 }
 
-/* Drawn in the panel root, so it sits above everything and never takes pointer input */
+/* Drawn last in the document root, so it sits above the document and never takes pointer input */
 .hh-tooltip {
     position: absolute;
     padding: var(--hh-space-1) var(--hh-space-2);

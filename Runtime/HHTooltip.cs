@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// Shows a label beside its target after a hover or focus delay; runtime panels don't show `tooltip` themselves.
+    /// Shows a label beside its target after a hover or focus delay, since runtime panels don't show `tooltip`; icon buttons have one already.
     public class HHTooltip : Manipulator
     {
         public const string UssClassName = "hh-tooltip";
@@ -28,8 +28,19 @@ namespace HootonHeroics.DesignSystem
 
         public string Text => string.IsNullOrEmpty(text) ? target?.tooltip : text;
 
-        /// The element the label is drawn in; the target's panel root unless a test sets another.
+        /// The element the label is drawn in, where a test sets one; otherwise see TopLevel.
         internal VisualElement Layer { get; set; }
+
+        // The target's ancestor just under the panel root: the document, which carries the HH stylesheets
+        internal static VisualElement TopLevel(VisualElement element)
+        {
+            var top = element;
+            while (top?.parent != null && top.parent != top.panel?.visualTree)
+            {
+                top = top.parent;
+            }
+            return top;
+        }
 
         protected override void RegisterCallbacksOnTarget()
         {
@@ -39,6 +50,7 @@ namespace HootonHeroics.DesignSystem
             target.RegisterCallback<FocusOutEvent>(OnLeave);
             target.RegisterCallback<DetachFromPanelEvent>(OnLeave);
             target.RegisterCallback<KeyDownEvent>(OnKey);
+            target.RegisterCallback<PointerDownEvent>(OnLeave);
         }
 
         protected override void UnregisterCallbacksFromTarget()
@@ -49,6 +61,7 @@ namespace HootonHeroics.DesignSystem
             target.UnregisterCallback<FocusOutEvent>(OnLeave);
             target.UnregisterCallback<DetachFromPanelEvent>(OnLeave);
             target.UnregisterCallback<KeyDownEvent>(OnKey);
+            target.UnregisterCallback<PointerDownEvent>(OnLeave);
             Hide();
         }
 
@@ -74,8 +87,8 @@ namespace HootonHeroics.DesignSystem
         /// Shows the label below the target at once, if there's text and somewhere to draw it.
         internal void Show()
         {
-            var layer = Layer ?? target?.panel?.visualTree;
-            if (layer == null || string.IsNullOrEmpty(Text))
+            var layer = Layer ?? (target?.panel != null ? TopLevel(target) : null);
+            if (layer == null || layer == target || string.IsNullOrEmpty(Text))
             {
                 return;
             }

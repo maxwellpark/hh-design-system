@@ -12,7 +12,8 @@ Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh`).
 | With no text it falls back to the target's `tooltip`, and with none it shows nothing | `FallsBackToTheTargetsTooltipAndShowsNothingWithoutText` | compiled, not run | unverified |
 | Removing the manipulator hides the label | `RemovingTheManipulatorHidesTheLabel` | compiled, not run | unverified |
 | An icon button's label shows as its tooltip | `IconButtonsCarryATooltipForTheirLabel` | compiled, not run | unverified |
-| Hover or focus shows it after 500ms; leave, blur, Escape or detach hides it; the label sits below the target and never takes clicks | the callbacks in `HHTooltip` | needs a live panel | unverified |
+| It draws in the target's document root, where the HH stylesheets apply | `TheLayerIsTheTopmostAncestorWithoutAPanel` | compiled, not run | unverified |
+| Hover or focus shows it after 500ms; leave, blur, Escape, a click or detach hides it; the label sits below the target and never takes clicks | the callbacks in `HHTooltip` | needs a live panel | unverified |
 
 ## Paths
 
@@ -53,9 +54,9 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
 1. Hover an `HHIconButton` with `tooltip="Settings"` for half a second: a small dark label reading
    "Settings" appears just below it. Move away: it goes.
 2. Tab to the button: the label appears; press Escape: it goes.
-3. Run the EditMode tests: the four in `TooltipTests` pass.
+3. Run the EditMode tests: the five in `TooltipTests` pass.
 
 ## Unverified
 
-The timing, placement and event routing in a live panel, and the four tests. Near the bottom or
+The timing, placement and event routing in a live panel, and the five tests. Near the bottom or
 right edge of the screen the label isn't flipped back on screen (a recorded decision).

@@ -89,7 +89,8 @@
   compile gate can't import USS without a licence, and a merge once dropped a brace that only a
   reviewer caught. To change: once batch mode is licensed, let the editor's importer judge instead.
   To refresh the list: `strings -e l UnityEngine.UIElementsModule.dll`, keep the property families.
-- Default 2026-11-26 [needs-review]: tooltips draw in the panel root, 4px below the target's left
-  edge, after 500ms. Why: the root sits above every other element, and below-left reads naturally
-  under buttons. To change: `HHTooltip.Show` and `DefaultDelayMs`; it doesn't yet flip near screen
+- Default 2026-11-26 [needs-review]: tooltips draw as the last child of the target's document (its
+  ancestor just under the panel root), 4px below the target's left edge, after 500ms. Why: the
+  document carries the HH stylesheets when they're added per document rather than as a theme, and
+  below-left reads naturally under buttons. To change: `HHTooltip.Show` and `DefaultDelayMs`; it doesn't yet flip near screen
   edges.

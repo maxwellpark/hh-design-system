@@ -52,6 +52,18 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void TheLayerIsTheTopmostAncestorWithoutAPanel()
+        {
+            var document = new VisualElement();
+            var card = new VisualElement();
+            var target = new VisualElement();
+            document.Add(card);
+            card.Add(target);
+
+            Assert.That(HHTooltip.TopLevel(target), Is.SameAs(document));
+        }
+
+        [Test]
         public void IconButtonsCarryATooltipForTheirLabel()
         {
             var button = new HHIconButton(null, "Settings", null);
