@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- Contrast: the slider's focus ring and the dropdown arrow now have 3:1 pairs, and the empty
+  track of a slider, progress bar, segmented bar or scroller is checked against the card at WCAG
+  1.4.11's 3:1. It's 1.39:1 in the default theme, accepted until the owner picks a
+  fix in BACKLOG.md, and passes in high contrast.
 - HUD sample: a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven
   by its own buttons so it runs under either input system.
 - Component reference: `Documentation~/components.md` lists each control's UXML, classes,
