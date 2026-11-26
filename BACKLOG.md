@@ -9,13 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Adding a control guide: `Documentation~/adding-a-control.md`, linked from `index.md`, lists
-   what `check.mjs` and the gate hold a new control to (its `.meta`; a rule per class constant; a
-   reference section whose lists match exactly; a test outside `GalleryTests.cs`; a gallery entry,
-   and a disabled one if focusable; focus and disabled rules on its own class; tokens only, through
-   the modifiers; known USS properties and Unity classes; contrast pairs by convention), naming
-   `check.mjs` as the authority. Its C# example is a doc-only class with a name no real control has,
-   kept out of the guide's UXML. Check: the doc snippet gate compiles the example.
 
 ## Blocked on owner
 
@@ -54,6 +47,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: adding a control guide: `Documentation~/adding-a-control.md` lists what the checks hold a new control to, naming `check.mjs` as the authority, with a doc-only example the gate compiles (branch `max/control-guide`).
 - 2026-11-26: pause menu hold to quit: the Pause Menu sample's Quit is a Hold to quit `HHHoldButton` whose `Confirmed` shows the warning toast, in place of the dialog; the sample table requires it; `HHHoldButton.Begin` and `Release` became public so a game can drive a pad hold (branch `max/pause-hold`).
 - 2026-11-26: gallery disabled test: `GalleryTests.ThePageHoldsEveryFocusableControlDisabled` builds the gallery page and finds a disabled instance of each of the twelve focusable controls (branch `max/gallery-disabled-test`).
 - 2026-11-26: reference examples check: `check.mjs` builds the allowed attributes from each section's list, Unity base table and VisualElement's only, and holds `components.md`'s own examples to them; every example passes (branch `max/reference-examples`).
