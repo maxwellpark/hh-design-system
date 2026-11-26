@@ -321,8 +321,9 @@
     right: var(--hh-space-4);
     bottom: var(--hh-space-4);
     width: 320px;
+    max-height: 80%;
     flex-direction: column;
-    justify-content: flex-end;
+    overflow: hidden;
 }
 
 .hh-toast {
@@ -337,7 +338,6 @@
 .hh-toast .hh-toast__text {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-md);
-    white-space: normal;
 }
 
 .hh-toast.hh-toast--success {

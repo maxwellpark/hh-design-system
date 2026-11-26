@@ -11,7 +11,7 @@ Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh`).
 | Both have rules and tests | the reference check | 11 controls | verified |
 | `Show` adds a toast with its text and exactly its tone's class | `ShowAddsAToastWithItsTextAndTone` | compiled, not run | unverified |
 | The newest goes last, and past the cap the oldest is dismissed with `Dismissed` raised | `NewestGoesLastAndTheOldestIsDismissedPastTheCap` | compiled, not run | unverified |
-| Dismissing twice raises `Dismissed` once; lowering the cap trims, never below 1 | `DismissIsSafeToCallTwice`, `LoweringTheCapTrimsAndItNeverDropsBelowOne` | compiled, not run | unverified |
+| Dismissing twice raises `Dismissed` once; lowering the cap trims, never below 1; other children in the stack neither count nor get removed | `DismissIsSafeToCallTwice`, `LoweringTheCapTrimsAndItNeverDropsBelowOne`, `OtherChildrenDontCountOrBreakTheCap` | compiled, not run | unverified |
 | `max-visible`, `text` and `tone` work from UXML | `UxmlAttributesReachTheStackAndToast` | compiled, not run | unverified |
 | A toast dismisses itself after its seconds | `schedule.Execute(...).StartingIn` in `Show` | needs a live panel | unverified |
 
@@ -55,8 +55,8 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
    times quickly, then once with `HHToastTone.Danger`: cards stack in the bottom-right, newest at the
    bottom, with teal and pink edges; the oldest goes when a fifth arrives.
 2. Wait four seconds: each card goes on its own. Clicks beside the cards reach the game.
-3. Run the EditMode tests: the five in `ToastTests` pass.
+3. Run the EditMode tests: the six in `ToastTests` pass.
 
 ## Unverified
 
-Rendering, the timed dismissal, and the five tests, which need a licensed editor.
+Rendering, the timed dismissal, and the six tests, which need a licensed editor.

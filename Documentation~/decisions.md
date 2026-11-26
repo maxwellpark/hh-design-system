@@ -72,3 +72,5 @@
   5.7:1 or more against the card. To change: the `.hh-toast--*` rules.
 - Default 2026-11-26 [needs-review]: four toasts show at most, each for 4 seconds. Why: enough to
   read a short line without covering the game. To change: `MaxVisible` and `DefaultSeconds`.
+- Default 2026-11-26 [needs-review]: the toast stack is at most 80% of its parent's height and clips
+  beyond that. Why: a high `max-visible` shouldn't push cards off-screen. To change: `.hh-toast-stack`.

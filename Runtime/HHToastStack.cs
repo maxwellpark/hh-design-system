@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
@@ -42,11 +43,13 @@ namespace HootonHeroics.DesignSystem
             return toast;
         }
 
+        // Counts and dismisses only toasts, so other children placed in the stack are left alone
         private void Trim()
         {
-            while (childCount > maxVisible)
+            var toasts = Children().OfType<HHToast>().ToList();
+            for (var i = 0; i < toasts.Count - maxVisible; i++)
             {
-                ((HHToast)this[0]).Dismiss();
+                toasts[i].Dismiss();
             }
         }
     }

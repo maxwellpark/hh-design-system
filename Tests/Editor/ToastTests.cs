@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -59,6 +60,19 @@ namespace HootonHeroics.DesignSystem.Tests
             stack.MaxVisible = 0;
             Assert.That(stack.MaxVisible, Is.EqualTo(1));
             Assert.That(stack.childCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void OtherChildrenDontCountOrBreakTheCap()
+        {
+            var stack = new HHToastStack { MaxVisible = 1 };
+            var label = new Label("Not a toast");
+            stack.Add(label);
+            stack.Show("One", seconds: 0f);
+            stack.Show("Two", seconds: 0f);
+
+            Assert.That(label.parent, Is.SameAs(stack));
+            Assert.That(stack.Children().OfType<HHToast>().Count(), Is.EqualTo(1));
         }
 
         [Test]
