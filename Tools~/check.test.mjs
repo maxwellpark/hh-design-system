@@ -156,6 +156,7 @@ const cases = [
   ["a large-text size off the 1.25 scale fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "--hh-font-size-md: 18px;", "--hh-font-size-md: 16px;"), 1, /\.hh-large-text sets --hh-font-size-md to 16px, expected 18px/],
   ["a modifier setting a token outside its kind fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-duration-normal: 0s;\n", "    --hh-duration-normal: 0s;\n    --hh-space-1: 0px;\n"), 1, /\.hh-reduced-motion sets --hh-space-1, outside its kind/],
   ["a modifier setting something that isn't a token fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-font-size-xl: 35px;\n", "    --hh-font-size-xl: 35px;\n    --hh-font-size-huge: 50px;\n"), 1, /\.hh-large-text sets --hh-font-size-huge, which isn't a token/],
+  ["a second modifier rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-reduced-motion {\n    --hh-duration-fast: 1s;\n}\n"); }, 1, /2 standalone \.hh-reduced-motion rules, needs exactly 1/],
 ];
 
 let failed = 0;

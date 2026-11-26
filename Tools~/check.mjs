@@ -307,11 +307,12 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
 // Accessibility modifiers override every token of their kind, and only tokens: motion to 0s, type to 1.25x rounded
 const modifiers = { "hh-reduced-motion": ["duration-", () => "0s"], "hh-large-text": ["font-size-", (raw) => `${Math.round(parseFloat(raw) * 1.25)}px`] };
 for (const [className, [kind, expect]] of Object.entries(modifiers)) {
-  const body = componentRules.match(new RegExp(`(?:^|\\})\\s*\\.${className}\\s*\\{([^}]*)\\}`))?.[1];
-  if (body === undefined) {
-    problems.push(`hh-components.uss: no .${className} rule`);
+  const bodies = [...componentRules.matchAll(new RegExp(`(?:^|\\})\\s*\\.${className}\\s*\\{([^}]*)\\}`, "g"))].map((m) => m[1]);
+  if (bodies.length !== 1) {
+    problems.push(`hh-components.uss: ${bodies.length} standalone .${className} rules, needs exactly 1`);
     continue;
   }
+  const body = bodies[0];
   const set = new Map([...body.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]));
   for (const [name, raw] of tokens.filter(([n]) => n.startsWith(kind))) {
     if (!set.has(name)) {
