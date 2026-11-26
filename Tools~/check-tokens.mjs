@@ -21,10 +21,21 @@ function rgba(value) {
 const same = (a, b) => Boolean(a && b) && a.every((v, i) => Math.abs(v - b[i]) < 1e-6);
 
 const NUMERIC = ["space", "radius", "font-size"];
+// Motion keeps the whole token name as its key, durations in seconds and easings as keywords
+const MOTION = ["duration-", "easing-"];
 const uss = read("Runtime/Styles/hh-tokens.uss").replace(/\/\*[\s\S]*?\*\//g, "");
-const ussTokens = { color: {}, ...Object.fromEntries(NUMERIC.map((g) => [g, {}])) };
+const ussTokens = { color: {}, motion: {}, ...Object.fromEntries(NUMERIC.map((g) => [g, {}])) };
 for (const [, name, raw] of uss.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)) {
   const value = raw.trim();
+  if (MOTION.some((prefix) => name.startsWith(prefix))) {
+    const time = value.match(/^(\d+(?:\.\d+)?)(ms|s)$/);
+    const parsed = name.startsWith("duration-") ? (time ? Number(time[1]) / (time[2] === "ms" ? 1000 : 1) : null) : /^[a-z-]+$/.test(value) ? value : null;
+    if (parsed === null) {
+      errors.push(`hh-tokens.uss --hh-${name} is ${value}, not a duration or easing keyword`);
+    }
+    ussTokens.motion[name] = parsed ?? value;
+    continue;
+  }
   const group = name.startsWith("color-") ? "color" : NUMERIC.find((g) => name.startsWith(`${g}-`));
   if (!group) {
     errors.push(`hh-tokens.uss --hh-${name} is in no group tokens.json mirrors; add its group to tokens.json and this check`);
@@ -42,7 +53,7 @@ for (const [, name, raw] of uss.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)) {
   }
 }
 
-for (const group of ["color", ...NUMERIC]) {
+for (const group of ["color", "motion", ...NUMERIC]) {
   const mirror = tokens[group] ?? {};
   for (const [key, value] of Object.entries(ussTokens[group])) {
     if (!(key in mirror)) {
@@ -93,6 +104,15 @@ const colourConstants = new Set(Object.keys(tokens.color).map(constantFor));
 for (const [constant, value] of Object.entries(gd)) {
   if (value.startsWith("Color") && !colourConstants.has(constant)) {
     errors.push(`hh_tokens.gd ${constant} is a colour tokens.json does not have`);
+  }
+}
+
+for (const [key, value] of Object.entries(tokens.motion ?? {})) {
+  const constant = constantFor(key);
+  // GDScript writes 1s as 1.0, so durations compare as numbers
+  const matches = typeof value === "string" ? gd[constant] === JSON.stringify(value) : Number(gd[constant]) === value;
+  if (!matches) {
+    errors.push(`hh_tokens.gd ${constant} is ${gd[constant] ?? "missing"}, tokens.json motion.${key} is ${JSON.stringify(value)}`);
   }
 }
 
