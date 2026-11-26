@@ -9,6 +9,20 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Dialog focus trap: while an `HHDialog` is open, Tab and Shift+Tab wrap inside it and focus that
+   leaves by any route comes back. Check: EditMode tests written, the compile gate.
+2. HUD sample: `Samples~/HUD` with a health `HHProgressBar`, an `HHSegmentedBar` for lives, an
+   `HHBadge` and an `HHToastStack`, driven by its own buttons so it needs neither input system. Check: the compile gate builds `Sample.HUD`,
+   and `check.mjs` fails if the sample stops using any of them, as for Settings.
+3. Non-text contrast: WCAG 1.4.11 asks 3:1 for the parts that show a control's state. The focus
+   ring, scroller and tab underline have pairs; the toggle box edge, the text field and dropdown
+   edges, and the progress, segment and slider fills against their track don't yet. Check: those pairs in `Tools~/contrast.json` with
+   `min: 3`; any that fail go to Blocked on owner as palette choices, accepted meanwhile.
+4. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
+   Check: its test, gallery and reference sections, which `check.mjs` already demands.
+5. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
+   both samples instead of hand-built cards. Check: the same checks, and the compile gate.
+
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
