@@ -16,10 +16,17 @@ namespace HootonHeroics.DesignSystem
             RegisterCallback<GeometryChangedEvent>(_ => MakeHeadersFocusable());
         }
 
-        // Unity's tab headers aren't focusable, so keyboard and gamepad users couldn't reach them
+        // Unity's tab headers aren't focusable; an index loop, since this runs on every layout pass
         internal void MakeHeadersFocusable()
         {
-            this.Query<Tab>().ForEach(Wire);
+            var tabs = contentContainer;
+            for (var i = 0; i < tabs.childCount; i++)
+            {
+                if (tabs[i] is Tab tab)
+                {
+                    Wire(tab);
+                }
+            }
         }
 
         internal void Select(Tab tab)
