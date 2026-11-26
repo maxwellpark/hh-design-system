@@ -9,9 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
-   and tokens. Check: extend the reference check to fail on a control missing from it.
-
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
@@ -47,6 +44,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).
 - 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
 - 2026-11-26: component gallery: `Editor/HHGallery.cs` (Hooton Heroics > Design System > Gallery) shows every control in its states under a picked token file; `check.mjs` fails on a control missing from it (branch `max/gallery`).
 - 2026-11-26: runtime theme switching: `HHThemes.Apply` and `HHThemes.Next` set or cycle a PanelSettings' theme sheet; the Basic UI sample's Theme button cycles them on a runtime copy of its PanelSettings (branch `max/theme-switching`).

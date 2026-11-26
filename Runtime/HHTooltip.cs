@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// Shows a label beside its target after a hover or focus delay, since runtime panels don't show `tooltip`; icon buttons have one already.
+    /// Shows a label below its target after a hover or focus delay, since runtime panels don't show `tooltip`; icon buttons have one already.
     public class HHTooltip : Manipulator
     {
         public const string UssClassName = "hh-tooltip";
