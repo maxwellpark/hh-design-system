@@ -29,7 +29,7 @@ Not measured. The reader is a 45-line loop over IL handling four instructions, r
 
 ```
 ok   Sample.BasicUI [player] (1 files)
-ok   99 .unity-* class uses checked against 275 Unity class names
+ok   99 .unity-* class uses checked against 319 Unity class names
 ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
@@ -45,6 +45,7 @@ ok   an unknown asmdef reference fails
 ok   tests losing their runtime reference fail
 ok   editor-only code in a runtime assembly fails the player build
 ok   a misspelt Unity class in a stylesheet fails
+ok   a real Unity class outside *UssClassName fields passes
 ok   an uncommitted change is not compiled
 ok   a missing editor exits 2
 0 failed
@@ -52,6 +53,6 @@ ok   a missing editor exits 2
 
 ## Unverified
 
-- Names assigned outside static constructors (none seen in UI Toolkit) would be missed and
-  reported as unknown, failing safe.
+- Names assigned outside static constructors, or built with `string.Format`, interpolation or an
+  array `Concat`, aren't read; a stylesheet using one fails with "isn't a class", so it fails loud.
 - Windows: the reader runs through the editor's `dotnet.exe`, untested there.
