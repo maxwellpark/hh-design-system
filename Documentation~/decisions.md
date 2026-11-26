@@ -74,3 +74,18 @@
   read a short line without covering the game. To change: `MaxVisible` and `DefaultSeconds`.
 - Default 2026-11-26 [needs-review]: the toast stack is at most 80% of its parent's height and clips
   beyond that. Why: a high `max-visible` shouldn't push cards off-screen. To change: `.hh-toast-stack`.
+- Default 2026-11-26 [needs-review]: `HHDialog` doesn't trap Tab focus inside the card. Why: UI
+  Toolkit has no focus scope, and the scrim already blocks pointer input behind it. To change: a
+  `FocusOutEvent` handler that returns focus to the first action when it leaves the card.
+- Default 2026-11-26 [needs-review]: the scrim is `bg` at 72%. Why: dark enough to set the card
+  apart from a busy game scene behind it. To change: `--hh-color-scrim` and its mirrors.
+- Default 2026-11-26 [needs-review]: Escape closes a dialog on its `KeyDownEvent`, and the
+  `NavigationCancelEvent` Unity sends for the same key goes on to whatever regains focus. Why:
+  harmless with one dialog open. To change: with stacked dialogs, ignore a cancel in the frame a
+  key Escape was handled.
+- Default 2026-11-26 [needs-review]: stylesheets are checked by a small parser in `check.mjs`, with
+  the property list taken from strings in Unity 6000.0's `UnityEngine.UIElementsModule.dll`, plus
+  `top` and `all`, which aren't among them. Why: the
+  compile gate can't import USS without a licence, and a merge once dropped a brace that only a
+  reviewer caught. To change: once batch mode is licensed, let the editor's importer judge instead.
+  To refresh the list: `strings -e l UnityEngine.UIElementsModule.dll`, keep the property families.
