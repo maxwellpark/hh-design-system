@@ -35,7 +35,7 @@ ok   HEAD compiles: 10 assembly builds with the compiler and generators of Unity
 `node Tools~/check.mjs` (last line), `node Tools~/check.test.mjs`:
 
 ```
-58 .meta files ok, 32 tokens match HHTheme, 82 contrast pairs checked across 2 theme(s), 15 controls referenced, 16 types in the component reference
+58 .meta files ok, 32 tokens match HHTheme, 88 contrast pairs checked across 2 theme(s), 15 controls referenced, 16 types in the component reference
 74/74 passed
 ```
 
