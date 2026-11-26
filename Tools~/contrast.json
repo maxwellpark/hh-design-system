@@ -1,6 +1,7 @@
 {
   "pairs": [
     { "use": "Body text on the page", "text": "text", "on": "bg" },
+    { "use": "Tooltip text", "text": "text", "on": "bg" },
     { "use": "Body text on a card", "text": "text", "on": "surface" },
     { "use": "Dim text on the page", "text": "text-dim", "on": "bg" },
     { "use": "Dim text on a card", "text": "text-dim", "on": "surface" },

@@ -314,3 +314,15 @@
 .hh-segmented-bar.hh-segmented-bar--peach .hh-segmented-bar__segment--filled {
     background-color: var(--hh-color-peach);
 }
+
+/* Drawn in the panel root, so it sits above everything and never takes pointer input */
+.hh-tooltip {
+    position: absolute;
+    padding: var(--hh-space-1) var(--hh-space-2);
+    border-width: 1px;
+    border-color: var(--hh-color-track);
+    border-radius: var(--hh-radius-sm);
+    background-color: var(--hh-color-bg);
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-sm);
+}

@@ -20,6 +20,7 @@ namespace HootonHeroics.DesignSystem
             AddToClassList(UssClassName);
             Icon = icon;
             tooltip = label;
+            this.AddManipulator(new HHTooltip());
         }
 
         [UxmlAttribute]
