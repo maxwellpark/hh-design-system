@@ -31,8 +31,8 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 | Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 12 of 12 |
 | Tokens | `node Tools~/check.mjs` | 32 |
 | Check cases | `node Tools~/check.test.mjs` | 80/80 |
-| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 3 of 100, all owner decisions |
-| EditMode tests | unity-packages' `unity-verify` | 58 written, 0 run |
+| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 3 of 102, all owner decisions |
+| EditMode tests | unity-packages' `unity-verify` | 62 written, 0 run |
 
 ## Out of scope
 
