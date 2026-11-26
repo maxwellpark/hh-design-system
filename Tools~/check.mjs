@@ -512,6 +512,7 @@ if (existsSync(referencePath)) {
   const elements = (code) =>
     [...code.matchAll(/<hh:(\w+)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g)].map((m) => ({
       type: m[1],
+      at: code.slice(0, m.index).split("\n").length - 1,
       attributes: [...m[2].matchAll(/([\w:-]+)\s*=\s*("[^"]*"|'[^']*')/g)].map((a) => ({ name: a[1], at: code.slice(0, m.index + m[0].indexOf(a[0], m[1].length)).split("\n").length - 1 })),
     }));
   const allowed = new Map();
@@ -526,9 +527,9 @@ if (existsSync(referencePath)) {
   // The reference's own examples are held to the same lists, so a typo there can't pass as documented
   for (const doc of readdirSync("Documentation~").filter((n) => n.endsWith(".md"))) {
     for (const { code, line } of fencedBlocks(readFileSync(join("Documentation~", doc), "utf8"), ["xml", "uxml"])) {
-      for (const { type, attributes } of elements(code)) {
+      for (const { type, attributes, at: elementAt } of elements(code)) {
         if (!allowed.has(type)) {
-          problems.push(`Documentation~/${doc}:${line + (attributes[0]?.at ?? 0)}: hh:${type} isn't in the component reference`);
+          problems.push(`Documentation~/${doc}:${line + elementAt}: hh:${type} isn't in the component reference`);
           continue;
         }
         for (const { name, at } of attributes.filter((a) => !allowed.get(type).has(a.name))) {

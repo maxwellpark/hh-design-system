@@ -14,6 +14,7 @@ which fails on a control with no EditMode test.
    lives in a pure `Advance(elapsedSeconds)` that tests drive with explicit times, with the
    scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
    timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
+
 2. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
    instance of each focusable control (button, icon button, hold button once merged, toggle, slider,
    dropdown, text field, radio group, stepper, tabs, list, scroll view), found with
