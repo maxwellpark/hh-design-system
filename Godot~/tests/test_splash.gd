@@ -22,30 +22,46 @@ func test_reduced_motion_cuts_instead_of_fading() -> bool:
 
 
 func test_it_finishes_once_after_its_time_and_frees_itself() -> bool:
-	var splash: Control = HHSplash.create()
+	var splash: CanvasLayer = HHSplash.create()
 	Engine.get_main_loop().root.add_child(splash)
 	var count := [0]
 	splash.finished.connect(func(): count[0] += 1)
-	splash.advance(1.0)
+	for _frame in 30:
+		splash.advance(1.0 / 30.0)
 	check_eq(count[0], 0, "still showing at one second")
-	splash.advance(1.1)
-	splash.advance(0.5)
+	for _frame in 40:
+		splash.advance(1.0 / 30.0)
 	check_eq(count[0], 1, "finished exactly once")
 	check(splash.is_queued_for_deletion(), "freed after finishing")
 	return done()
 
 
-func test_any_press_skips_but_a_release_or_key_repeat_does_not() -> bool:
+func test_a_long_first_frame_neither_skips_the_fade_nor_the_splash() -> bool:
+	var splash: CanvasLayer = HHSplash.create()
+	Engine.get_main_loop().root.add_child(splash)
+	splash.advance(2.2)
+	check(not splash.done, "a 2.2 s hitch must not end the splash")
+	check(splash.frame.get_node("Content").modulate.a < 0.2, "and the fade in has barely started")
+	splash.free()
+	return done()
+
+
+func test_any_press_skips_but_a_release_repeat_wheel_or_motion_does_not() -> bool:
 	var key := InputEventKey.new()
 	key.pressed = true
 	check(HHSplash.skips(key), "a key press")
 	key.echo = true
 	check(not HHSplash.skips(key), "a held key's repeat")
 	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = false
 	check(not HHSplash.skips(click), "a mouse release")
 	click.pressed = true
 	check(HHSplash.skips(click), "a click")
+	var wheel := InputEventMouseButton.new()
+	wheel.button_index = MOUSE_BUTTON_WHEEL_DOWN
+	wheel.pressed = true
+	check(not HHSplash.skips(wheel), "a wheel scroll")
 	var touch := InputEventScreenTouch.new()
 	touch.pressed = true
 	check(HHSplash.skips(touch), "a touch")
@@ -56,22 +72,42 @@ func test_any_press_skips_but_a_release_or_key_repeat_does_not() -> bool:
 	return done()
 
 
-func test_layout_puts_the_host_left_of_the_mark_on_the_brand_field() -> bool:
-	var host := ImageTexture.create_from_image(Image.create(8, 8, false, Image.FORMAT_RGBA8))
-	var splash: Control = HHSplash.create(host)
-	Engine.get_main_loop().root.add_child(splash)
-	# Full-rect anchors would override a set size; a fixed 720p frame stands in for the screen.
-	splash.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	splash.size = Vector2(1280, 720)
-	var logo: TextureRect = splash.get_node("Content/Logo")
-	var placed_host: TextureRect = splash.get_node("Content/Host")
-	check_eq(splash.get_node("Field").color, Tokens.BG)
-	check(is_equal_approx(logo.size.y, 720 * Tokens.SPLASH_LOGO_HEIGHT), "mark height follows the token")
-	check(placed_host.position.x + placed_host.size.x < logo.position.x, "host stands left of the mark")
-	check_eq(splash.get_node("Content/Wordmark").text, "HOOTON HEROICS")
-	splash.free()
-	var bare: Control = HHSplash.create()
-	Engine.get_main_loop().root.add_child(bare)
-	check(bare.get_node_or_null("Content/Host") == null, "no host when none is given")
-	bare.free()
+func test_it_fills_the_screen_under_a_2d_scene_and_draws_above_game_layers() -> bool:
+	var world := Node2D.new()
+	Engine.get_main_loop().root.add_child(world)
+	var splash: CanvasLayer = HHSplash.create()
+	world.add_child(splash)
+	var screen: Vector2 = splash.get_viewport().get_visible_rect().size
+	check(screen.x > 0 and screen.y > 0, "the test viewport has a size")
+	check_eq(splash.frame.size, screen, "the splash covers the viewport")
+	check(splash.layer > 100, "above ordinary game canvas layers")
+	check_eq(splash.frame.get_node("Field").color, Tokens.BG)
+	check_eq(splash.frame.get_node("Content/Wordmark").text, "HOOTON HEROICS")
+	world.free()
+	return done()
+
+
+func test_landscape_puts_the_host_beside_the_mark_with_clear_space() -> bool:
+	var rects := HHSplash.layout_for(Vector2(1280, 720), true)
+	var mark: Rect2 = rects["mark"]
+	var host: Rect2 = rects["host"]
+	check(rects["beside"], "wide enough for the host beside the mark")
+	check(is_equal_approx(mark.size.y, 720 * Tokens.SPLASH_LOGO_HEIGHT), "mark height follows the token")
+	check(mark.position.x - host.end.x >= mark.size.y / 4.0 - 0.01, "a quarter of the mark between host and mark")
+	check(host.position.x >= 0, "host on screen")
+	check(rects["wordmark"].position.y - mark.end.y >= mark.size.y / 4.0 - 0.01, "clear space above the wordmark")
+	return done()
+
+
+func test_portrait_and_square_screens_stack_the_host_above_the_mark_on_screen() -> bool:
+	for screen in [Vector2(720, 1280), Vector2(1000, 1000), Vector2(390, 844)]:
+		var rects := HHSplash.layout_for(screen, true)
+		var host: Rect2 = rects["host"]
+		var mark: Rect2 = rects["mark"]
+		check(not rects["beside"], "%s stacks" % screen)
+		check(Rect2(Vector2.ZERO, screen).encloses(host), "%s host on screen: %s" % [screen, host])
+		check(mark.position.y - host.end.y >= mark.size.y / 4.0 - 0.01, "%s clear space under the host" % screen)
+		check(rects["wordmark"].end.y <= screen.y, "%s wordmark on screen" % screen)
+	var bare := HHSplash.layout_for(Vector2(720, 1280), false)
+	check_eq(bare["mark"].get_center(), Vector2(360, 640), "no host: the mark is centred")
 	return done()

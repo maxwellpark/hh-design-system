@@ -1,7 +1,7 @@
-extends Control
+extends CanvasLayer
 ## The Hooton Heroics studio splash for Godot 4. Brand~/README.md is the spec.
 ##
-## Usage from the game's first scene:
+## Usage from the game's first scene, whatever its root (Node, Node2D or Control):
 ##     const HHSplash := preload("res://addons/hh_studio/hh_splash.gd")
 ##     var splash := HHSplash.create(load("res://art/russell-studio-host.png"))
 ##     add_child(splash)
@@ -13,15 +13,22 @@ signal finished
 const Tokens := preload("res://addons/hh_studio/hh_tokens.gd")
 const LOGO := preload("res://addons/hh_studio/hh-logo.png")
 
+## A long first frame (a synchronous load behind the splash) must not skip the fade or the splash.
+const MAX_STEP := 1.0 / 30.0
+## Above every game layer, so no game UI draws over it.
+const LAYER := 128
+const WORDMARK_SPACING := 4
+
 @export var host_texture: Texture2D
 @export var reduced_motion := false
 
 var elapsed := 0.0
 var done := false
+var frame: Control
 
 
-static func create(host: Texture2D = null, cut_instead_of_fade := false) -> Control:
-	var splash: Control = load("res://addons/hh_studio/hh_splash.gd").new()
+static func create(host: Texture2D = null, cut_instead_of_fade := false) -> CanvasLayer:
+	var splash: CanvasLayer = load("res://addons/hh_studio/hh_splash.gd").new()
 	splash.host_texture = host
 	splash.reduced_motion = cut_instead_of_fade
 	return splash
@@ -45,30 +52,70 @@ static func alpha_at(seconds: float, cut := false) -> float:
 	return 1.0
 
 
+## Rects for the mark, the wordmark and the host on a screen. The host stands left of the mark when it
+## fits with clear space; on narrower screens it stands above, shrunk to fit if it must. Clear space is a
+## quarter of the mark.
+static func layout_for(screen: Vector2, with_host: bool) -> Dictionary:
+	var short_side := minf(screen.x, screen.y)
+	var mark := Vector2.ONE * short_side * Tokens.SPLASH_LOGO_HEIGHT
+	var clear := mark.y / 4.0
+	var host := Vector2.ONE * short_side * Tokens.SPLASH_HOST_HEIGHT if with_host else Vector2.ZERO
+	var wordmark_height := short_side * 0.08
+	var centre := screen / 2.0
+	var mark_pos := centre - mark / 2.0
+	var host_pos := Vector2.ZERO
+	var beside := with_host and mark_pos.x - clear - host.x >= clear
+	if with_host and beside:
+		host_pos = Vector2(mark_pos.x - clear - host.x, centre.y - host.y / 2.0)
+	elif with_host:
+		# Stacked, the host gives up height first so the whole column stays inside 90% of the screen.
+		var rest := clear + mark.y + clear + wordmark_height
+		host = Vector2.ONE * clampf(screen.y * 0.9 - rest, 0.0, host.y)
+		var stack := host.y + rest
+		host_pos = Vector2(centre.x - host.x / 2.0, centre.y - stack / 2.0)
+		mark_pos = Vector2(mark_pos.x, host_pos.y + host.y + clear)
+	return {
+		"mark": Rect2(mark_pos, mark),
+		"wordmark": Rect2(Vector2(0, mark_pos.y + mark.y + clear), Vector2(screen.x, wordmark_height)),
+		"host": Rect2(host_pos, host),
+		"beside": beside,
+		"font_size": maxi(16, int(short_side * 0.045)),
+	}
+
+
 func _ready() -> void:
-	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	mouse_filter = Control.MOUSE_FILTER_STOP
+	layer = LAYER
+	frame = Control.new()
+	frame.name = "Frame"
+	frame.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(frame)
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var field := ColorRect.new()
 	field.name = "Field"
 	field.color = Tokens.BG
-	field.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	field.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(field)
+	frame.add_child(field)
+	field.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var content := Control.new()
 	content.name = "Content"
-	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(content)
+	frame.add_child(content)
+	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content.add_child(_texture("Logo", LOGO))
 	if host_texture != null:
 		content.add_child(_texture("Host", host_texture))
 	var wordmark := Label.new()
 	wordmark.name = "Wordmark"
 	wordmark.text = Tokens.SPLASH_WORDMARK
+	var spaced := FontVariation.new()
+	spaced.base_font = ThemeDB.fallback_font
+	spaced.spacing_glyph = WORDMARK_SPACING
+	wordmark.add_theme_font_override("font", spaced)
 	wordmark.add_theme_color_override("font_color", Tokens.TEXT)
 	wordmark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	wordmark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(wordmark)
-	resized.connect(_layout)
+	frame.resized.connect(_layout)
 	_layout()
 	content.modulate.a = alpha_at(0.0, reduced_motion)
 
@@ -77,15 +124,16 @@ func _process(delta: float) -> void:
 	advance(delta)
 
 
-## Moves the splash on by a time step; the game loop calls it each frame and tests call it directly.
+## Moves the splash on by a time step, capped at MAX_STEP; the game loop calls it each frame and tests
+## call it directly.
 func advance(delta: float) -> void:
 	if done:
 		return
-	elapsed += delta
+	elapsed += minf(delta, MAX_STEP)
 	if elapsed >= total_seconds():
 		finish()
 		return
-	get_node("Content").modulate.a = alpha_at(elapsed, reduced_motion)
+	frame.get_node("Content").modulate.a = alpha_at(elapsed, reduced_motion)
 
 
 func _input(event: InputEvent) -> void:
@@ -95,9 +143,14 @@ func _input(event: InputEvent) -> void:
 
 
 static func skips(event: InputEvent) -> bool:
-	if event is InputEventKey or event is InputEventMouseButton or event is InputEventJoypadButton:
+	if event is InputEventMouseButton:
+		var wheel: bool = event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN, MOUSE_BUTTON_WHEEL_LEFT, MOUSE_BUTTON_WHEEL_RIGHT]
+		return event.pressed and not wheel
+	if event is InputEventKey:
 		return event.pressed and not event.is_echo()
-	return event is InputEventScreenTouch and event.pressed
+	if event is InputEventJoypadButton or event is InputEventScreenTouch:
+		return event.pressed
+	return false
 
 
 func finish() -> void:
@@ -119,21 +172,16 @@ func _texture(node_name: String, texture: Texture2D) -> TextureRect:
 
 
 func _layout() -> void:
-	var content := get_node_or_null("Content")
-	if content == null:
-		return
-	var short_side := minf(size.x, size.y)
-	var centre := size / 2.0
-	var logo_size := Vector2.ONE * short_side * Tokens.SPLASH_LOGO_HEIGHT
-	var logo: TextureRect = content.get_node("Logo")
-	logo.position = centre - logo_size / 2.0
-	logo.size = logo_size
-	var wordmark: Label = content.get_node("Wordmark")
-	wordmark.add_theme_font_size_override("font_size", maxi(16, int(short_side * 0.045)))
-	wordmark.position = Vector2(0, logo.position.y + logo_size.y + short_side * 0.04)
-	wordmark.size = Vector2(size.x, short_side * 0.08)
+	var content := frame.get_node("Content")
 	var host: TextureRect = content.get_node_or_null("Host")
+	var rects := layout_for(frame.size, host != null)
+	var logo: TextureRect = content.get_node("Logo")
+	logo.position = rects["mark"].position
+	logo.size = rects["mark"].size
+	var wordmark: Label = content.get_node("Wordmark")
+	wordmark.add_theme_font_size_override("font_size", rects["font_size"])
+	wordmark.position = rects["wordmark"].position
+	wordmark.size = rects["wordmark"].size
 	if host != null:
-		var host_size := Vector2.ONE * short_side * Tokens.SPLASH_HOST_HEIGHT
-		host.size = host_size
-		host.position = Vector2(logo.position.x - host_size.x - short_side * 0.04, centre.y - host_size.y / 2.0)
+		host.position = rects["host"].position
+		host.size = rects["host"].size

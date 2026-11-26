@@ -63,11 +63,11 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
   ```gdscript
   const HHSplash := preload("res://addons/hh_studio/hh_splash.gd")
   var splash := HHSplash.create(null)  # or a sized Russell studio-host texture
-  add_child(splash)
+  add_child(splash)  # any root: it draws on its own canvas layer
   await splash.finished
   ```
 - **Unity:** the tokens are `Runtime/Styles/hh-tokens.uss` and `HHTheme`. The splash component is planned and needs a Unity compile and play check before it ships.
-- **Check:** `bash Tools~/verify.sh` runs `Tools~/check.mjs`, `Tools~/check-tokens.mjs` and the Godot tests (Node and a Godot 4.7 binary as `godot` or `GODOT`).
+- **Check:** `bash Tools~/verify.sh` runs `Tools~/check.mjs`, both check test files, `Tools~/check-tokens.mjs` and the Godot tests (Node and a Godot 4.7 binary as `godot` or `GODOT`).
 
 ## Licence
 MIT. Built by [Hooton Heroics](https://hootonheroics.com).
