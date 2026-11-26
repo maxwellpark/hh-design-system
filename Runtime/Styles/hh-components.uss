@@ -525,6 +525,20 @@
     background-color: var(--hh-color-bg);
 }
 
+/* Accessibility modifiers (HHAccessibility): token overrides for everything under the element, under any theme */
+.hh-reduced-motion {
+    --hh-duration-fast: 0s;
+    --hh-duration-normal: 0s;
+}
+
+/* Each font size is 1.25 times its hh-tokens.uss default, rounded to a whole pixel */
+.hh-large-text {
+    --hh-font-size-sm: 15px;
+    --hh-font-size-md: 18px;
+    --hh-font-size-lg: 23px;
+    --hh-font-size-xl: 35px;
+}
+
 /* A segmented row: the radio circles are hidden and the checked choice fills teal, with bg text (badge contrast) */
 .hh-radio-group.unity-base-field .unity-radio-button-group__container {
     flex-direction: row;

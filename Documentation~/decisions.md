@@ -143,3 +143,9 @@
   itself takes focus (outside the tab order) when its scrim is clicked, so a click doesn't clear
   focus; a window losing focus does clear it, and the dialog then refocuses its first stop. To change:
   `HHDialog.OnFocusOut` and `RefocusTarget`.
+- Default 2026-11-26 [needs-review]: accessibility settings are classes that override tokens
+  (`.hh-reduced-motion`, `.hh-large-text`), not more themes. Why: they combine with any theme, and
+  themes would multiply (default, high contrast, each with and without). Large text is 1.25 times
+  `hh-tokens.uss`'s sizes in fixed pixels, so a theme with its own sizes is overridden, and a
+  dropdown's open menu, drawn outside the document, keeps the theme's sizes. To change: the two
+  rules at the end of `hh-components.uss`, which `check.mjs` holds to the tokens.
