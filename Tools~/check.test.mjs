@@ -165,9 +165,20 @@ const cases = [
   ["a modifier setting a token outside its kind fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-duration-normal: 0s;\n", "    --hh-duration-normal: 0s;\n    --hh-space-1: 0px;\n"), 1, /\.hh-reduced-motion sets --hh-space-1, outside its kind/],
   ["a modifier setting something that isn't a token fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-font-size-xl: 35px;\n", "    --hh-font-size-xl: 35px;\n    --hh-font-size-huge: 50px;\n"), 1, /\.hh-large-text sets --hh-font-size-huge, which isn't a token/],
   ["a second modifier rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-reduced-motion {\n    --hh-duration-fast: 1s;\n}\n"); }, 1, /2 standalone \.hh-reduced-motion rules, needs exactly 1/],
+  ["a focusable control with no focus rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view:focus {", ".hh-list-view:hover {"), 1, /HHListView\.cs: HHListView can take focus \(a ListView\) but no :focus rule/],
+  ["a focus rule on a part of the control passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button .unity-text-element:focus {"), 0, /controls referenced/],
+  ["a focus rule written inside another control doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-dialog .hh-button:focus {"), 1, /HHButton can take focus \(a Button\) but no :focus rule/],
+  ["a focus rule on a variant only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button--ghost:focus {"), 1, /HHButton can take focus/],
+  ["a :not(:focus) rule doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button:not(:focus) {"), 1, /HHButton can take focus/],
+  ["a control on an unlisted base fails", (d) => edit(d, "Runtime/HHBadge.cs", "public partial class HHBadge : Label", "public partial class HHBadge : Image"), 1, /HHBadge's base Image isn't listed/],
   ["a guide's UXML using documented attributes passes", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"Play\" ghost=\"true\" name=\"play\" />\n```\n"), 0, /controls referenced/],
   ["a guide's UXML naming an unknown hh element fails", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHSwitch />\n```\n"), 1, /Documentation~\/index\.md:\d+: hh:HHSwitch isn't in the component reference/],
   ["a guide's UXML with a misspelt attribute fails", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"Back\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
+  ["a guide's UXML in a loosely written fence is still checked", (d) => append(d, "Documentation~/index.md", "\n  ```XML  \n  <hh:HHSwitch />\n  ```\n"), 1, /hh:HHSwitch isn't in the component reference/],
+  ["a guide's UXML may use its Unity base's attributes", (d) => append(d, "Documentation~/index.md", "\n```uxml\n<hh:HHSlider label=\"Volume\" show-input-field=\"true\" binding-path=\"volume\" />\n```\n"), 0, /controls referenced/],
+  ["an = or > inside a value isn't read as an attribute", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"a=b > c\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
+  ["a fence shown inside a longer fence isn't checked", (d) => append(d, "Documentation~/index.md", "\n````markdown\n```xml\n<hh:HHSwitch />\n```\n````\n"), 0, /controls referenced/],
+  ["a misspelt attribute is reported at its own line", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /index\.md:13: hh:HHButton has no ghots/],
 ];
 
 let failed = 0;
