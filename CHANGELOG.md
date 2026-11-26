@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHSlider` can show its value beside the track: `show-value` turns it on, and `value-format`
+  picks Percent (the default) or Number. The gallery and the Settings sample's volume show it.
 - Accessibility: `HHAccessibility.SetReducedMotion` and `SetLargeText` add `.hh-reduced-motion`
   (every duration 0s) and `.hh-large-text` (every font size 1.25 times) to an element, under any
   theme. The Settings sample gains an Access tab with both (applied on Save), and the gallery a toggle

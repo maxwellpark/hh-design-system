@@ -109,15 +109,18 @@ An on/off checkbox with a label. Extends `Toggle`.
 
 ## HHSlider
 
-A horizontal value slider with a label. Extends `Slider`.
+A horizontal value slider with a label, and optionally its value beside the track. The value text refreshes when the value changes, not when only the range does. Extends `Slider`.
 
 ```xml
-<hh:HHSlider label="Volume" low-value="0" high-value="1" value="0.6" />
+<hh:HHSlider label="Volume" low-value="0" high-value="1" value="0.6" show-value="true" />
 ```
 
-- **Classes:** `.hh-slider`
+- **Classes:** `.hh-slider`, `.hh-slider__value`
+- **Attributes:**
+  - `show-value` (bool, default false): Writes the value beside the track.
+  - `value-format` (HHSliderValueFormat, default Percent): Percent (where the value sits in the range, as a whole percentage) or Number (the value, to two places).
 - **States:** `:focus` (dragger border) and `:disabled`; hover and active keep the resting look.
-- **Tokens:** `--hh-color-teal`, `--hh-color-text`, `--hh-color-track`, `--hh-font-size-md`, `--hh-radius-sm`
+- **Tokens:** `--hh-color-teal`, `--hh-color-text`, `--hh-color-track`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-2`
 
 ## HHDropdown
 

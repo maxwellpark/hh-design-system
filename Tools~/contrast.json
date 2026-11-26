@@ -35,6 +35,7 @@
     { "use": "Text field and dropdown border against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Checked toggle against a card", "text": "violet", "on": "surface", "min": 3 },
     { "use": "Slider handle against its track", "text": "teal", "on": "track", "min": 3 },
+    { "use": "Slider value text on a card", "text": "text", "on": "surface" },
     { "use": "Slider handle focus ring against its track", "text": "text", "on": "track", "min": 3 },
     { "use": "Dropdown arrow in its field", "text": "violet-light", "on": "bg", "min": 3 },
     { "use": "Progress fill or segment against its track", "text": "teal", "on": "track", "min": 3 },
