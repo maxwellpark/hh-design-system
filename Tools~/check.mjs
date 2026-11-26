@@ -257,10 +257,24 @@ function classConstants(source) {
   return values;
 }
 
-// Every sample package.json lists must exist, and the settings, HUD and pause menu samples must use the controls those screens need
+// Every sample package.json lists must exist, with a README naming every script in its folder, so its setup steps can't
+// miss one; the settings, HUD and pause menu samples must also use the controls those screens need
 for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ?? []) {
   if (!existsSync(sample.path)) {
     problems.push(`package.json: sample "${sample.displayName}" path ${sample.path} is missing`);
+    continue;
+  }
+  const readmePath = join(sample.path, "README.md");
+  if (!existsSync(readmePath)) {
+    problems.push(`${sample.path}: no README.md`);
+    continue;
+  }
+  const readme = readFileSync(readmePath, "utf8");
+  for (const script of readdirSync(sample.path).filter((file) => file.endsWith(".cs"))) {
+    // A whole name, so Menu.cs isn't found inside PauseMenu.cs
+    if (!new RegExp(`(?<![\\w.-])${script.replace(/\./g, "\\.")}(?![\\w])`).test(readme)) {
+      problems.push(`${readmePath}: doesn't name ${script}`);
+    }
   }
 }
 const sampleControls = {
