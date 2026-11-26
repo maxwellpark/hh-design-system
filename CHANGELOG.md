@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- `HHThemes.Apply(panelSettings, theme)` and `HHThemes.Next(panelSettings, themes)` switch a panel's
+  theme sheet at runtime. They change the PanelSettings asset, so in the editor the change outlives
+  Play mode; the Basic UI sample cycles themes on a runtime copy instead.
 - High-contrast theme: `hh-theme-high-contrast.tss` with `hh-tokens-high-contrast.uss`, black and near
   black surfaces, white text, a yellow focus ring and darker buttons. Every contrast pair passes AA
   in it outright; `Tools~/check.mjs` now checks each pair in each `hh-tokens-*.uss` theme, which must
