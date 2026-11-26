@@ -178,7 +178,7 @@ const cases = [
   ["a guide's UXML may use its Unity base's attributes", (d) => append(d, "Documentation~/index.md", "\n```uxml\n<hh:HHSlider label=\"Volume\" show-input-field=\"true\" binding-path=\"volume\" />\n```\n"), 0, /controls referenced/],
   ["an = or > inside a value isn't read as an attribute", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"a=b > c\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
   ["a fence shown inside a longer fence isn't checked", (d) => append(d, "Documentation~/index.md", "\n````markdown\n```xml\n<hh:HHSwitch />\n```\n````\n"), 0, /controls referenced/],
-  ["a misspelt attribute is reported at its own line", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /index\.md:13: hh:HHButton has no ghots/],
+  ["a misspelt attribute is reported at its own line", (d) => writeFileSync(join(d, "Documentation~/planted.md"), "```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /planted\.md:4: hh:HHButton has no ghots/],
 ];
 
 let failed = 0;

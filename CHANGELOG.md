@@ -4,6 +4,9 @@
 - `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
   duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
   sample's Music uses it.
+- Getting started guide: `Documentation~/getting-started.md` builds a themed card with a toggle and a
+  button, then theme and accessibility switching. Its C# is compiled by the gate and its UXML
+  checked against the component reference.
 - `HHListView` shows focus with a ring in the focus colour, and `check.mjs` now fails on any control
   built on a focusable Unity base without a `:focus` rule.
 - Doc snippets: the compile gate compiles each fenced `csharp` block in `Documentation~/*.md`, with

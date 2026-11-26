@@ -9,9 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
-   install to a themed card with a toggle and a button. Check: the doc snippet gate.
-2. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
+1. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
    (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
    at the ends with the button there disabled. Check: its test, gallery and reference sections,
    contrast pairs and the compile gate.
@@ -52,6 +50,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
+- 2026-11-26: getting started guide: `Documentation~/getting-started.md` goes from install to a themed card with a toggle and a button, then themes and accessibility; the gate compiles its two C# blocks and `check.mjs` checks its UXML (branch `max/getting-started`).
 - 2026-11-26: focus rule check: `check.mjs` fails on a control built on a focusable Unity base (from a table) with no `:focus` rule on it or a part; `HHListView`, the one without, gains a focus ring (branch `max/focus-rules`).
 - 2026-11-26: doc snippet gate: `unity-compile.mjs` compiles each fenced `csharp` block in `Documentation~/*.md` as a sample-like assembly, errors at the guide's line; `check.mjs` fails on guide UXML naming an `hh:` element or attribute the reference doesn't have (branch `max/doc-snippets`).
 - 2026-11-26: slider value: `HHSlider` writes its value beside the track with `show-value`, as a percentage (from a table, so dragging allocates nothing) or a number with `value-format`; tests, reference section and a contrast pair (branch `max/slider-value`).
