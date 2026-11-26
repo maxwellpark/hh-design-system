@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `--hh-color-button` and `--hh-color-button-hover` (mirrored in `HHTheme`, `Brand~/tokens.json` and
+  Godot) now colour the button; they take today's violet values, so nothing changes on screen.
 - Dropdown lists: `hh-dropdown-menu.uss` styles the list a dropdown opens (a card with a track
   hover, white labels and a teal checkmark). `hh-theme.tss` imports it; documents styled with the
   two stylesheets alone keep Unity's list, since it opens at the panel root.
