@@ -65,6 +65,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: `HHDialog`: modal card on a `--hh-color-scrim` scrim, title, UXML body, `AddAction`; Escape, gamepad cancel and scrim clicks close it unless `require-choice`; focus moves to the first action and back on close (branch `max/dialog`).
+- 2026-11-26: stylesheet check: `Tools~/check.mjs` fails on a stylesheet that doesn't parse as flat rules (a missing or stray brace, a declaration without a colon or semicolon) or uses a property Unity 6000.0 doesn't know (branch `max/stylesheet-check`).
 - 2026-11-26: progress bar tones (violet, pink, peach; teal stays the default) and `HHSegmentedBar` (1 to 50 segments, filled count, tones) (branch `max/progress-variants`).
 - 2026-11-26: first compile of `main` (057e229): every assembly compiles clean, so nothing to fix.
 - 2026-11-26: Unity compile gate `Tools~/unity-compile.sh`: every asmdef compiled as Unity would with 6000.0.85f2's own compiler and UI Toolkit generators, editor and player builds, in `Tools~/verify.sh`, with ten planted failures in `Tools~/unity-compile.test.sh` (branch `max/unity-compile-gate`).

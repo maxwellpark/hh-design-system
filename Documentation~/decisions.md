@@ -76,3 +76,9 @@
   `NavigationCancelEvent` Unity sends for the same key goes on to whatever regains focus. Why:
   harmless with one dialog open. To change: with stacked dialogs, ignore a cancel in the frame a
   key Escape was handled.
+- Default 2026-11-26 [needs-review]: stylesheets are checked by a small parser in `check.mjs`, with
+  the property list taken from strings in Unity 6000.0's `UnityEngine.UIElementsModule.dll`, plus
+  `top` and `all`, which aren't among them. Why: the
+  compile gate can't import USS without a licence, and a merge once dropped a brace that only a
+  reviewer caught. To change: once batch mode is licensed, let the editor's importer judge instead.
+  To refresh the list: `strings -e l UnityEngine.UIElementsModule.dll`, keep the property families.
