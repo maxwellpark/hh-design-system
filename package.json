@@ -4,7 +4,7 @@
   "displayName": "Hooton Heroics Design System",
   "description": "A themeable UI Toolkit design system for Unity: design tokens (USS variables), a ScriptableObject theme, and ready-to-use components. Open-core, by Hooton Heroics.",
   "unity": "6000.0",
-  "keywords": ["ui", "ui-toolkit", "design-system", "theme", "uss", "uxml"],
+  "keywords": ["ui", "ui-toolkit", "design-system", "theme", "uss", "uxml", "progress-bar"],
   "author": { "name": "Hooton Heroics", "url": "https://hootonheroics.com" },
   "license": "MIT",
   "documentationUrl": "https://github.com/maxwellpark/hh-design-system",
