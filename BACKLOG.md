@@ -15,6 +15,15 @@ which fails on a control with no EditMode test.
    `page.Query<T>().Where(e => !e.enabledSelf)`, so the built page is held, not only its source.
    Check: the test written, not run; `bash Tools~/unity-compile.sh`.
 
+2. Adding a control guide: `Documentation~/adding-a-control.md` lists what a new control needs
+   to pass every check (a `.meta`, an EditMode test, a gallery entry and a disabled one if
+   focusable, a reference section, focus and disabled rules, contrast pairs), with a minimal
+   control as its C# example. Check: the doc snippet gate compiles the example.
+
+3. Pause menu hold to quit: the Pause Menu sample's Quit becomes an `HHHoldButton` ("Hold to
+   quit") in place of the confirm dialog, showing the control in a real screen. Check: the sample
+   table requires `HHHoldButton`, with a planted case, and the compile gate builds the sample.
+
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
