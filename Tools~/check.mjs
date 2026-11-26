@@ -319,31 +319,31 @@ if (!existsSync(referencePath)) {
       problems.push(`${name}: ${type} has no section in ${referencePath}`);
       continue;
     }
-    const names = (word) => new RegExp(`(?<![\\w-])${word.replace(/[.-]/g, "\\$&")}(?![\\w-])`).test(section);
-    for (const className of classes) {
-      if (!names(`.${className}`)) {
-        problems.push(`${referencePath}: ${type} doesn't name .${className}`);
-      }
-    }
-    for (const [, property] of source.matchAll(/\[\s*UxmlAttribute\b[^\]]*\]\s*public\s+[\w.<>]+\s+(\w+)/g)) {
-      const attribute = property.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-      if (!section.includes(`\`${attribute}\``)) {
-        problems.push(`${referencePath}: ${type} doesn't name its \`${attribute}\` attribute`);
-      }
-    }
+    // Only the three lists count, so a mention in prose or an example can't stand in for an entry
+    const listed = (label) => [...(section.match(new RegExp(`^- \\*\\*${label}:\\*\\*(.*)$`, "m"))?.[1] ?? "").matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+    const attributeBlock = section.match(/^- \*\*Attributes:\*\*\n((?: {2}- .*\n?)*)/m)?.[1] ?? "";
+    const listedAttributes = [...attributeBlock.matchAll(/^ {2}- `([^`]+)`/gm)].map((m) => m[1]);
+    const attributes = [...source.matchAll(/\[\s*UxmlAttribute\b\s*(?:\(\s*"([^"]+)"\s*\))?\s*\]\s*(?:\[[^\]]*\]\s*)*public\s+[\w.<>?\[\],]+\s+(\w+)/g)].map(
+      ([, explicit, property]) => explicit ?? property.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(),
+    );
     const owns = (selector) => classes.some((className) => new RegExp(`\\.${className}(?![\\w-])`).test(selector));
+    const used = new Set();
     for (const rule of rules.filter((r) => r.selectors.some(owns))) {
       for (const [, token] of rule.body.matchAll(/var\(\s*--hh-([\w-]+)/g)) {
-        if (!names(`--hh-${token}`)) {
-          problems.push(`${referencePath}: ${type} doesn't name --hh-${token}, which its rules use`);
-        }
+        used.add(`--hh-${token}`);
       }
     }
-    for (const [, token] of section.matchAll(/--hh-([\w-]+)/g)) {
-      if (!defined.has(token)) {
-        problems.push(`${referencePath}: ${type} names --hh-${token}, which isn't a token`);
+    const compare = (what, expected, found) => {
+      for (const item of expected.filter((x) => !found.includes(x))) {
+        problems.push(`${referencePath}: ${type}'s ${what} list is missing ${item}`);
       }
-    }
+      for (const item of found.filter((x) => !expected.includes(x))) {
+        problems.push(`${referencePath}: ${type}'s ${what} list names ${item}, which it doesn't have`);
+      }
+    };
+    compare("Classes", classes.map((c) => `.${c}`), listed("Classes"));
+    compare("Attributes", attributes, listedAttributes);
+    compare("Tokens", [...used], listed("Tokens"));
   }
   for (const type of sections.keys()) {
     if (!documented.has(type)) {

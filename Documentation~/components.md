@@ -1,6 +1,6 @@
 # Component reference
 
-Every control in the package: its UXML, the USS classes it carries, its attributes, its states and the tokens its rules use. Declare the namespace once per UXML file: `xmlns:hh="HootonHeroics.DesignSystem"`. `node Tools~/check.mjs` fails when a control, class, attribute or token here falls out of step with the code and `hh-components.uss`.
+Every control in the package: its UXML, the USS classes it carries, its attributes, its states and the tokens its rules use. Declare the namespaces once per UXML file: `xmlns:ui="UnityEngine.UIElements"` and `xmlns:hh="HootonHeroics.DesignSystem"`. `node Tools~/check.mjs` fails when a control, class, attribute or token here falls out of step with the code and `hh-components.uss`.
 
 ## HHButton
 
@@ -19,7 +19,7 @@ The main action button, with a ghost style for secondary actions. Extends `Butto
 
 ## HHIconButton
 
-A square button showing an icon, with its label as the tooltip and accessible name. Extends `Button`.
+A square button showing an icon, with its label as its tooltip. Extends `Button`.
 
 ```xml
 <hh:HHIconButton icon="project://database/Assets/Icons/gear.png" tooltip="Settings" />
@@ -100,7 +100,7 @@ A horizontal value slider with a label. Extends `Slider`.
 ```
 
 - **Classes:** `.hh-slider`
-- **States:** `:hover` and `:active` on the dragger, `:focus`, `:disabled`.
+- **States:** `:focus` (dragger border) and `:disabled`; hover and active keep the resting look.
 - **Tokens:** `--hh-color-teal`, `--hh-color-text`, `--hh-color-track`, `--hh-font-size-md`, `--hh-radius-sm`
 
 ## HHDropdown
@@ -112,7 +112,7 @@ A labelled choice list. Its open menu is drawn at the panel root, so its rules l
 ```
 
 - **Classes:** `.hh-dropdown`
-- **States:** `:hover`, `:focus`, `:disabled`. The open menu uses `--hh-color-surface`, `--hh-color-track` and `--hh-color-teal` from `hh-dropdown-menu.uss`.
+- **States:** `:hover`, `:focus`, `:disabled`. The open menu's rules and tokens are in `hh-dropdown-menu.uss`.
 - **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
 ## HHTextField
@@ -156,7 +156,7 @@ A scroll view with thin, token-coloured scrollers. Extends `ScrollView`.
 
 ## HHListView
 
-A virtualised list with rounded, hoverable rows. Extends `ListView`.
+A virtualised list with hoverable rows and slim scrollers. Extends `ListView`.
 
 ```xml
 <hh:HHListView fixed-item-height="32" />
@@ -200,7 +200,7 @@ One notification card. `HHToastStack.Show` creates these; `Dismiss()` removes on
 
 ## HHToastStack
 
-The corner that holds toasts. `Show(text, tone, seconds)` adds one that dismisses itself after `seconds`. Extends `VisualElement`.
+The corner that holds toasts. `Show(text, tone, seconds)` adds one that dismisses itself after `seconds` (4 by default); 0 or less keeps it until dismissed. Extends `VisualElement`.
 
 ```xml
 <hh:HHToastStack max-visible="3" />
@@ -208,13 +208,13 @@ The corner that holds toasts. `Show(text, tone, seconds)` adds one that dismisse
 
 - **Classes:** `.hh-toast-stack`
 - **Attributes:**
-  - `max-visible` (int, default 4): Older toasts beyond this are removed.
+  - `max-visible` (int, default 4): At least 1; the oldest toasts beyond it are dismissed.
 - **States:** No interactive states.
 - **Tokens:** `--hh-space-4`
 
 ## HHTooltip
 
-A manipulator, not an element: `element.AddManipulator(new HHTooltip("Save"))`. Without text it shows the element's `tooltip`. It shows after a hover or focus delay (500 ms by default), draws in the document just under the panel root so the HH stylesheets reach it, and hides on click, Escape or leave.
+A manipulator, not an element: `element.AddManipulator(new HHTooltip("Save"))`. Without text it shows the element's `tooltip`. It shows after a hover or focus delay (500 ms by default), draws below the element, left-aligned with a 4 px gap, in the document just under the panel root so the HH stylesheets reach it, and hides on click, Escape, pointer leave, blur or detach.
 
 - **Classes:** `.hh-tooltip`
 - **States:** Shown while hovered or focused; `IsShowing` reports it.

@@ -136,11 +136,18 @@ const cases = [
   }, 1, /HHSegmentedBar\.cs: HHSegmentedBar isn't in the gallery/],
   ["a control with no reference section fails", (d) => edit(d, "Documentation~/components.md", "## HHToggle\n", "## Toggle notes\n"), 1, /HHToggle\.cs: HHToggle has no section in Documentation~\/components\.md/],
   ["a reference section for no control fails", (d) => edit(d, "Documentation~/components.md", "## HHToggle\n", "## HHToggle\n\n## HHSwitch\n"), 1, /section HHSwitch has no matching control/],
-  ["a class missing from the reference fails", (d) => edit(d, "Documentation~/components.md", ", `.hh-button--ghost`", ""), 1, /HHButton doesn't name \.hh-button--ghost/],
-  ["a modifier named only as a longer class fails", (d) => edit(d, "Documentation~/components.md", "`.hh-badge--dot`", "`.hh-badge--dotted`"), 1, /HHBadge doesn't name \.hh-badge--dot$/m],
-  ["an attribute missing from the reference fails", (d) => edit(d, "Documentation~/components.md", "`require-choice` (bool", "`requireChoice` (bool"), 1, /HHDialog doesn't name its `require-choice` attribute/],
-  ["a token a control's rules use, missing from its section, fails", (d) => edit(d, "Documentation~/components.md", "`--hh-color-scrim`, ", ""), 1, /HHDialog doesn't name --hh-color-scrim, which its rules use/],
-  ["a reference naming an unknown token fails", (d) => edit(d, "Documentation~/components.md", "`--hh-space-4`", "`--hh-space-4`, `--hh-space-9`"), 1, /names --hh-space-9, which isn't a token/],
+  ["a class missing from the reference fails", (d) => edit(d, "Documentation~/components.md", ", `.hh-button--ghost`", ""), 1, /HHButton's Classes list is missing \.hh-button--ghost/],
+  ["a class named only in prose fails", (d) => edit(d, "Documentation~/components.md", ", `.hh-dialog--open`", ""), 1, /HHDialog's Classes list is missing \.hh-dialog--open/],
+  ["a modifier named only as a longer class fails", (d) => edit(d, "Documentation~/components.md", "`.hh-badge--dot`", "`.hh-badge--dotted`"), 1, /HHBadge's Classes list is missing \.hh-badge--dot$/m],
+  ["a class the control doesn't have fails", (d) => edit(d, "Documentation~/components.md", "`.hh-button--ghost`", "`.hh-button--ghost`, `.hh-button--huge`"), 1, /HHButton's Classes list names \.hh-button--huge, which it doesn't have/],
+  ["an attribute missing from the reference fails", (d) => edit(d, "Documentation~/components.md", "`require-choice` (bool", "`requireChoice` (bool"), 1, /HHDialog's Attributes list is missing require-choice/],
+  ["an attribute named only in prose fails", (d) => edit(d, "Documentation~/components.md", "  - `segments` (int, default 5): How many segments, 1 to 50.\n", ""), 1, /HHSegmentedBar's Attributes list is missing segments/],
+  ["an attribute the control doesn't have fails", (d) => edit(d, "Documentation~/components.md", "  - `dot` (bool", "  - `glow` (bool, default false): Gone.\n  - `dot` (bool"), 1, /HHBadge's Attributes list names glow, which it doesn't have/],
+  ["an attribute with its own name or a second mark is read", (d) => {
+    edit(d, "Runtime/HHToastStack.cs", "        [UxmlAttribute]\n        public int MaxVisible", "        [UxmlAttribute(\"limit\")]\n        [System.ComponentModel.Description(\"x\")]\n        public int MaxVisible");
+  }, 1, /HHToastStack's Attributes list is missing limit\n.*names max-visible, which it doesn't have/],
+  ["a token a control's rules use, missing from its section, fails", (d) => edit(d, "Documentation~/components.md", "`--hh-color-scrim`, ", ""), 1, /HHDialog's Tokens list is missing --hh-color-scrim/],
+  ["a token a control's rules don't use fails", (d) => edit(d, "Documentation~/components.md", "`--hh-space-4`", "`--hh-space-4`, `--hh-space-9`"), 1, /HHTabs's Tokens list names --hh-space-9, which it doesn't have/],
 ];
 
 let failed = 0;
