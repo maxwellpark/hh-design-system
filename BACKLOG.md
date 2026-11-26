@@ -9,15 +9,11 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
-   (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
-   at the ends with the button there disabled. Check: its test, gallery and reference sections,
-   contrast pairs and the compile gate.
-2. Settings sample shows the newer controls, after item 1: a Difficulty `HHRadioGroup` and a
+1. Settings sample shows the newer controls: a Difficulty `HHRadioGroup` and a
    Resolution `HHStepper` on the Video tab, in the `Settings` struct, `Current` and `Revert`, and
    in the sample's README. Check: `check.mjs`'s sample table requires both, with a planted
    "drops a control fails" case for each, and the compile gate builds the sample.
-3. Scroller focus: settle whether a scroll view's scrollers (sliders inside `Scroller`) take focus
+2. Scroller focus: settle whether a scroll view's scrollers (sliders inside `Scroller`) take focus
    in Unity 6000.0, by having `Tools~/unity-classes.cs` read it from the UI Toolkit assembly and
    the gate print it, with a `decisions.md` line either way. If they do, `.hh-scroll-view` gains a
    focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
@@ -60,6 +56,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHStepper`: an ordered list stepped with arrows or left and right when focused, clamped with the end arrow disabled; tests, gallery, reference, four contrast pairs, and `BaseField` added to the focus check's focusable bases (branch `max/stepper`).
 - 2026-11-26: sample README check: `check.mjs` fails on a listed sample with no `README.md`, or with a `*.cs` its README doesn't name; all four samples pass (branch `max/sample-readmes`).
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
 - 2026-11-26: getting started guide: `Documentation~/getting-started.md` goes from install to a themed card with a toggle and a button, then themes and accessibility; the gate compiles its two C# blocks and `check.mjs` checks its UXML (branch `max/getting-started`).

@@ -161,6 +161,21 @@ One choice of several, for settings such as difficulty, shown as a segmented row
 - **States:** The checked choice is `:checked` (teal fill, bg text); `:hover` brightens a choice's text; `:focus` rings a choice in the focus colour, or in text colour on the checked one, since the focus colour can match the fill; `:disabled`.
 - **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-3`
 
+## HHStepper
+
+One value from an ordered list longer than a radio row suits (resolution, text size), stepped with its arrows or, when focused, left and right on a keyboard or gamepad. It stops at the ends, disabling the arrow there. Extends `BaseField<int>`.
+
+```xml
+<hh:HHStepper label="Resolution" choices="720p,1080p,1440p,4K" index="1" />
+```
+
+- **Classes:** `.hh-stepper`, `.hh-stepper__button`, `.hh-stepper__value`
+- **Attributes:**
+  - `choices` (List<string>, default empty): The values in order, comma-separated in UXML.
+  - `index` (int, default 0): The chosen value's position, kept within the choices.
+- **States:** `:focus` on the field rings the value; the arrows don't take focus, so left and right step instead of moving focus; `:disabled`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
+
 ## HHTabs
 
 Tabs whose headers take keyboard focus. Extends `TabView`.

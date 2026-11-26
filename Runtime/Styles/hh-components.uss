@@ -130,7 +130,8 @@
 .hh-slider.unity-base-field .unity-base-field__label,
 .hh-dropdown.unity-base-field .unity-base-field__label,
 .hh-text-field.unity-base-field .unity-base-field__label,
-.hh-radio-group.unity-base-field .unity-base-field__label {
+.hh-radio-group.unity-base-field .unity-base-field__label,
+.hh-stepper.unity-base-field .unity-base-field__label {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-md);
 }
@@ -139,7 +140,8 @@
 .hh-slider.unity-base-field:disabled,
 .hh-dropdown.unity-base-field:disabled,
 .hh-text-field.unity-base-field:disabled,
-.hh-radio-group.unity-base-field:disabled {
+.hh-radio-group.unity-base-field:disabled,
+.hh-stepper.unity-base-field:disabled {
     opacity: 0.4;
 }
 
@@ -654,4 +656,39 @@
 /* The focus colour can match the checked fill, so the checked choice's ring is text, against the row's bg */
 .hh-radio-group.unity-base-field .unity-radio-button:checked:focus {
     border-color: var(--hh-color-text);
+}
+
+/* The stepper: ghost arrows either side of the value, which is boxed like a text field's input */
+.hh-stepper.unity-base-field .unity-base-field__input {
+    flex-direction: row;
+    align-items: center;
+}
+
+.hh-stepper.unity-base-field .hh-stepper__button {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.hh-stepper.unity-base-field .hh-stepper__value {
+    min-width: 96px;
+    margin: 0 var(--hh-space-2);
+    padding: var(--hh-space-1) var(--hh-space-2);
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+    -unity-text-align: middle-center;
+    background-color: var(--hh-color-bg);
+    border-width: 2px;
+    border-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-stepper.unity-base-field:focus:enabled .hh-stepper__value {
+    border-color: var(--hh-color-focus);
+}
+
+/* A disabled stepper fades once, as a field; its arrows would otherwise fade again as disabled buttons */
+.hh-stepper.unity-base-field:disabled .hh-stepper__button {
+    opacity: 1;
 }

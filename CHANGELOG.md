@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHStepper`: one value from an ordered list, stepped with its arrows or, when focused, left and
+  right on a keyboard or gamepad; it stops at the ends, disabling the arrow there.
 - `Tools~/check.mjs` fails on a listed sample without a README, or with a script its README doesn't
   name, so a sample's setup steps can't miss one.
 - `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the

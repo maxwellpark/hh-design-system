@@ -323,7 +323,7 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
 // class (not a variant, not inside another control) and :focus sits on that element or the part right after it, as the tab
 // headers' and radio choices' do. TabView stands for the headers HHTabs makes focusable; HHDialog takes focus outside the tab
 // order on purpose, on a base that isn't listed as focusable. A base in neither list fails, so a new one gets decided.
-const focusableBases = new Set(["Button", "Toggle", "Slider", "DropdownField", "TextField", "RadioButtonGroup", "ListView", "TabView"]);
+const focusableBases = new Set(["Button", "Toggle", "Slider", "DropdownField", "TextField", "RadioButtonGroup", "ListView", "TabView", "BaseField"]);
 const unfocusableBases = new Set(["VisualElement", "Label", "ProgressBar", "ScrollView"]);
 const focusSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).map((sel) => sel.trim().split(/\s*>\s*|\s+/));
 const showsFocus = (compounds, className) =>
@@ -450,6 +450,7 @@ if (existsSync(referencePath)) {
   const inherited = {
     Button: ["text", "icon-image", "enable-rich-text", "parse-escape-sequences", "display-tooltip-when-elided"],
     Label: ["text", "enable-rich-text", "parse-escape-sequences", "display-tooltip-when-elided"],
+    BaseField: ["label", "value"],
     Toggle: [...field, "text", "toggle-on-label-click"],
     Slider: [...range, "page-size", "show-input-field", "direction", "inverted", "fill"],
     DropdownField: [...field, "choices", "index"],
