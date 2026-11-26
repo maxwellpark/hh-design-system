@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- `HHProgressBar.Tone` (`tone` in UXML): violet, pink or peach fills; teal stays the default.
+- `HHSegmentedBar`: separate segments for health, ammo or charges, with `segments`, `filled` and
+  `tone`.
 - `HHIconButton`: an icon-only button tinted like ghost text, whose label becomes its tooltip.
 - `HHBadge`: a count (capped at `99+`) or a dot, in violet, teal, pink or peach, always with dark
   text, since white is under 3:1 on every tone. `HHTone` names the tones.
