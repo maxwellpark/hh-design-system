@@ -48,6 +48,10 @@
     { "use": "Radio group edge against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Focus ring on a radio choice", "text": "focus", "on": "bg", "min": 3 },
     { "use": "Focus ring on the checked radio choice", "text": "text", "on": "bg", "min": 3 },
+    { "use": "Stepper value text", "text": "text", "on": "bg" },
+    { "use": "Stepper value edge against a card", "text": "violet-light", "on": "surface", "min": 3 },
+    { "use": "Stepper arrows", "text": "violet-light", "on": "violet-ghost", "over": "surface" },
+    { "use": "Focus ring on a stepper's value", "text": "focus", "on": "bg", "min": 3 },
     {
       "use": "Empty track of a slider, progress bar, segmented bar or scroller against a card",
       "text": "track",

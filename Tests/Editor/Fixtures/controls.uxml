@@ -30,4 +30,5 @@
     </hh:HHCard>
     <hh:HHRadioGroup name="radio" label="Difficulty" choices="Easy,Normal,Hard" value="1" />
     <hh:HHSlider name="valued-slider" low-value="0" high-value="10" value="3" show-value="true" value-format="Number" />
+    <hh:HHStepper name="stepper" label="Resolution" choices="720p,1080p,1440p" index="1" />
 </ui:UXML>
