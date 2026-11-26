@@ -17,4 +17,8 @@
     <hh:HHSegmentedBar name="ammo" filled="8" segments="10" />
     <hh:HHToastStack name="toasts" max-visible="2" />
     <hh:HHToast name="toast" text="Saved" tone="Success" />
+    <hh:HHTabs name="tabs">
+        <ui:Tab name="audio" label="Audio" />
+        <ui:Tab name="video" label="Video" />
+    </hh:HHTabs>
 </ui:UXML>
