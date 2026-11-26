@@ -67,3 +67,8 @@
 - Default 2026-11-26 [needs-review]: a badge sits beside or over a control by the game's own
   layout; nothing positions it inside a button. Why: a Label inside a Button overlaps the button's
   text, which isn't a layout child. To change: add a corner-anchored `.hh-badge--corner` rule.
+- Default 2026-11-26 [needs-review]: `HHDialog` doesn't trap Tab focus inside the card. Why: UI
+  Toolkit has no focus scope, and the scrim already blocks pointer input behind it. To change: a
+  `FocusOutEvent` handler that returns focus to the first action when it leaves the card.
+- Default 2026-11-26 [needs-review]: the scrim is `bg` at 72%. Why: dark enough to set the card
+  apart from a busy game scene behind it. To change: `--hh-color-scrim` and its mirrors.

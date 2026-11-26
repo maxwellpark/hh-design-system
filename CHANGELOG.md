@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- `HHDialog`: a modal that covers its parent with a `--hh-color-scrim` scrim and shows a card with
+  a title, its UXML children as the body, and actions from `AddAction`. Escape, gamepad cancel and
+  clicks on the scrim close it unless `require-choice` is set; opening focuses the first action and
+  closing returns focus. `Closed` fires once per close.
 - `HHProgressBar.Tone` (`tone` in UXML): violet, pink or peach fills; teal stays the default.
 - `HHSegmentedBar`: separate segments for health, ammo or charges, with `segments`, `filled` and
   `tone`.
