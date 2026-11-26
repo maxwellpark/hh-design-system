@@ -10,19 +10,23 @@ public class SettingsMenu : MonoBehaviour
     private HHToggle music;
     private HHSlider volume;
     private HHDropdown quality;
+    private HHStepper resolution;
+    private HHRadioGroup difficulty;
     private HHTextField playerName;
     private HHToggle reduceMotion;
     private HHToggle largeText;
     private VisualElement root;
     private HHDialog discard;
     private HHToastStack toasts;
-    private Settings saved = new Settings { Music = true, Volume = 0.8f, Quality = 1, PlayerName = "Northwind" };
+    private Settings saved = new Settings { Music = true, Volume = 0.8f, Quality = 1, Resolution = 1, Difficulty = 1, PlayerName = "Northwind" };
 
     private struct Settings
     {
         public bool Music;
         public float Volume;
         public int Quality;
+        public int Resolution;
+        public int Difficulty;
         public string PlayerName;
         public bool ReduceMotion;
         public bool LargeText;
@@ -50,13 +54,15 @@ public class SettingsMenu : MonoBehaviour
         music = new HHToggle { label = "Music", IsSwitch = true };
         volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f, ShowValue = true };
         quality = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "Medium", "High" } };
+        resolution = new HHStepper("Resolution", new List<string> { "1280x720", "1920x1080", "2560x1440", "3840x2160" });
+        difficulty = new HHRadioGroup("Difficulty", new List<string> { "Story", "Normal", "Hard" });
         playerName = new HHTextField { label = "Name" };
         reduceMotion = new HHToggle { label = "Reduce motion" };
         largeText = new HHToggle { label = "Large text" };
         var tabs = new HHTabs();
         tabs.Add(TabWith("Audio", music, volume));
-        tabs.Add(TabWith("Video", quality));
-        tabs.Add(TabWith("Player", playerName));
+        tabs.Add(TabWith("Video", quality, resolution));
+        tabs.Add(TabWith("Player", playerName, difficulty));
         tabs.Add(TabWith("Access", reduceMotion, largeText));
         card.Add(tabs);
         card.Add(BuildActions());
@@ -99,6 +105,8 @@ public class SettingsMenu : MonoBehaviour
         Music = music.value,
         Volume = volume.value,
         Quality = quality.index,
+        Resolution = resolution.Index,
+        Difficulty = difficulty.value,
         PlayerName = playerName.value,
         ReduceMotion = reduceMotion.value,
         LargeText = largeText.value,
@@ -126,6 +134,8 @@ public class SettingsMenu : MonoBehaviour
         music.value = saved.Music;
         volume.value = saved.Volume;
         quality.index = saved.Quality;
+        resolution.Index = saved.Resolution;
+        difficulty.value = saved.Difficulty;
         playerName.value = saved.PlayerName;
         reduceMotion.value = saved.ReduceMotion;
         largeText.value = saved.LargeText;
