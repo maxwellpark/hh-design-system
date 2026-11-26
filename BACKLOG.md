@@ -4,15 +4,13 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
 
 ## Ready
 
-1. Form controls with hover, pressed, focus and disabled states: `HHToggle`, `HHSlider`,
-   `HHDropdown`, `HHTextField`.
-2. Overlays and navigation: `HHDialog`, `HHTabs`, tooltip and toast.
-3. Small parts: icon button, badge, scroll view and list styling.
-4. Progress bar variants: colour modifiers, segmented, indeterminate.
-5. Light and high-contrast themes, and a runtime theme switcher.
-6. `HHTheme` reads tokens from the resolved stylesheet at runtime, so the mirror and its check go.
-7. Font and motion tokens.
-8. A component gallery editor window with live token editing.
+1. Overlays and navigation: `HHDialog`, `HHTabs`, tooltip and toast.
+2. Small parts: icon button, badge, scroll view and list styling.
+3. Progress bar variants: colour modifiers, segmented, indeterminate.
+4. Light and high-contrast themes, and a runtime theme switcher.
+5. `HHTheme` reads tokens from the resolved stylesheet at runtime, so the mirror and its check go.
+6. Font and motion tokens.
+7. A component gallery editor window with live token editing.
 
 ## Blocked on owner
 
@@ -24,7 +22,7 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
   hover 2.5:1, both under AA's 4.5:1 (accepted in `Tools~/contrast.json` until decided). Options:
   a darker button violet (`#754EE6`, 4.8:1) with a darker hover (`#6E4AD9`, 5.2:1); or dark text
   (`bg`) on `violet-light` buttons, 7.0:1. Recommended: the darker violets, which keep the look.
-- Run the EditMode tests (`Tests/Editor`, five tests) in Unity 6: none has run, since batch mode
+- Run the EditMode tests (`Tests/Editor`, seven tests) in Unity 6: none has run, since batch mode
   refuses tests without a licence and there's no editor here. Also decide whether they run through
   unity-packages' unity-verify, as other Unity repos do.
 - The open-core split: which controls stay MIT and which go in the paid Pro pack.
@@ -32,8 +30,14 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
 
 ## Ideas
 
+- Style the dropdown's open list (`.unity-base-dropdown`), which opens at the panel root and
+  keeps Unity's default look.
+
 ## Done
 
+- 2026-11-26: `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField` with label, hover, focus,
+  checked and disabled styles, a `--hh-color-track` token, and their tests (branch
+  `max/form-controls`).
 - 2026-11-26: EditMode tests for the controls' classes, the ghost toggle, UXML attributes and
   `HHStyles.Apply` (branch `max/editmode-tests`); written, not yet run.
 - 2026-11-26: WCAG AA contrast check over `Tools~/contrast.json`; ghost hover tint to 22% and the
