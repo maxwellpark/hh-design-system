@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,6 +28,9 @@ namespace HootonHeroics.DesignSystem
         public HHDialog()
         {
             AddToClassList(UssClassName);
+            // Focusable outside the tab order, so a click on the scrim focuses the dialog rather than clearing focus
+            focusable = true;
+            tabIndex = -1;
             var panel = new VisualElement();
             panel.AddToClassList(PanelUssClassName);
             titleLabel = new Label();
@@ -55,6 +59,7 @@ namespace HootonHeroics.DesignSystem
                 }
             });
             RegisterCallback<PointerDownEvent>(e => HandleScrimPointer(e.target));
+            RegisterCallback<FocusOutEvent>(OnFocusOut);
         }
 
         public override VisualElement contentContainer => body;
@@ -91,9 +96,10 @@ namespace HootonHeroics.DesignSystem
             focusBeforeOpen = focusController?.focusedElement;
             AddToClassList(OpenUssClassName);
             BringToFront();
-            if (actions.childCount > 0)
+            var stops = FocusStops();
+            if (stops.Count > 0)
             {
-                actions[0].Focus();
+                stops[0].Focus();
             }
         }
 
@@ -130,6 +136,126 @@ namespace HootonHeroics.DesignSystem
             }
             Close();
             return true;
+        }
+
+        // Focus is mid-switch during FocusOut, so the trap looks again on the next tick, at where focus landed
+        private void OnFocusOut(FocusOutEvent e)
+        {
+            if (!IsOpen || (e.relatedTarget is VisualElement arriving && Contains(arriving)))
+            {
+                return;
+            }
+            var leaving = e.target as VisualElement;
+            schedule.Execute(() =>
+            {
+                var back = RefocusTarget(leaving, focusController?.focusedElement as VisualElement);
+                if (back != null && back.panel != null && back.canGrabFocus)
+                {
+                    back.Focus();
+                }
+            });
+        }
+
+        /// Where focus goes back to once it has left an open dialog for `focused` (null when nothing has focus):
+        /// the last stop when Shift+Tab left the first, otherwise the first. Null when it may stay: the dialog is
+        /// closed or has no stops, focus is on or inside it, or focus is in an open dialog above it, which traps it instead.
+        internal VisualElement RefocusTarget(VisualElement leaving, VisualElement focused)
+        {
+            if (!IsOpen || (focused != null && (focused == this || Contains(focused) || InOpenDialogAbove(focused))))
+            {
+                return null;
+            }
+            var stops = FocusStops();
+            if (stops.Count == 0)
+            {
+                return null;
+            }
+            var first = stops[0];
+            var wentBack = focused != null && leaving != null && (first == leaving || first.Contains(leaving));
+            return wentBack ? stops[stops.Count - 1] : first;
+        }
+
+        // Open() brings a dialog to the front, so of two open dialogs the later in tree order is on top
+        private bool InOpenDialogAbove(VisualElement element)
+        {
+            for (var ancestor = element.hierarchy.parent; ancestor != null; ancestor = ancestor.hierarchy.parent)
+            {
+                if (ancestor is HHDialog dialog && dialog.IsOpen && IsAfterInTree(dialog, this))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// True when `a` comes after `b` in a depth-first walk of their shared tree; a descendant comes after its ancestor.
+        internal static bool IsAfterInTree(VisualElement a, VisualElement b)
+        {
+            if (a == b)
+            {
+                return false;
+            }
+            var aPath = PathFromRoot(a);
+            var bPath = PathFromRoot(b);
+            var i = 0;
+            while (i < aPath.Count && i < bPath.Count && aPath[i] == bPath[i])
+            {
+                i++;
+            }
+            if (i == 0)
+            {
+                return false;
+            }
+            if (i == bPath.Count)
+            {
+                return true;
+            }
+            if (i == aPath.Count)
+            {
+                return false;
+            }
+            var parent = aPath[i - 1];
+            return parent.hierarchy.IndexOf(aPath[i]) > parent.hierarchy.IndexOf(bPath[i]);
+        }
+
+        private static List<VisualElement> PathFromRoot(VisualElement element)
+        {
+            var path = new List<VisualElement>();
+            for (var node = element; node != null; node = node.hierarchy.parent)
+            {
+                path.Insert(0, node);
+            }
+            return path;
+        }
+
+        /// The dialog's tab stops in tree order: displayed elements that can take focus with a tab index of zero or
+        /// more. A field that delegates its focus is one stop, not its parts; positive tab indices aren't sorted first.
+        internal List<VisualElement> FocusStops()
+        {
+            var stops = new List<VisualElement>();
+            CollectStops(this, stops);
+            return stops;
+        }
+
+        private static void CollectStops(VisualElement element, List<VisualElement> stops)
+        {
+            for (var i = 0; i < element.hierarchy.childCount; i++)
+            {
+                var child = element.hierarchy[i];
+                if (child.resolvedStyle.display == DisplayStyle.None)
+                {
+                    continue;
+                }
+                if (child.canGrabFocus && child.tabIndex >= 0)
+                {
+                    stops.Add(child);
+                    if (child.delegatesFocus)
+                    {
+                        continue;
+                    }
+                }
+                CollectStops(child, stops);
+            }
         }
 
         internal void HandleScrimPointer(IEventHandler target)
