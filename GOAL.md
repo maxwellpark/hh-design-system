@@ -40,4 +40,4 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 
 ## Last checked
 
-2026-11-26, 8cf365f.
+2026-11-26, 44fddb3.

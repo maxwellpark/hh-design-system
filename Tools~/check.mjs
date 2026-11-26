@@ -11,12 +11,13 @@ const problems = [];
 // A .meta that exists on disk but was never committed still leaves the asset out of a git install
 const listed = spawnSync("git", ["ls-files", "-z"], { encoding: "utf8" });
 const tracked = listed.status === 0 ? new Set(listed.stdout.split("\0").filter(Boolean)) : null;
-const isTracked = (path) => [...tracked].some((file) => file === path || file.startsWith(`${path}/`));
+const slashed = (path) => path.replaceAll("\\", "/");
+const isTracked = (path) => [...tracked].some((file) => file === slashed(path) || file.startsWith(`${slashed(path)}/`));
 
 function walk(path) {
   if (!existsSync(`${path}.meta`)) {
     problems.push(`${path}: no .meta`);
-  } else if (tracked && isTracked(path) && !tracked.has(`${path}.meta`)) {
+  } else if (tracked && isTracked(path) && !tracked.has(`${slashed(path)}.meta`)) {
     problems.push(`${path}.meta: not committed`);
   }
   if (statSync(path).isDirectory()) {
