@@ -7,7 +7,7 @@ Node 22 and Unity 6000.0.85f2's compiler, through the doc snippet gate.
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | The guide's example control compiles, editor and player, with UI Toolkit's source generators | the compile gate: `Docs.adding_a_control.1` | ok | verified |
-| Its list matches what `check.mjs` and the gate enforce today: metas, rules per class constant, known properties and Unity classes, tokens, a test outside the gallery test, the gallery, the reference's exact lists and examples, focus and disabled rules and a disabled gallery instance for focusable controls, the base tables, contrast pairs by convention, and new tokens in every mirror | read against `check.mjs`, `unity-compile.mjs` and `check-tokens.mjs`, and by the backlog review | | verified by reading |
+| Its list matches what `check.mjs` and the gate enforce today: file and folder metas, the file named after the class, rules per class constant, known properties and Unity classes, defined tokens (token-only values are a convention), a test outside the gallery test, the gallery, the reference's exact lists and examples, focus and disabled rules and a disabled gallery instance for focusable controls, the base tables, contrast pairs by convention, and new tokens in every theme, `HHTheme`, the brand and Godot mirrors and the modifier rules | read against `check.mjs`, `unity-compile.mjs` and `check-tokens.mjs`, and by the backlog review | | verified by reading |
 | It names `check.mjs` as the authority, so it can lag without misleading | the opening paragraph | | verified |
 
 ## Coverage and complexity
