@@ -1,15 +1,28 @@
+using System;
 using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// A Button pre-styled with the design system's .hh-button class. Usable in UXML as <hh:HHButton/>.
-    public class HHButton : Button
+    /// A Button with the .hh-button style. UXML: <hh:HHButton text="Play" ghost="true" />
+    [UxmlElement]
+    public partial class HHButton : Button
     {
-        public new class UxmlFactory : UxmlFactory<HHButton, UxmlTraits> { }
+        public const string UssClassName = "hh-button";
+        public const string GhostUssClassName = UssClassName + "--ghost";
 
-        public HHButton()
+        public HHButton() : this(null) { }
+
+        public HHButton(Action clickEvent) : base(clickEvent)
         {
-            AddToClassList("hh-button");
+            AddToClassList(UssClassName);
+        }
+
+        /// The low-emphasis variant: tinted background, violet text.
+        [UxmlAttribute]
+        public bool Ghost
+        {
+            get => ClassListContains(GhostUssClassName);
+            set => EnableInClassList(GhostUssClassName, value);
         }
     }
 }
