@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Pause Menu sample: Quit is now a Hold to quit `HHHoldButton` in place of a confirm dialog.
+  `HHHoldButton.Begin` and `Release` are public, so a game can drive a pad hold from its own input.
 - An EditMode test holds the gallery page itself to a disabled instance of every focusable control,
   alongside `check.mjs`'s check of its source.
 - `Tools~/check.mjs` holds the component reference's own UXML examples to its attribute lists and

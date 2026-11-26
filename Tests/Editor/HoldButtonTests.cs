@@ -25,7 +25,7 @@ namespace HootonHeroics.DesignSystem.Tests
             button.Confirmed += () => confirmed++;
 
             Assert.That(button.Advance(5f), Is.False, "not holding");
-            button.Begin();
+            button.StartHold();
             Assert.That(button.Advance(0.5f), Is.False);
             Assert.That(button.Progress, Is.EqualTo(0.5f).Within(0.001f));
             Assert.That(button.Advance(0.6f), Is.True);
@@ -43,10 +43,10 @@ namespace HootonHeroics.DesignSystem.Tests
             var confirmed = 0;
             button.Confirmed += () => confirmed++;
 
-            button.Begin();
+            button.StartHold();
             button.Advance(0.9f);
             button.Cancel();
-            button.Begin();
+            button.StartHold();
             Assert.That(button.Advance(0.5f), Is.False, "a new hold starts from nothing");
             Assert.That(confirmed, Is.EqualTo(0));
         }
@@ -56,7 +56,7 @@ namespace HootonHeroics.DesignSystem.Tests
         {
             var button = new HHHoldButton();
             button.SetEnabled(false);
-            button.Begin();
+            button.StartHold();
             Assert.That(button.IsHolding, Is.False);
         }
 
@@ -67,12 +67,12 @@ namespace HootonHeroics.DesignSystem.Tests
             var confirmed = 0;
             button.Confirmed += () => confirmed++;
 
-            button.Begin();
+            button.StartHold();
             button.Advance(1f);
-            button.Begin();
+            button.StartHold();
             Assert.That(button.IsHolding, Is.False, "the key or pointer is still down");
             button.Release();
-            button.Begin();
+            button.StartHold();
             Assert.That(button.IsHolding, Is.True);
             Assert.That(confirmed, Is.EqualTo(1));
         }
@@ -87,9 +87,17 @@ namespace HootonHeroics.DesignSystem.Tests
         public void DisablingMidHoldStopsIt()
         {
             var button = new HHHoldButton { HoldSeconds = 1f };
-            button.Begin();
+            button.StartHold();
             button.SetEnabled(false);
             Assert.That(button.Advance(2f), Is.False);
+            Assert.That(button.IsHolding, Is.False);
+        }
+
+        [Test]
+        public void BeginOnADetachedButtonDoesNothing()
+        {
+            var button = new HHHoldButton();
+            button.Begin();
             Assert.That(button.IsHolding, Is.False);
         }
 

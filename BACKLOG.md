@@ -16,11 +16,6 @@ which fails on a control with no EditMode test.
    the modifiers; known USS properties and Unity classes; contrast pairs by convention), naming
    `check.mjs` as the authority. Its C# example is a doc-only class with a name no real control has,
    kept out of the guide's UXML. Check: the doc snippet gate compiles the example.
-2. Pause menu hold to quit: the Pause Menu sample's Quit becomes an `HHHoldButton` ("Hold to quit")
-   whose `Confirmed` shows the warning toast, in place of the confirm dialog. That touches
-   `PauseMenu.cs`, its README, the `package.json` description, the sample table in `check.mjs`
-   (`HHHoldButton` for `HHDialog`, which Settings still covers), its planted case and the sample's
-   pack. Check: the planted case fails without `HHHoldButton`, and the compile gate builds the sample.
 
 ## Blocked on owner
 
@@ -59,6 +54,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: pause menu hold to quit: the Pause Menu sample's Quit is a Hold to quit `HHHoldButton` whose `Confirmed` shows the warning toast, in place of the dialog; the sample table requires it; `HHHoldButton.Begin` and `Release` became public so a game can drive a pad hold (branch `max/pause-hold`).
 - 2026-11-26: gallery disabled test: `GalleryTests.ThePageHoldsEveryFocusableControlDisabled` builds the gallery page and finds a disabled instance of each of the twelve focusable controls (branch `max/gallery-disabled-test`).
 - 2026-11-26: reference examples check: `check.mjs` builds the allowed attributes from each section's list, Unity base table and VisualElement's only, and holds `components.md`'s own examples to them; every example passes (branch `max/reference-examples`).
 - 2026-11-26: hold to confirm: `HHHoldButton` confirms after `hold-seconds` (an attribute, so reduced motion never shortens it), its foot bar filling linearly from a pure `Advance` that five tests drive with explicit times, on one cached scheduled item; reference, gallery (and disabled), focus and disabled rules, and a fill pair (branch `max/hold-button`).
