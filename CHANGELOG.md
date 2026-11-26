@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
+  duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
+  sample's Music uses it.
 - Getting started guide: `Documentation~/getting-started.md` builds a themed card with a toggle and a
   button, then theme and accessibility switching. Its C# is compiled by the gate and its UXML
   checked against the component reference.

@@ -97,15 +97,18 @@ A bar of discrete segments, for lives, charges or steps. Extends `VisualElement`
 
 ## HHToggle
 
-An on/off checkbox with a label. Extends `Toggle`.
+An on/off checkbox with a label, or with `switch` a sliding switch whose knob is added in C#. Extends `Toggle`.
 
 ```xml
 <hh:HHToggle label="Music" value="true" />
+<hh:HHToggle label="Subtitles" switch="true" />
 ```
 
-- **Classes:** `.hh-toggle`
-- **States:** `:checked` fills the box, plus `:hover`, `:focus` and `:disabled`.
-- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-sm`
+- **Classes:** `.hh-toggle`, `.hh-toggle--switch`, `.hh-toggle__knob`
+- **Attributes:**
+  - `switch` (bool, default false): Draws a sliding switch: the box becomes a track and a knob slides across it on the duration tokens.
+- **States:** `:checked` fills the box, or slides the switch's knob right and fills its track violet, plus `:hover`, `:focus` and `:disabled`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-track`, `--hh-color-violet`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`
 
 ## HHSlider
 
