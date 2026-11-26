@@ -46,6 +46,8 @@ namespace HootonHeroics.DesignSystem.Tests
             Assert.That(HHThemes.Next(panel, themes), Is.SameAs(contrast));
             Assert.That(HHThemes.Next(panel, themes), Is.SameAs(dark));
             Assert.That(HHThemes.Next(panel, new ThemeStyleSheet[0]), Is.Null);
+            Assert.That(HHThemes.Next(panel, new ThemeStyleSheet[] { null, contrast }), Is.SameAs(contrast));
+            Assert.That(HHThemes.Next(panel, new ThemeStyleSheet[] { null }), Is.Null);
         }
     }
 }

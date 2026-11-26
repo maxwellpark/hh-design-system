@@ -8,13 +8,13 @@ Node 22 and Unity 6000.0.85f2's compiler.
 |---|---|---|---|
 | `HHThemes`, its tests and the sample's Theme button compile, editor and player | the compile gate | 6 builds | verified |
 | `Apply` sets the theme and ignores nulls | `ApplySetsTheThemeAndIgnoresNulls` | compiled, not run | unverified |
-| `Next` cycles, wraps, starts at the first for an unlisted theme, and returns null for no themes | `NextCyclesAndStartsAtTheFirstForAnUnlistedTheme` | compiled, not run | unverified |
+| `Next` cycles, wraps, starts at the first for an unlisted theme, skips null entries, and returns null for no usable themes | `NextCyclesAndStartsAtTheFirstForAnUnlistedTheme` | compiled, not run | unverified |
 | The sample copies its PanelSettings before building, so cycling in Play mode leaves the asset alone | `DemoPanel.OnEnable` | | unverified |
 | Pressing Theme in Play mode restyles the whole panel | `panelSettings.themeStyleSheet` | | unverified |
 
 ## Coverage and complexity
 
-Needs a Unity test run. `Next` is 20 lines with three branches.
+Needs a Unity test run. `Next` is 25 lines with four branches.
 
 ## Behaviour transcript
 
@@ -35,8 +35,9 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
 
 ## Hands-on checklist (Unity 6, three minutes)
 
-1. In the Basic UI sample, set `DemoPanel.themes` to `hh-theme.tss` and `hh-theme-high-contrast.tss`
-   and press Play: a Theme button shows under Reset.
+1. In the Basic UI sample, set the PanelSettings' theme to `hh-theme.tss`, set `DemoPanel.themes` to
+   `hh-theme.tss` and `hh-theme-high-contrast.tss`, and press Play: a Theme button shows under Reset.
+   (The two USS fields are ignored while themes are set.)
 2. Press it: the card turns black-edged high contrast; press again: back to the usual look.
 3. Stop Play: the PanelSettings asset still names the theme it had before.
 4. Run the EditMode tests: the two in `ThemesTests` pass.

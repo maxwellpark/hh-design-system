@@ -24,15 +24,23 @@ namespace HootonHeroics.DesignSystem
             var index = -1;
             for (var i = 0; i < themes.Count; i++)
             {
-                if (themes[i] == panel.themeStyleSheet)
+                if (themes[i] != null && themes[i] == panel.themeStyleSheet)
                 {
                     index = i;
                     break;
                 }
             }
-            var next = themes[(index + 1) % themes.Count];
-            Apply(panel, next);
-            return next;
+            // Null entries are skipped; a list of nothing but nulls changes nothing
+            for (var step = 1; step <= themes.Count; step++)
+            {
+                var next = themes[(index + step) % themes.Count];
+                if (next != null)
+                {
+                    Apply(panel, next);
+                    return next;
+                }
+            }
+            return null;
         }
     }
 }
