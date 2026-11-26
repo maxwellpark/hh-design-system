@@ -97,15 +97,18 @@ A bar of discrete segments, for lives, charges or steps. Extends `VisualElement`
 
 ## HHToggle
 
-An on/off checkbox with a label. Extends `Toggle`.
+An on/off checkbox with a label, or with `switch` a sliding switch whose knob is added in C#. Extends `Toggle`.
 
 ```xml
 <hh:HHToggle label="Music" value="true" />
+<hh:HHToggle label="Subtitles" switch="true" />
 ```
 
-- **Classes:** `.hh-toggle`
-- **States:** `:checked` fills the box, plus `:hover`, `:focus` and `:disabled`.
-- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-sm`
+- **Classes:** `.hh-toggle`, `.hh-toggle--switch`, `.hh-toggle__knob`
+- **Attributes:**
+  - `switch` (bool, default false): Draws a sliding switch: the box becomes a track and a knob slides across it on the duration tokens.
+- **States:** `:checked` fills the box, or slides the switch's knob right and fills its track violet, plus `:hover`, `:focus` and `:disabled`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-track`, `--hh-color-violet`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`
 
 ## HHSlider
 
@@ -157,6 +160,21 @@ One choice of several, for settings such as difficulty, shown as a segmented row
 - **Classes:** `.hh-radio-group`
 - **States:** The checked choice is `:checked` (teal fill, bg text); `:hover` brightens a choice's text; `:focus` rings a choice in the focus colour, or in text colour on the checked one, since the focus colour can match the fill; `:disabled`.
 - **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-3`
+
+## HHStepper
+
+One value from an ordered list longer than a radio row suits (resolution, text size), stepped with its arrows or, when focused, left and right on a keyboard or gamepad. It stops at the ends, disabling the arrow there. Extends `BaseField<int>`.
+
+```xml
+<hh:HHStepper label="Resolution" choices="720p,1080p,1440p,4K" index="1" />
+```
+
+- **Classes:** `.hh-stepper`, `.hh-stepper__button`, `.hh-stepper__value`
+- **Attributes:**
+  - `choices` (List<string>, default empty): The values in order, comma-separated in UXML.
+  - `index` (int, default 0): The chosen value's position, kept within the choices.
+- **States:** `:focus` on the field rings the value; the arrows don't take focus, so left and right step instead of moving focus; `:disabled`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
 ## HHTabs
 

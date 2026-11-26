@@ -153,3 +153,6 @@
   101-entry table so dragging allocates nothing; Number formats a new string each time the value
   changes, which a drag does every frame. Why: most settings sliders run 0 to 1, where a
   percentage reads best. To change: `HHSlider.ValueFormat`'s default, or cache Number text.
+- Default 2026-11-26 [needs-review]: the switch is 40 by 22px with a 14px knob, in fixed pixels, and
+  its knob is a child added in C# because USS has no pseudo-elements. Why: a size that reads as a
+  switch beside 14px text; large text leaves it as it is. To change: the `.hh-toggle--switch` rules.
