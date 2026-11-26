@@ -14,7 +14,7 @@ in the editor and for a player.
 
 ## Coverage and complexity
 
-Sample code, not under test. Every method is under 25 lines.
+Sample code, not under test. `OnEnable` builds the screen in three helpers; every method is under 25 lines.
 
 ## Behaviour transcript
 

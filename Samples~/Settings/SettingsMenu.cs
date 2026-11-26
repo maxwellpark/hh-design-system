@@ -26,9 +26,19 @@ public class SettingsMenu : MonoBehaviour
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
+        // Re-enabling this component alone keeps the document's root, so start it empty
+        root.Clear();
         root.style.paddingTop = 40;
         root.style.paddingLeft = 40;
+        root.Add(BuildCard());
+        root.Add(BuildDialog());
+        toasts = new HHToastStack();
+        root.Add(toasts);
+        Revert();
+    }
 
+    private VisualElement BuildCard()
+    {
         var card = new VisualElement();
         card.AddToClassList("hh-card");
         card.style.width = 420;
@@ -40,32 +50,33 @@ public class SettingsMenu : MonoBehaviour
         volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f };
         quality = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "Medium", "High" } };
         playerName = new HHTextField { label = "Name" };
-
         var tabs = new HHTabs();
         tabs.Add(TabWith("Audio", music, volume));
         tabs.Add(TabWith("Video", quality));
         tabs.Add(TabWith("Player", playerName));
         card.Add(tabs);
+        card.Add(BuildActions());
+        return card;
+    }
 
+    private VisualElement BuildActions()
+    {
         var actions = new VisualElement();
         actions.style.flexDirection = FlexDirection.Row;
         actions.style.justifyContent = Justify.FlexEnd;
         actions.style.marginTop = 16;
         actions.Add(new HHButton(Back) { text = "Back", Ghost = true });
         actions.Add(new HHButton(Save) { text = "Save" });
-        card.Add(actions);
-        root.Add(card);
+        return actions;
+    }
 
+    private HHDialog BuildDialog()
+    {
         discard = new HHDialog { Title = "Discard changes?" };
-        discard.Add(new Label("Your changes to settings haven't been saved.") { name = "discard-body" });
+        discard.Add(new Label("Your changes to settings haven't been saved."));
         discard.AddAction("Keep editing", ghost: true);
         discard.AddAction("Discard", Revert);
-        root.Add(discard);
-
-        toasts = new HHToastStack();
-        root.Add(toasts);
-
-        Revert();
+        return discard;
     }
 
     private static Tab TabWith(string label, params VisualElement[] controls)
