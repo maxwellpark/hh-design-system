@@ -109,7 +109,7 @@ An on/off checkbox with a label. Extends `Toggle`.
 
 ## HHSlider
 
-A horizontal value slider with a label, and optionally its value beside the track. The value text refreshes when the value changes, not when only the range does. Extends `Slider`.
+A horizontal value slider with a label, and optionally its value beside the track. Extends `Slider`.
 
 ```xml
 <hh:HHSlider label="Volume" low-value="0" high-value="1" value="0.6" show-value="true" />

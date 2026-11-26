@@ -34,6 +34,14 @@ namespace HootonHeroics.DesignSystem
             valueLabel.AddToClassList(ValueUssClassName);
             hierarchy.Add(valueLabel);
             ShowValue = false;
+            // A range change that leaves the value alone doesn't set it, so follow the range too
+            ((INotifyBindablePropertyChanged)this).propertyChanged += (_, e) =>
+            {
+                if (e.propertyName == "lowValue" || e.propertyName == "highValue")
+                {
+                    UpdateValueText();
+                }
+            };
         }
 
         /// Writes the value beside the track.
@@ -80,11 +88,16 @@ namespace HootonHeroics.DesignSystem
             {
                 var range = highValue - lowValue;
                 var fraction = Mathf.Approximately(range, 0f) ? 0f : Mathf.Clamp01((value - lowValue) / range);
+                if (float.IsNaN(fraction))
+                {
+                    fraction = 0f;
+                }
                 valueLabel.text = Percents[Mathf.RoundToInt(fraction * 100f)];
             }
             else
             {
-                var rounded = Mathf.Round(value * 100f) / 100f;
+                // Adding 0 turns -0 into 0, so a tiny negative value doesn't read "-0"
+                var rounded = Mathf.Round(value * 100f) / 100f + 0f;
                 var text = rounded.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
                 if (text != valueLabel.text)
                 {

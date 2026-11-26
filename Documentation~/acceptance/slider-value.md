@@ -10,6 +10,7 @@ needs a licence (Blocked on owner).
 | `HHSlider` with its value label, the tests, the gallery and the Settings sample compile, editor and player | the compile gate | 12 of 12 | verified |
 | The value is hidden until `show-value` is set | `SliderValueTests.TheValueIsHiddenUntilAsked` | | written, not run |
 | Percent is where the value sits in the range, as a whole percentage, including a range not starting at 0 and a value set without notify | `SliderValueTests.PercentFollowsTheValueAcrossTheRange` | | written, not run |
+| Percent follows a range change that leaves the value where it was | `SliderValueTests.PercentFollowsARangeChangeThatLeavesTheValue` | | written, not run |
 | Number is the value to at most two places | `SliderValueTests.NumberShowsTheValueToTwoPlaces` | | written, not run |
 | `show-value` and `value-format` apply from UXML | `SliderValueTests.UxmlAttributesApply` with the fixture | | written, not run |
 | Percent text comes from a 101-entry table, so dragging allocates nothing; Number allocates a string per change | `HHSlider.Percents`, `UpdateValueText`; `decisions.md` | | verified by reading |
@@ -19,8 +20,8 @@ needs a licence (Blocked on owner).
 
 ## Coverage and complexity
 
-`UpdateValueText` has both branches tested. The text refreshes when the value changes, not when
-only the range does, as the reference says.
+`UpdateValueText` has both branches tested, and the text follows a range change as well as a
+value change. With Unity's `show-input-field` also on, both readouts show.
 
 ## Behaviour transcript
 
@@ -50,4 +51,4 @@ ok   HEAD compiles: 12 assembly builds with the compiler and generators of Unity
 
 ## Unverified
 
-Rendering, and the four tests.
+Rendering, and the five tests.

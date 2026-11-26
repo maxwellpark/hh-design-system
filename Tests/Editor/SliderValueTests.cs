@@ -38,6 +38,17 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void PercentFollowsARangeChangeThatLeavesTheValue()
+        {
+            var slider = new HHSlider { value = 0.6f };
+            slider.highValue = 1f;
+            Assert.That(slider.ValueText, Is.EqualTo("60%"));
+
+            slider.lowValue = 0.2f;
+            Assert.That(slider.ValueText, Is.EqualTo("50%"));
+        }
+
+        [Test]
         public void NumberShowsTheValueToTwoPlaces()
         {
             var slider = new HHSlider { lowValue = 0f, highValue = 10f, ValueFormat = HHSliderValueFormat.Number };
