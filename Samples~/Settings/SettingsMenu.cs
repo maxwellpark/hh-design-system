@@ -39,12 +39,8 @@ public class SettingsMenu : MonoBehaviour
 
     private VisualElement BuildCard()
     {
-        var card = new VisualElement();
-        card.AddToClassList("hh-card");
+        var card = new HHCard { Title = "Settings" };
         card.style.width = 420;
-        var title = new Label("Settings");
-        title.AddToClassList("hh-title");
-        card.Add(title);
 
         music = new HHToggle { label = "Music" };
         volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f };

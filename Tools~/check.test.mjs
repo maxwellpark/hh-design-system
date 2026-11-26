@@ -110,7 +110,7 @@ const cases = [
   ["a stray closing brace fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "}\n.hh-card {"), 1, /a closing brace with no rule open/],
 
   ["a semicolon or brace inside a quoted url passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-logo {\n    background-image: url("data:image/png;base64,AA}A");\n}\n\n.hh-card {'), 0, /controls referenced/],
-  ["a bad declaration is reported at its own line", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);\n}\n\n.hh-title", "    border-radius: var(--hh-radius-lg);\n    paddin: var(--hh-space-6);\n}\n\n.hh-title"), 1, /hh-components\.uss:7: unknown property paddin/],
+  ["a bad declaration is reported at its own line", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);\n}\n\n.hh-card__title", "    border-radius: var(--hh-radius-lg);\n    paddin: var(--hh-space-6);\n}\n\n.hh-card__title"), 1, /hh-components\.uss:7: unknown property paddin/],
   ["a rule with no selector fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "{\n}\n\n.hh-card {"), 1, /a rule has no selector/],
   ["a rule never closed fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-open {\n    color: red;\n"); }, 1, /1 rule\(s\) never closed/],
   ["text after the last rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\nstray"); }, 1, /"stray" after the last rule isn't an @import/],

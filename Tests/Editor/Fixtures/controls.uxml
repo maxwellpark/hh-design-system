@@ -25,4 +25,7 @@
         <ui:Tab name="audio" label="Audio" />
         <ui:Tab name="video" label="Video" />
     </hh:HHTabs>
+    <hh:HHCard name="card" title="Audio">
+        <hh:HHToggle name="card-toggle" label="Music" />
+    </hh:HHCard>
 </ui:UXML>

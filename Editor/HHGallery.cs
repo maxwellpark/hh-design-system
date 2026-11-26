@@ -127,16 +127,12 @@ namespace HootonHeroics.DesignSystem.Editor
 
         private static VisualElement Section(VisualElement parent, string title)
         {
-            var card = new VisualElement();
-            card.AddToClassList("hh-card");
+            var card = new HHCard { Title = title };
             card.style.marginBottom = 12;
-            var heading = new Label(title);
-            heading.AddToClassList("hh-title");
             var row = new VisualElement();
             row.style.flexDirection = FlexDirection.Row;
             row.style.flexWrap = Wrap.Wrap;
             row.style.alignItems = Align.Center;
-            card.Add(heading);
             card.Add(row);
             parent.Add(card);
             return row;

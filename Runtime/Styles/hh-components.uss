@@ -7,6 +7,14 @@
     padding: var(--hh-space-6);
 }
 
+.hh-card__title {
+    margin-bottom: var(--hh-space-3);
+}
+
+.hh-card__body {
+    flex-grow: 1;
+}
+
 .hh-title {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-xl);

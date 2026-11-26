@@ -2,6 +2,22 @@
 
 Every control in the package: its UXML, the USS classes it carries, its attributes, its states and the tokens its rules use. Declare the namespaces once per UXML file: `xmlns:ui="UnityEngine.UIElements"` and `xmlns:hh="HootonHeroics.DesignSystem"`. `node Tools~/check.mjs` fails when a control, class, attribute or token here falls out of step with the code and `hh-components.uss`.
 
+## HHCard
+
+The surface every screen is built on: a rounded card with an optional title. Children go in its body, so `Clear()` keeps the title. The `.hh-card` class still works on its own for a plain panel. Extends `VisualElement`.
+
+```xml
+<hh:HHCard title="Settings">
+  <hh:HHToggle label="Music" />
+</hh:HHCard>
+```
+
+- **Classes:** `.hh-card`, `.hh-card__title`, `.hh-card__body`
+- **Attributes:**
+  - `title` (string, default empty): The heading, styled as `.hh-title`; empty hides it.
+- **States:** No interactive states.
+- **Tokens:** `--hh-color-card-edge`, `--hh-color-surface`, `--hh-radius-lg`, `--hh-space-3`, `--hh-space-6`
+
 ## HHButton
 
 The main action button, with a ghost style for secondary actions. Extends `Button`.

@@ -23,12 +23,11 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
      Dropdown lists open at the panel root, so only the theme styles them.
 3. Use the classes / components:
 ```xml
-<ui:VisualElement class="hh-card">
-  <ui:Label text="Hooton Heroics" class="hh-title" />
+<hh:HHCard title="Hooton Heroics">
   <hh:HHProgressBar title="Loading" value="40" />
   <hh:HHButton text="Play" />
   <hh:HHButton text="Back" ghost="true" />
-</ui:VisualElement>
+</hh:HHCard>
 ```
 Import the **Basic UI**, **Settings** or **HUD** sample from the Package Manager for a working demo, or open **Hooton Heroics >
 Design System > Gallery** to see every control in its states.
