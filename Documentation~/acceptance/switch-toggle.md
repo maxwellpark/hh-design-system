@@ -27,7 +27,9 @@ needs a licence (Blocked on owner).
 ## Coverage and complexity
 
 A class toggle and a child element; the look is USS. Focus and hover borders come from the toggle's
-existing rules on the checkmark, so the focus check still holds it.
+existing rules on the checkmark, so the focus check still holds it. The focus ring is paired against
+the card and the off track; against the on fill it's 2.45:1 (2.82:1 in high contrast), carried by
+its outer edge on the card, as the checked box's ring was.
 
 ## Behaviour transcript
 

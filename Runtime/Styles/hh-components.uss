@@ -175,7 +175,8 @@
     border-color: var(--hh-color-focus);
 }
 
-/* The switch: the checkmark becomes a track and the knob slides on the duration tokens, so reduced motion holds */
+/* The switch: the checkmark becomes a track and the knob slides on the duration tokens, so reduced motion holds.
+   Keep these after the toggle's box rules: the off track ties the box's :checked rule and wins on order */
 .hh-toggle__knob {
     display: none;
 }
