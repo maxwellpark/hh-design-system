@@ -243,6 +243,58 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// Each stylesheet parses as flat rules: selectors, then one brace block of known `property: value;` lines
+const knownProperties = new Set(readFileSync("Tools~/uss-properties.txt", "utf8").split(/\r?\n/).filter((l) => l && !l.startsWith("#")));
+for (const name of styles) {
+  const text = stripComments(readFileSync(join("Runtime/Styles", name), "utf8"));
+  let depth = 0;
+  let line = 1;
+  let chunk = "";
+  let selectorLine = 1;
+  for (const ch of text) {
+    if (ch === "{") {
+      if (depth > 0) {
+        problems.push(`${name}:${line}: a rule opens inside another rule; a closing brace is missing above`);
+      } else if (!chunk.trim() || /;\s*$/.test(chunk.trim())) {
+        problems.push(`${name}:${line}: a rule has no selector`);
+      }
+      depth += 1;
+      chunk = "";
+      selectorLine = line;
+    } else if (ch === "}") {
+      if (depth === 0) {
+        problems.push(`${name}:${line}: a closing brace with no rule open`);
+      } else {
+        for (const declaration of chunk.split(";").map((d) => d.trim()).filter(Boolean)) {
+          const match = declaration.match(/^(-{0,2}[a-z][a-z0-9-]*)\s*:\s*(.+)$/s);
+          if (!match) {
+            problems.push(`${name}:${selectorLine}: "${declaration.replace(/\s+/g, " ")}" isn't a property: value pair`);
+          } else if (!match[1].startsWith("--") && !knownProperties.has(match[1])) {
+            problems.push(`${name}:${selectorLine}: unknown property ${match[1]}`);
+          }
+        }
+        if (!/;\s*$/.test(chunk) && chunk.trim()) {
+          problems.push(`${name}:${line}: the last declaration has no semicolon`);
+        }
+      }
+      depth = Math.max(0, depth - 1);
+      chunk = "";
+    } else {
+      chunk += ch;
+      if (ch === "\n") {
+        line += 1;
+      }
+    }
+  }
+  if (depth !== 0) {
+    problems.push(`${name}: ${depth} rule(s) never closed`);
+  }
+  const rest = chunk.trim();
+  if (rest && !/^(@import\s+url\([^)]*\)\s*;\s*)+$/.test(rest)) {
+    problems.push(`${name}: text after the last rule: ${rest.slice(0, 40)}`);
+  }
+}
+
 if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);

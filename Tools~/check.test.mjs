@@ -103,6 +103,12 @@ const cases = [
   ["duration in ms matches seconds", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-duration-normal: 0.2s;", "--hh-duration-normal: 200ms;"), 0, /tokens match HHTheme/],
   ["easing drifts", (d) => edit(d, "Runtime/HHTheme.cs", '"ease-out"', '"linear"'), 1, /--hh-easing-standard is ease-out but HHTheme\.easingStandard is linear/],
   ["// inside a stylesheet url() doesn't hide a bad token", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {\n", '.hh-card {\n    background-image: url("project://database/x.png"); color: var(--hh-color-nope);\n'), 1, /var\(--hh-color-nope\) is not a token/],
+  ["a rule missing its closing brace fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);\n}\n", "    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);\n"), 1, /a rule opens inside another rule; a closing brace is missing above/],
+  ["a misspelt property fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    background-color: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);", "    background-colour: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);"), 1, /unknown property background-colour/],
+  ["a declaration without a colon fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    padding: var(--hh-space-6);\n}", "    padding var(--hh-space-6);\n}"), 1, /"padding var\(--hh-space-6\)" isn't a property: value pair/],
+  ["a missing last semicolon fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    padding: var(--hh-space-6);\n}", "    padding: var(--hh-space-6)\n}"), 1, /the last declaration has no semicolon/],
+  ["a stray closing brace fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "}\n.hh-card {"), 1, /a closing brace with no rule open/],
+  ["the theme sheet's imports pass", () => {}, 0, /controls referenced/],
 ];
 
 let failed = 0;
