@@ -50,7 +50,8 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
   `hh-tokens.uss`. Run it before every commit; change a token in both places.
   It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
   control puts text on a new colour. It also fails on undefined tokens, classes without rules,
-  controls without a test, and stylesheets that don't parse or use an unknown property. `node Tools~/check.test.mjs` tests the check itself.
+  controls without a test, and stylesheets that don't parse or use an unknown property.
+  `node Tools~/check.test.mjs` tests the check itself.
 - `bash Tools~/unity-compile.sh` compiles every committed asmdef, following its references,
   platforms and define constraints, plus each sample, with Unity's own compiler and UI Toolkit
   source generators, warnings as errors; runtime code is built for the editor and for a player.

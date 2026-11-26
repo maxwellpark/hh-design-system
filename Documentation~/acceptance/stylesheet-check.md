@@ -7,22 +7,25 @@ Node 22, from the package root. Pure tooling.
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | A rule missing its closing brace fails, naming the line where the next rule opens inside it | `check.test.mjs` "a rule missing its closing brace fails"; also the check run on `72eef7d`, the dialog merge that dropped a brace | case passes; `72eef7d` fails at line 331 | verified |
-| A misspelt property, a declaration without a colon, a missing last semicolon and a stray brace each fail | four planted cases | pass | verified |
-| `main`'s three stylesheets, including the theme sheet's `@import` lines, pass | `node Tools~/check.mjs`; "the theme sheet's imports pass" | exit 0 | verified |
-| The property list is Unity 6000.0's | `Tools~/uss-properties.txt`, filtered from the editor's `UnityEngine.UIElementsModule.dll` strings | 95 properties | verified (by the command in decisions.md) |
+| A misspelt property, a declaration without a colon, a missing last semicolon, a stray brace, a rule with no selector, a rule never closed, a stray `;` between rules and text after the last rule each fail | eight planted cases | pass | verified |
+| A bad declaration is reported at its own line | "a bad declaration is reported at its own line" (line 5) | pass | verified |
+| A `;` or brace inside a quoted `url()`, custom properties and an empty rule pass | two planted cases | pass | verified |
+| `main`'s three stylesheets, including the theme sheet's `@import` lines, pass | `node Tools~/check.mjs` | exit 0 | verified |
+| The property list is Unity 6000.0's | `Tools~/uss-properties.txt`: the editor's `UnityEngine.UIElementsModule.dll` strings, filtered, plus `top` and `all` by hand | 95 properties | verified (by the command in decisions.md) |
 
 ## Paths
 
 | Code | Path | Evidence |
 |---|---|---|
-| braces | balanced / nested open / stray close / never closed | clean run / the brace cases / `72eef7d` |
-| declarations | known / unknown / custom `--` / no colon / no final semicolon | clean run (tokens are `--`) / the cases |
-| after the last rule | nothing / `@import` lines / other text | clean run / theme sheet / none |
+| braces | balanced / nested open / stray close / never closed / inside quotes | clean run / the brace cases / `72eef7d` / the url case |
+| before a selector | nothing / `@import` / other text / empty selector | clean run / theme sheet / stray `;` case / no-selector case |
+| declarations | known / unknown / custom `--` / no colon / no final semicolon / `;` in a url / empty rule | clean run and the cases |
+| after the last rule | nothing / `@import` lines / other text | clean run / theme sheet / the text case |
 
 ## Coverage and complexity
 
-Not measured. The parser loop is about 55 lines with eight branches; it's one pass over the text, so
-it stays one loop.
+Not measured. `checkStylesheet` is about 75 lines and `splitTop` 30; each is one pass over the text,
+so they stay single loops.
 
 ## Behaviour transcript
 
@@ -79,8 +82,14 @@ ok   a misspelt property fails
 ok   a declaration without a colon fails
 ok   a missing last semicolon fails
 ok   a stray closing brace fails
-ok   the theme sheet's imports pass
-43/43 passed
+ok   a semicolon or brace inside a quoted url passes
+ok   a bad declaration is reported at its own line
+ok   a rule with no selector fails
+ok   a rule never closed fails
+ok   text after the last rule fails
+ok   a stray semicolon between rules fails
+ok   custom properties and an empty rule pass
+49/49 passed
 ```
 
 ## Unverified

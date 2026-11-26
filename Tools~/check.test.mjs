@@ -108,7 +108,14 @@ const cases = [
   ["a declaration without a colon fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    padding: var(--hh-space-6);\n}", "    padding var(--hh-space-6);\n}"), 1, /"padding var\(--hh-space-6\)" isn't a property: value pair/],
   ["a missing last semicolon fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    padding: var(--hh-space-6);\n}", "    padding: var(--hh-space-6)\n}"), 1, /the last declaration has no semicolon/],
   ["a stray closing brace fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "}\n.hh-card {"), 1, /a closing brace with no rule open/],
-  ["the theme sheet's imports pass", () => {}, 0, /controls referenced/],
+
+  ["a semicolon or brace inside a quoted url passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-logo {\n    background-image: url("data:image/png;base64,AA}A");\n}\n\n.hh-card {'), 0, /controls referenced/],
+  ["a bad declaration is reported at its own line", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {\n    background-color: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);\n    padding: var(--hh-space-6);", ".hh-card {\n    background-color: var(--hh-color-surface);\n    border-radius: var(--hh-radius-lg);\n    paddin: var(--hh-space-6);"), 1, /hh-components\.uss:5: unknown property paddin/],
+  ["a rule with no selector fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "{\n}\n\n.hh-card {"), 1, /a rule has no selector/],
+  ["a rule never closed fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-open {\n    color: red;\n"); }, 1, /1 rule\(s\) never closed/],
+  ["text after the last rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\nstray"); }, 1, /"stray" after the last rule isn't an @import/],
+  ["a stray semicolon between rules fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "foo;\n.hh-card {"), 1, /"foo" before a rule isn't an @import/],
+  ["custom properties and an empty rule pass", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", ".hh-empty {\n}\n\n.hh-local {\n    --hh-local-gap: 4px;\n}\n\n.hh-card {"), 0, /controls referenced/],
 ];
 
 let failed = 0;
