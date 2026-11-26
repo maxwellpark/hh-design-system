@@ -201,3 +201,71 @@
 .hh-text-field.unity-base-field:focus:enabled .unity-base-text-field__input {
     border-color: var(--hh-color-focus);
 }
+
+/* Icon-only, so the icon is tinted like ghost text and the button carries the ghost tint */
+.hh-icon-button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-md);
+    background-color: var(--hh-color-violet-ghost);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    -unity-background-image-tint-color: var(--hh-color-violet-light);
+    transition-property: background-color, border-color;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
+}
+
+.hh-icon-button:hover {
+    background-color: var(--hh-color-violet-ghost-hover);
+}
+
+.hh-icon-button:hover:active {
+    background-color: var(--hh-color-violet-ghost);
+}
+
+.hh-icon-button:focus {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-icon-button:disabled {
+    opacity: 0.4;
+}
+
+/* Dark text on every tone: white is under 3:1 on all four. Radii are half the height, so pills stay round */
+.hh-badge {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 var(--hh-space-1);
+    border-radius: 10px;
+    background-color: var(--hh-color-violet-light);
+    color: var(--hh-color-bg);
+    font-size: var(--hh-font-size-sm);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.hh-badge.hh-badge--teal {
+    background-color: var(--hh-color-teal);
+}
+
+.hh-badge.hh-badge--pink {
+    background-color: var(--hh-color-pink);
+}
+
+.hh-badge.hh-badge--peach {
+    background-color: var(--hh-color-peach);
+}
+
+.hh-badge.hh-badge--dot {
+    min-width: 8px;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 4px;
+}
