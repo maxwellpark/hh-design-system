@@ -11,10 +11,18 @@ public class DemoPanel : MonoBehaviour
     public ThemeStyleSheet[] themes;  // hh-theme.tss, hh-theme-high-contrast.tss; empty hides the Theme button
 
     private HHProgressBar progress;
+    private bool panelCopied;
 
     private void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        var document = GetComponent<UIDocument>();
+        // A runtime copy before building, so cycling themes in Play mode doesn't rewrite the PanelSettings asset
+        if (themes != null && themes.Length > 0 && !panelCopied)
+        {
+            document.panelSettings = Instantiate(document.panelSettings);
+            panelCopied = true;
+        }
+        var root = document.rootVisualElement;
         HHStyles.Apply(root, tokens, components);
         root.style.paddingTop = 40;
         root.style.paddingLeft = 40;
@@ -38,21 +46,18 @@ public class DemoPanel : MonoBehaviour
         var back = new HHButton(() => progress.value = progress.lowValue) { text = "Reset", Ghost = true };
         back.style.marginTop = 8;
 
-        if (themes != null && themes.Length > 0)
-        {
-            var document = GetComponent<UIDocument>();
-            // A runtime copy, so cycling in Play mode doesn't rewrite the PanelSettings asset
-            document.panelSettings = Instantiate(document.panelSettings);
-            var theme = new HHButton(() => HHThemes.Next(document.panelSettings, themes)) { text = "Theme", Ghost = true };
-            theme.style.marginTop = 8;
-            card.Add(theme);
-        }
-
         card.Add(title);
         card.Add(sub);
         card.Add(progress);
         card.Add(play);
         card.Add(back);
+        if (themes != null && themes.Length > 0)
+        {
+            var theme = new HHButton(() => HHThemes.Next(GetComponent<UIDocument>().panelSettings, themes)) { text = "Theme", Ghost = true };
+            theme.style.marginTop = 8;
+            card.Add(theme);
+        }
+
         root.Add(card);
     }
 }
