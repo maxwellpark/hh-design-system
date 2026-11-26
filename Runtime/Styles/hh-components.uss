@@ -598,6 +598,11 @@
     border-color: var(--hh-color-focus);
 }
 
+/* A count beside a tab's label; the header doesn't change colour when selected, so the badge reads the same either way */
+.hh-tabs.unity-tab-view .hh-tabs__badge {
+    margin-left: var(--hh-space-2);
+}
+
 .hh-tabs.unity-tab-view .unity-tab-view__content-container {
     padding-top: var(--hh-space-4);
 }

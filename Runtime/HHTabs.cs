@@ -8,6 +8,7 @@ namespace HootonHeroics.DesignSystem
     public partial class HHTabs : TabView
     {
         public const string UssClassName = "hh-tabs";
+        public const string BadgeUssClassName = UssClassName + "__badge";
 
         public HHTabs()
         {
@@ -27,6 +28,31 @@ namespace HootonHeroics.DesignSystem
                     Wire(tab);
                 }
             }
+        }
+
+        /// Shows count on the tab's header (new items in an inventory tab), or removes the badge when count is 0 or less.
+        /// The badge is found again by class each call, so it holds however Unity rebuilds the header.
+        public HHBadge SetBadge(Tab tab, int count)
+        {
+            var header = tab?.tabHeader;
+            if (header == null)
+            {
+                return null;
+            }
+            var badge = header.Q<HHBadge>(className: BadgeUssClassName);
+            if (count <= 0)
+            {
+                badge?.RemoveFromHierarchy();
+                return null;
+            }
+            if (badge == null)
+            {
+                badge = new HHBadge { pickingMode = PickingMode.Ignore };
+                badge.AddToClassList(BadgeUssClassName);
+                header.Add(badge);
+            }
+            badge.Count = count;
+            return badge;
         }
 
         internal void Select(Tab tab)
