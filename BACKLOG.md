@@ -13,11 +13,6 @@ which fails on a control with no EditMode test.
    inventory tab), found again by class so it survives Unity rebuilding headers, and 0 removes it;
    the gallery's tabs show one. Check: EditMode tests written, not run; contrast pairs for the badge
    on a selected and an unselected header; the reference; the compile gate.
-2. Hold to confirm: `HHHoldButton` fires only after it is held for `hold-seconds` (an attribute,
-   not a duration token, so reduced motion never shortens it). Its fill grows linearly; the timing
-   lives in a pure `Advance(elapsedSeconds)` that tests drive with explicit times, with the
-   scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
-   timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
 
 ## Blocked on owner
 
@@ -56,6 +51,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: hold to confirm: `HHHoldButton` confirms after `hold-seconds` (an attribute, so reduced motion never shortens it), its foot bar filling linearly from a pure `Advance` that five tests drive with explicit times, on one cached scheduled item; reference, gallery (and disabled), focus and disabled rules, and a fill pair (branch `max/hold-button`).
 - 2026-11-26: theming guide: `Documentation~/theming.md` makes a theme in a game's project, from copied tokens to a theme sheet importing the package's component sheets, a contrast check by hand against `Tools~/contrast.json`, and switching with `HHThemes`; the gate compiles its C# (branch `max/theming-guide`).
 - 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
 - 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).

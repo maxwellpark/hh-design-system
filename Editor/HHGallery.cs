@@ -78,6 +78,8 @@ namespace HootonHeroics.DesignSystem.Editor
             disabled.SetEnabled(false);
             buttons.Add(disabled);
             buttons.Add(new HHIconButton(null, "Settings", null));
+            var hold = new HHHoldButton { text = "Hold to quit", HoldSeconds = 1.5f };
+            buttons.Add(hold);
 
             var badges = Section(scroll, "Badges");
             badges.Add(new HHBadge { Count = 3 });
@@ -147,6 +149,7 @@ namespace HootonHeroics.DesignSystem.Editor
             row.style.flexDirection = FlexDirection.Column;
             row.style.alignItems = Align.Stretch;
             var iconButton = new HHIconButton(null, "Locked settings", null);
+            var lockedHold = new HHHoldButton { text = "Hold to skip" };
             var slider = new HHSlider { label = "Volume", lowValue = 0, highValue = 1, value = 0.3f };
             var dropdown = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "High" }, index = 0 };
             var textField = new HHTextField { label = "Name", value = "Northwind" };
@@ -159,11 +162,12 @@ namespace HootonHeroics.DesignSystem.Editor
             var scroller = new HHScrollView();
             scroller.style.height = 40;
             scroller.Add(new Label("Locked"));
-            foreach (var control in new VisualElement[] { iconButton, slider, dropdown, textField, radio, stepper, lockedTabs, lockedList, scroller })
+            foreach (var control in new VisualElement[] { iconButton, lockedHold, slider, dropdown, textField, radio, stepper, lockedTabs, lockedList, scroller })
             {
                 row.Add(control);
             }
             iconButton.SetEnabled(false);
+            lockedHold.SetEnabled(false);
             slider.SetEnabled(false);
             dropdown.SetEnabled(false);
             textField.SetEnabled(false);

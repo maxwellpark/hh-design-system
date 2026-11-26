@@ -33,6 +33,20 @@ The main action button, with a ghost style for secondary actions. Extends `Butto
 - **States:** `:hover`, `:active`, `:focus` (focus ring), `:disabled`.
 - **Tokens:** `--hh-color-button`, `--hh-color-button-hover`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-ghost`, `--hh-color-violet-ghost-hover`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-radius-md`, `--hh-space-2`, `--hh-space-3`, `--hh-space-6`
 
+## HHHoldButton
+
+A button that confirms only after it is held for `hold-seconds` (quit, skip a cutscene), raising `Confirmed`; a bar along its foot fills while held. Pointer, Space and Enter hold it; letting go, leaving or losing focus cancels. A pad's submit has no release, so it can't hold. It carries `.hh-button` too, so it looks like one. Extends `Button`.
+
+```xml
+<hh:HHHoldButton text="Hold to quit" hold-seconds="1.5" />
+```
+
+- **Classes:** `.hh-hold-button`, `.hh-hold-button__fill`
+- **Attributes:**
+  - `hold-seconds` (float, default 1): How long to hold, at least 0.1; not a duration token, so reduced motion never shortens it.
+- **States:** `:focus` and `:disabled` as a button; while held the bar fills linearly, driven each tick, so reduced motion changes nothing.
+- **Tokens:** `--hh-color-focus`, `--hh-color-text`
+
 ## HHIconButton
 
 A square button showing an icon, with its label as its tooltip. Extends `Button`.
