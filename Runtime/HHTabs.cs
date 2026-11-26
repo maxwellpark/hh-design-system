@@ -50,7 +50,8 @@ namespace HootonHeroics.DesignSystem
                 badge = new HHBadge { pickingMode = PickingMode.Ignore };
                 badge.AddToClassList(BadgeUssClassName);
                 // Right after the label, so a close button added later stays last
-                var label = tab.headerLabel;
+                // The header's own label is its first Label child; the badge isn't there yet
+                var label = header.Q<Label>();
                 header.Insert(label != null && label.parent == header ? header.IndexOf(label) + 1 : header.childCount, badge);
             }
             badge.Count = count;

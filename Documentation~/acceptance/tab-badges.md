@@ -29,13 +29,13 @@ tab.
 ok   HootonHeroics.DesignSystem [editor] (27 files)
 ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (17 files)
 ok   HootonHeroics.DesignSystem [player] (27 files)
-ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity 6000.0.85f2
+ok   HEAD compiles: 18 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line):
 
 ```
-68 .meta files ok, 32 tokens match HHTheme, 128 contrast pairs checked across 2 theme(s), 18 controls referenced, 20 types in the component reference
+68 .meta files ok, 32 tokens match HHTheme, 124 contrast pairs checked across 2 theme(s), 18 controls referenced, 20 types in the component reference
 ```
 
 ## Hands-on checklist (Unity 6, two minutes)
