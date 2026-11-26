@@ -15,16 +15,23 @@ which fails on a control with no EditMode test.
    Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
 2. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
-3. Focus rule check: every control that can take keyboard or gamepad focus (the button, icon
-   button, toggle, slider, dropdown, text field, tab headers, radio choices, list) has a `:focus`
-   rule in `hh-components.uss`, so a player can always see where focus is. Check: `check.mjs`
-   fails on a focusable control with none, with a planted case.
-4. Switch toggle: `HHToggle` gains `switch="true"`, drawn as a sliding switch rather than a box,
-   for on/off settings. Check: EditMode tests written, its reference attribute, and contrast pairs
-   for the track and knob in both states.
-5. `HHStepper`: a value picked from a short list with previous and next buttons (difficulty,
-   resolution), for gamepads where a dropdown is awkward. Check: its test, gallery and reference
-   sections, contrast pairs, and the compile gate.
+3. Focus rule check: every control whose Unity base is focusable has a `:focus` rule on its own
+   class or a part of it in `hh-components.uss`, so a player can always see where focus is.
+   `check.mjs` keeps a table of focusable bases (Button, Toggle, Slider, DropdownField, TextField,
+   RadioButtonGroup, ListView, the tab headers) and exempts `HHDialog`, which is focusable outside
+   the tab order on purpose. `HHListView` has no focus rule today, so the item adds one. Check:
+   `check.mjs` fails on a focusable control without one, with a planted case in
+   `Tools~/check.test.mjs`.
+4. Switch toggle: `HHToggle` gains a `switch` attribute (`[UxmlAttribute("switch")]`, since
+   `switch` is a C# keyword) adding `.hh-toggle--switch`: the checkmark becomes the track, with a
+   knob added in C# that slides on the duration tokens, so reduced motion holds, and a focus rule.
+   The gallery shows it on and off. Check: EditMode tests written, its reference attribute, 3:1
+   pairs in `Tools~/contrast.json` for track and knob in both states and both themes, and the
+   compile gate. The slide itself stays unverified until a licence.
+5. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
+   (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
+   at the ends with the button there disabled. Check: its test, gallery and reference sections,
+   contrast pairs and the compile gate.
 
 ## Blocked on owner
 
