@@ -14,12 +14,14 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 - [x] 2026-11-26, `Tools~/check.mjs`: every imported asset has a `.meta`, and `HHTheme` matches
   the tokens. Check: `node Tools~/check.mjs` exits 0.
 - [ ] Menus, settings and HUD are covered: button, toggle, slider, dropdown, text field, dialog,
-  tabs, tooltip, toast and progress bar each have a control and styles. Check: the Numbers line.
+  tabs, tooltip, toast and progress bar each have a file in `Runtime/` and rules in
+  `hh-components.uss`. Check: the controls count in Numbers reaches 10.
 - [ ] Every text colour meets WCAG AA contrast on the surfaces it sits on. Check:
   `node Tools~/check.mjs`.
 - [ ] Switching between dark, light and high-contrast themes at runtime restyles every control.
   Check: a capture of the sample in each theme.
-- [ ] EditMode tests pass through unity-verify. Check: its exit code.
+- [ ] EditMode tests pass through unity-packages' `unity-verify`. Check: its exit code (it runs on
+  the owner's machine; not available in a cloud session).
 
 ## Numbers
 
@@ -27,8 +29,8 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 |---|---|---|
 | Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 2 |
 | Tokens | `node Tools~/check.mjs` | 24 |
-| Check cases | `node Tools~/check.test.mjs` | 11/11 |
-| EditMode tests | unity-verify | 0 |
+| Check cases | `node Tools~/check.test.mjs` | 15/15 |
+| EditMode tests | unity-packages' `unity-verify` | 0 |
 
 ## Out of scope
 
@@ -38,4 +40,4 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 
 ## Last checked
 
-2026-11-26, branch `max/unity6-progress-bar`.
+2026-11-26, 8cf365f.

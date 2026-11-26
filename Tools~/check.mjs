@@ -1,4 +1,5 @@
 // Fails on an asset without a .meta (Unity skips it in a git install) or HHTheme drifting from the tokens.
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -7,9 +8,16 @@ const imported = (name) => !name.startsWith(".") && !name.endsWith("~") && !name
 const roots = readdirSync(".").filter(imported);
 const problems = [];
 
+// A .meta that exists on disk but was never committed still leaves the asset out of a git install
+const listed = spawnSync("git", ["ls-files", "-z"], { encoding: "utf8" });
+const tracked = listed.status === 0 ? new Set(listed.stdout.split("\0").filter(Boolean)) : null;
+const isTracked = (path) => [...tracked].some((file) => file === path || file.startsWith(`${path}/`));
+
 function walk(path) {
   if (!existsSync(`${path}.meta`)) {
     problems.push(`${path}: no .meta`);
+  } else if (tracked && isTracked(path) && !tracked.has(`${path}.meta`)) {
+    problems.push(`${path}.meta: not committed`);
   }
   if (statSync(path).isDirectory()) {
     for (const name of readdirSync(path).filter(imported)) {
@@ -34,7 +42,7 @@ function collectGuids(path) {
   if (!path.endsWith(".meta")) {
     return;
   }
-  const guid = readFileSync(path, "utf8").match(/^guid: ([0-9a-f]{32})$/m)?.[1];
+  const guid = readFileSync(path, "utf8").match(/^guid: ([0-9a-f]{32})\r?$/m)?.[1];
   if (!guid) {
     problems.push(`${path}: no guid`);
   } else if (guids.has(guid)) {
@@ -52,7 +60,7 @@ for (const root of roots) {
   }
 }
 
-// HHTheme's defaults must match hh-tokens.uss field for field
+// Unity serializes fields by name, so 0.1's `background` keeps its name to keep saved themes
 const aliases = { "color-bg": "background" };
 const fieldFor = (token) =>
   aliases[token] ?? token.replace(/^color-/, "").replace(/-(\w)/g, (_, c) => c.toUpperCase());
@@ -80,7 +88,7 @@ for (const m of theme.matchAll(/public float (\w+) = ([\d.]+)f;/g)) {
   fields.set(m[1], { type: "px", value: +m[2] });
 }
 
-const uss = readFileSync("Runtime/Styles/hh-tokens.uss", "utf8");
+const uss = readFileSync("Runtime/Styles/hh-tokens.uss", "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
 const tokens = [...uss.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]);
 const mirrored = new Set();
 for (const [name, raw] of tokens) {
@@ -91,7 +99,8 @@ for (const [name, raw] of tokens) {
     problems.push(`--hh-${name}: no HHTheme.${field}`);
     continue;
   }
-  const want = name.startsWith("color-") ? parseColour(raw) : parseFloat(raw);
+  const px = raw.match(/^(\d+(?:\.\d+)?)px$/);
+  const want = name.startsWith("color-") ? parseColour(raw) : px ? +px[1] : null;
   if (want === null) {
     problems.push(`--hh-${name}: can't parse ${raw}`);
   } else if (f.type === "colour" ? !Array.isArray(want) || want.some((c, i) => c !== f.value[i]) : f.value !== want) {

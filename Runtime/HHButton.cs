@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    /// A Button with the .hh-button style. UXML: <hh:HHButton text="Play" ghost="true" />
+    /// UXML: <hh:HHButton text="Play" ghost="true" />
     [UxmlElement]
     public partial class HHButton : Button
     {

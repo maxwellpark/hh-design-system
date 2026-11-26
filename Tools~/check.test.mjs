@@ -40,6 +40,15 @@ const cases = [
   ["token with no field", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-space-1: 4px;", "--hh-space-1: 4px;\n    --hh-space-8: 32px;"), 1, /--hh-space-8: no HHTheme\.space8/],
   ["field with no token", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "    --hh-space-1: 4px;\n", ""), 1, /HHTheme\.space1 has no matching token/],
   ["unparsable colour", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-teal: #45D6C4;", "--hh-color-teal: teal;"), 1, /--hh-color-teal: can't parse teal/],
+  ["size not in px", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-space-2: 8px;", "--hh-space-2: 8em;"), 1, /--hh-space-2: can't parse 8em/],
+  ["commented-out token is ignored", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", ":root {", ":root {\n    /* --hh-space-9: 36px; */"), 0, /tokens match HHTheme/],
+  [".meta with Windows line endings", (d) => writeFileSync(join(d, "README.md.meta"), readFileSync(join(d, "README.md.meta"), "utf8").replace(/\n/g, "\r\n")), 0, /tokens match HHTheme/],
+  [".meta on disk but not committed", (d) => {
+    const git = (...args) => assert.equal(spawnSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...args], { cwd: d }).status, 0);
+    git("init", "-q");
+    git("add", "-A");
+    git("rm", "-q", "--cached", "Runtime/HHButton.cs.meta");
+  }, 1, /Runtime\/HHButton\.cs\.meta: not committed/],
 ];
 
 let failed = 0;

@@ -37,6 +37,11 @@
     background-color: var(--hh-color-violet-light);
 }
 
+/* Unity's .unity-button:hover:active outranks .hh-button:hover, so pressed needs its own rule */
+.hh-button:hover:active {
+    background-color: var(--hh-color-violet);
+}
+
 .hh-button:focus {
     border-color: var(--hh-color-focus);
 }
@@ -55,7 +60,11 @@
     background-color: var(--hh-color-violet-ghost-hover);
 }
 
-/* Skins the parts of Unity's ProgressBar; the title sits on top of the bar */
+.hh-button.hh-button--ghost:hover:active {
+    background-color: var(--hh-color-violet-ghost);
+}
+
+/* The title sits on top of the bar */
 .hh-progress-bar .unity-progress-bar__background {
     background-color: var(--hh-color-surface);
     border-width: 0;

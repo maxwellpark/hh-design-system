@@ -8,23 +8,23 @@ Commands run from the package root with Node 22.
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| Installed from git, Unity imports every asset (before, none had a `.meta`, so Unity skipped them all) | `node Tools~/check.mjs` | 17 `.meta` files, unique GUIDs, exit 0 | verified (files); unverified (import) |
-| A new file committed without a `.meta` fails the check | `node Tools~/check.test.mjs`, cases "asset without a .meta" and "new top-level folder" | pass | verified |
-| `HHTheme`'s defaults match every token, and drift fails the check | `node Tools~/check.test.mjs`, the six token cases | 11/11 cases pass | verified |
+| Installed from git, Unity imports every asset (before, none had a `.meta`, so Unity skipped them all) | `node Tools~/check.mjs` | 19 `.meta` files, all committed, unique GUIDs, exit 0 | verified (files); unverified (import) |
+| A new file without a committed `.meta` fails the check | `node Tools~/check.test.mjs`, cases "asset without a .meta", "new top-level folder", ".meta on disk but not committed" | pass | verified |
+| `HHTheme`'s defaults match every token, and drift fails the check | `node Tools~/check.test.mjs`, the token cases | 15/15 cases pass | verified |
 | Hovering a ghost button keeps its text readable (before, background and text were both violet-light) | `.hh-button.hh-button--ghost` (two classes) comes after `.hh-button:hover`, and its own `:hover` outranks both | by CSS specificity | unverified |
-| A focused button shows a teal ring without shifting layout; a disabled one dims | `.hh-button:focus`, `.hh-button:disabled`, 2px border always present | | unverified |
+| A focused button shows a teal ring without shifting layout (also after a pointer click: UI Toolkit has no `:focus-visible`); a pressed one keeps its own colour rather than Unity's grey; a disabled one dims | `.hh-button:focus`, `.hh-button:hover:active`, `.hh-button:disabled`, 2px border always present | | unverified |
 | `HHButton` registers with Unity 6's `[UxmlElement]` and `ghost="true"` works in UXML | `Runtime/HHButton.cs` | | unverified |
 | `HHProgressBar` renders with a teal fill, rounded track and the title on top, and keeps `value` and `title` from UXML | `Runtime/HHProgressBar.cs`, `.hh-progress-bar` rules | | unverified |
 | Choosing `hh-theme.tss` as a panel's theme styles every document on it | `Runtime/Styles/hh-theme.tss` imports Unity's default theme, then the tokens and components by relative path | | unverified |
-| Theme assets saved under 0.1 keep their background colour | `HHTheme.background` keeps its field name | | verified (by reading) |
+| Theme assets saved under 0.1 keep their background colour | `HHTheme.background` keeps its field name, and fields are only added | | unverified |
 
 ## Paths
 
 | Code | Path | Evidence |
 |---|---|---|
-| `check.mjs` walk | asset with `.meta` / without / folder recursed / hidden or `~` skipped | test cases 1 to 3; skip: none |
-| `check.mjs` GUIDs | unique / duplicate / missing guid / missing `.meta` file | cases 1, 4, 5, 3 |
-| `check.mjs` tokens | match / colour / alpha / px drift / token without field / field without token / unparsable value | cases 1, 6 to 11 |
+| `check.mjs` walk | asset with `.meta` / without / not committed / folder recursed / hidden or `~` skipped | cases 1 to 3 and 15; skip: none |
+| `check.mjs` GUIDs | unique / duplicate / missing guid / missing `.meta` file / CRLF line endings | cases 1, 4, 5, 3, 14 |
+| `check.mjs` tokens | match / colour / alpha / px drift / token without field / field without token / unparsable colour / non-px size / commented-out token | cases 1, 6 to 13 |
 | `HHButton.Ghost` | set true / set false / read | none (no Unity) |
 | `HHButton(Action)` | with a click handler / null from the parameterless constructor | none (no Unity) |
 
@@ -39,6 +39,30 @@ here, so the Runtime assembly has no coverage.
 `lizard` isn't installed here (installing it waits on the owner). By reading, the largest function
 is the token loop in `check.mjs` at about 20 lines with four branches; the C# is all under ten
 lines per member.
+
+## Behaviour transcript
+
+`node Tools~/check.test.mjs`, exit 0. Each case breaks a copy of the package one way and asserts the
+exit code and the message:
+
+```
+ok   clean package passes
+ok   asset without a .meta
+ok   new top-level folder without a .meta
+ok   two .meta files share a guid
+ok   .meta without a guid
+ok   colour drifts
+ok   alpha drifts
+ok   size drifts
+ok   token with no field
+ok   field with no token
+ok   unparsable colour
+ok   size not in px
+ok   commented-out token is ignored
+ok   .meta with Windows line endings
+ok   .meta on disk but not committed
+15/15 passed
+```
 
 ## Captures
 
