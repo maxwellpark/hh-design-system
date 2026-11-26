@@ -112,6 +112,9 @@ namespace HootonHeroics.DesignSystem.Editor
             var tabs = new HHTabs();
             tabs.Add(new Tab("Audio"));
             tabs.Add(new Tab("Video"));
+            var items = new Tab("Items");
+            tabs.Add(items);
+            tabs.SetBadge(items, 3);
             Section(scroll, "Tabs").Add(tabs);
 
             var rows = new List<string> { "Northwind", "Outfitters", "Digital" };

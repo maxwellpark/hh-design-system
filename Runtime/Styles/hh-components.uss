@@ -598,6 +598,16 @@
     border-color: var(--hh-color-focus);
 }
 
+/* A selected header keeps the transparent fill, stated so Unity's own :checked fill can't win on order */
+.hh-tabs.unity-tab-view .unity-tab__header:checked {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/* A count beside a tab's label; the header doesn't change colour when selected, so the badge reads the same either way */
+.hh-tabs.unity-tab-view .hh-tabs__badge {
+    margin-left: var(--hh-space-2);
+}
+
 .hh-tabs.unity-tab-view .unity-tab-view__content-container {
     padding-top: var(--hh-space-4);
 }
