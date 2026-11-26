@@ -298,6 +298,60 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// The component reference has a section per class-bearing type, naming its classes, UXML attributes and every token its rules use
+const referencePath = "Documentation~/components.md";
+const documented = new Set();
+if (!existsSync(referencePath)) {
+  problems.push(`${referencePath} is missing`);
+} else {
+  const sections = new Map(readFileSync(referencePath, "utf8").split(/^## /m).slice(1).map((s) => [s.split(/\s/)[0], s]));
+  const rules = [...componentRules.matchAll(/([^{}]+)\{([^}]*)\}/g)].map((m) => ({ selectors: m[1].split(","), body: m[2] }));
+  for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+    const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
+    const classes = [...classConstants(source).values()].filter((value) => value !== undefined);
+    if (classes.length === 0) {
+      continue;
+    }
+    const type = name.slice(0, -3);
+    const section = sections.get(type);
+    documented.add(type);
+    if (section === undefined) {
+      problems.push(`${name}: ${type} has no section in ${referencePath}`);
+      continue;
+    }
+    const names = (word) => new RegExp(`(?<![\\w-])${word.replace(/[.-]/g, "\\$&")}(?![\\w-])`).test(section);
+    for (const className of classes) {
+      if (!names(`.${className}`)) {
+        problems.push(`${referencePath}: ${type} doesn't name .${className}`);
+      }
+    }
+    for (const [, property] of source.matchAll(/\[\s*UxmlAttribute\b[^\]]*\]\s*public\s+[\w.<>]+\s+(\w+)/g)) {
+      const attribute = property.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+      if (!section.includes(`\`${attribute}\``)) {
+        problems.push(`${referencePath}: ${type} doesn't name its \`${attribute}\` attribute`);
+      }
+    }
+    const owns = (selector) => classes.some((className) => new RegExp(`\\.${className}(?![\\w-])`).test(selector));
+    for (const rule of rules.filter((r) => r.selectors.some(owns))) {
+      for (const [, token] of rule.body.matchAll(/var\(\s*--hh-([\w-]+)/g)) {
+        if (!names(`--hh-${token}`)) {
+          problems.push(`${referencePath}: ${type} doesn't name --hh-${token}, which its rules use`);
+        }
+      }
+    }
+    for (const [, token] of section.matchAll(/--hh-([\w-]+)/g)) {
+      if (!defined.has(token)) {
+        problems.push(`${referencePath}: ${type} names --hh-${token}, which isn't a token`);
+      }
+    }
+  }
+  for (const type of sections.keys()) {
+    if (!documented.has(type)) {
+      problems.push(`${referencePath}: section ${type} has no matching control`);
+    }
+  }
+}
+
 // Each stylesheet parses as flat rules: selectors, then one brace block of known `property: value;` lines
 const knownProperties = new Set(readFileSync("Tools~/uss-properties.txt", "utf8").split(/\r?\n/).filter((l) => l && !l.startsWith("#")));
 
@@ -428,5 +482,5 @@ if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);
 }
-const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked across ${themes.length} theme(s), ${controls} controls referenced`;
+const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked across ${themes.length} theme(s), ${controls} controls referenced, ${documented.size} types in the component reference`;
 console.log([...accepted, summary].join("\n"));

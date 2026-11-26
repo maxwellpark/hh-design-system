@@ -134,6 +134,13 @@ const cases = [
     const p = join(d, "Editor/HHGallery.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/HHSegmentedBar/g, "VisualElement").replace("Segments = 5, Filled = 3, Tone = HHTone.Peach", ""));
   }, 1, /HHSegmentedBar\.cs: HHSegmentedBar isn't in the gallery/],
+  ["a control with no reference section fails", (d) => edit(d, "Documentation~/components.md", "## HHToggle\n", "## Toggle notes\n"), 1, /HHToggle\.cs: HHToggle has no section in Documentation~\/components\.md/],
+  ["a reference section for no control fails", (d) => edit(d, "Documentation~/components.md", "## HHToggle\n", "## HHToggle\n\n## HHSwitch\n"), 1, /section HHSwitch has no matching control/],
+  ["a class missing from the reference fails", (d) => edit(d, "Documentation~/components.md", ", `.hh-button--ghost`", ""), 1, /HHButton doesn't name \.hh-button--ghost/],
+  ["a modifier named only as a longer class fails", (d) => edit(d, "Documentation~/components.md", "`.hh-badge--dot`", "`.hh-badge--dotted`"), 1, /HHBadge doesn't name \.hh-badge--dot$/m],
+  ["an attribute missing from the reference fails", (d) => edit(d, "Documentation~/components.md", "`require-choice` (bool", "`requireChoice` (bool"), 1, /HHDialog doesn't name its `require-choice` attribute/],
+  ["a token a control's rules use, missing from its section, fails", (d) => edit(d, "Documentation~/components.md", "`--hh-color-scrim`, ", ""), 1, /HHDialog doesn't name --hh-color-scrim, which its rules use/],
+  ["a reference naming an unknown token fails", (d) => edit(d, "Documentation~/components.md", "`--hh-space-4`", "`--hh-space-4`, `--hh-space-9`"), 1, /names --hh-space-9, which isn't a token/],
 ];
 
 let failed = 0;
