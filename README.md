@@ -12,8 +12,6 @@ https://github.com/maxwellpark/hh-design-system.git
 Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
 
 ## Use
-`Documentation~/getting-started.md` walks through a first screen step by step.
-
 1. Add a **UIDocument** to a GameObject (with PanelSettings).
 2. Give it the styles, either way:
    - **Theme (simplest):** set the PanelSettings' **Theme Style Sheet** to
@@ -33,6 +31,8 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
 ```
 Import the **Basic UI**, **Settings**, **HUD** or **Pause Menu** sample from the Package Manager for a working demo, or open **Hooton Heroics >
 Design System > Gallery** to see every control in its states.
+
+For a first screen step by step, see `Documentation~/getting-started.md`.
 
 ## Theming
 All components are styled through `var(--hh-*)` tokens in `hh-tokens.uss`, so restyling is a
