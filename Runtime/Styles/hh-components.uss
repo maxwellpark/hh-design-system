@@ -468,3 +468,40 @@
 .hh-list-view .unity-list-view__empty-label {
     color: var(--hh-color-text-dim);
 }
+
+/* Unity marks the active tab and its header :checked; HHTabs makes headers focusable; .unity-tab-view adds weight */
+.hh-tabs.unity-tab-view .unity-tab__header {
+    padding: var(--hh-space-2) var(--hh-space-4);
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-sm);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header-label {
+    color: var(--hh-color-text-dim);
+    font-size: var(--hh-font-size-md);
+    -unity-font-style: bold;
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:hover .unity-tab__header-label,
+.hh-tabs.unity-tab-view .unity-tab__header:checked .unity-tab__header-label {
+    color: var(--hh-color-text);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header-underline {
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:checked .unity-tab__header-underline {
+    background-color: var(--hh-color-teal);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:focus {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-tabs.unity-tab-view .unity-tab-view__content-container {
+    padding-top: var(--hh-space-4);
+}

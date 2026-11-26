@@ -13,6 +13,8 @@
     { "use": "Selected list row text", "text": "text", "on": "violet-ghost-hover", "over": "surface" },
     { "use": "Selected list row edge against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Scroller handle against its track", "text": "violet-light", "on": "track", "min": 3 },
+    { "use": "Unselected tab label on a card", "text": "text-dim", "on": "surface" },
+    { "use": "Selected tab underline against a card", "text": "teal", "on": "surface", "min": 3 },
     { "use": "Info toast edge against its card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Success toast edge against its card", "text": "teal", "on": "surface", "min": 3 },
     { "use": "Warning toast edge against its card", "text": "peach", "on": "surface", "min": 3 },

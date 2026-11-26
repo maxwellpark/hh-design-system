@@ -21,4 +21,8 @@
         <ui:Label name="scroll-content" text="Long content" />
     </hh:HHScrollView>
     <hh:HHListView name="list" fixed-item-height="36" />
+    <hh:HHTabs name="tabs">
+        <ui:Tab name="audio" label="Audio" />
+        <ui:Tab name="video" label="Video" />
+    </hh:HHTabs>
 </ui:UXML>

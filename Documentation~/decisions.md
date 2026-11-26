@@ -100,3 +100,10 @@
 - Default 2026-11-26 [needs-review]: scrollers lose their arrow buttons and thin to 8px. Why: games
   scroll by wheel, drag or gamepad, and the arrows read as editor chrome. To change: the
   `.unity-scroller__low-button` and `__high-button` rules.
+- Default 2026-11-26 [needs-review]: `HHTabs` styles Unity's own `TabView` and `Tab` rather than
+  building tabs. Why: `TabView` already handles selection, reordering and closing; the class names
+  and the `:checked` state were read from 6000.0's IL (`Tab.SetActive` sets pseudo-state 8). To
+  change: a custom control, if `TabView`'s structure ever gets in the way.
+- Default 2026-11-26 [needs-review]: `HHTabs` makes each tab header focusable and selects its tab on
+  submit, Enter or Space. Why: Unity 6000.0's headers aren't focusable, so a menu built on them was
+  mouse-only. To change: `HHTabs.Wire`.
