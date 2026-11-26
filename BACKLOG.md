@@ -56,6 +56,7 @@ which fails on a control with no EditMode test.
 
 ## Blocked on owner
 
+- A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
 - Confirm GOAL.md.
 - Open v0.2 in Unity 6: it compiles, the Basic UI sample runs, `hh-theme.tss` finds its two
   stylesheets, `HHProgressBar` takes `value` and `title` from UXML. Nothing here has run in Unity.
@@ -79,6 +80,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: reference check: undefined tokens, classes without rules and controls without tests fail `Tools~/check.mjs` (branch `max/reference-check`).
+- 2026-11-26: engine-neutral brand kit in `Brand~/` (tokens mirror, studio mark, splash, logo and credits rules), the Godot studio splash in `Godot~/addons/hh_studio` with its headless tests, and `Tools~/check-tokens.mjs` (branch `max/brand-kit`).
 - 2026-11-26: `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField` with label, hover, focus,
   checked and disabled styles, a `--hh-color-track` token, and their tests (branch
   `max/form-controls`).
