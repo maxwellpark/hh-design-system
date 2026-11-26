@@ -8,7 +8,7 @@ Node 22 and Unity 6000.0.85f2's compiler, through the doc snippet gate.
 |---|---|---|---|
 | The guide's C# (a theme picker over `HHThemes.Next`) compiles, editor and player | the compile gate: `Docs.theming.1` | ok | verified |
 | The token names, file paths and theme sheet imports it shows match the package | `Runtime/Styles/hh-tokens.uss`, `hh-theme-high-contrast.tss` | | verified by reading |
-| A theme sheet in a game's project can import the package's sheets by `project://database/Packages/...` URL | Unity's USS `url()` resolution | | unverified |
+| A theme sheet in a game's project can import the package's sheets by their project-absolute path (`/Packages/...`) | Unity's USS `url()` resolution | | unverified |
 | A package theme's contrast is checked by `check.mjs`; a game's is by hand | `check.mjs` reads only `Runtime/Styles` | | verified by reading |
 
 ## Coverage and complexity
@@ -39,4 +39,4 @@ ok   HEAD compiles: 18 assembly builds with the compiler and generators of Unity
 
 ## Unverified
 
-The project-URL imports and the steps end to end in Unity.
+The project-path imports and the steps end to end in Unity.
