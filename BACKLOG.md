@@ -9,12 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Goal numbers check: `check.mjs` fails when GOAL.md's Numbers rows disagree with what it counts:
-   the Controls row with its class count, Tokens with its token count, and the contrast row's
-   "N of M" with its accepted and checked pairs. A row is found by its label, and its Latest is the
-   last cell. Rows it can't count (gate builds, check cases, tests) and the Done-when prose stay
-   hand-kept. A branch adding a pair or token then edits that row, so the failure names the value
-   expected. Check: planted cases in `Tools~/check.test.mjs`.
 
 ## Blocked on owner
 
@@ -54,6 +48,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const); the sample table requires `HHCard` for the HUD (branch `max/hud-card`).
+- 2026-11-26: goal numbers check: `check.mjs` fails when GOAL.md's Controls, Tokens or contrast row disagrees with what it counts, naming the value expected; the other rows stay hand-kept (branch `max/goal-numbers`).
 - 2026-11-26: adding a control guide: `Documentation~/adding-a-control.md` lists what the checks hold a new control to, naming `check.mjs` as the authority, with a doc-only example the gate compiles (branch `max/control-guide`).
 - 2026-11-26: pause menu hold to quit: the Pause Menu sample's Quit is a Hold to quit `HHHoldButton` whose `Confirmed` shows the warning toast, in place of the dialog; the sample table requires it; `HHHoldButton.Begin` and `Release` became public so a game can drive a pad hold (branch `max/pause-hold`).
 - 2026-11-26: gallery disabled test: `GalleryTests.ThePageHoldsEveryFocusableControlDisabled` builds the gallery page and finds a disabled instance of each of the twelve focusable controls (branch `max/gallery-disabled-test`).

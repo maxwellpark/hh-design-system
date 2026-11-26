@@ -215,6 +215,18 @@ const cases = [
   ["a disabled rule on a child only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view.unity-list-view:disabled,\n", ".hh-list-view:disabled .unity-label,\n"), 1, /HHListView\.cs: HHListView can take focus but no :disabled rule/],
   ["a typo in a reference example fails", (d) => edit(d, "Documentation~/components.md", '<hh:HHBadge count="3" />', '<hh:HHBadge cuont="3" />'), 1, /Documentation~\/components\.md:\d+: hh:HHBadge has no cuont attribute/],
   ["a reference example using an unknown element fails", (d) => edit(d, "Documentation~/components.md", '<hh:HHBadge count="3" />', '<hh:HHBadges count="3" />'), 1, /components\.md:\d+: hh:HHBadges isn't in the component reference/],
+  ["a stale goal control count fails", (d) => {
+    const p = join(d, "GOAL.md");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/^(\| Controls with a UXML element \|.*\| )\d+( \|)$/m, (_, head, tail) => `${head}18${tail}`));
+  }, 1, /GOAL\.md: "Controls with a UXML element" says 18, the repo has \d+/],
+  ["a stale goal contrast count fails", (d) => {
+    const p = join(d, "GOAL.md");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/(\| Contrast pairs below AA \|[^|]*\| )\d+ of \d+/, (_, head) => `${head}2 of 80`));
+  }, 1, /GOAL\.md: "Contrast pairs below AA" says 2 of 80/],
+  ["a missing goal row fails", (d) => {
+    const p = join(d, "GOAL.md");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/^\| Tokens \|.*\n/m, ""));
+  }, 1, /GOAL\.md: no Numbers row "Tokens"/],
 ];
 
 let failed = 0;

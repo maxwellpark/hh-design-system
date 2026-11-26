@@ -666,6 +666,26 @@ for (const name of styles) {
   checkStylesheet(name, readFileSync(join("Runtime/Styles", name), "utf8"));
 }
 
+// GOAL.md's Numbers rows this check can count must match it, so the table can't drift from the repo; the rest stay hand-kept
+if (existsSync("GOAL.md")) {
+  const goal = readFileSync("GOAL.md", "utf8");
+  // A row's last cell is its Latest; the command cell may hold an escaped \\| of its own
+  const latest = (what) => goal.match(new RegExp(`^\\| ${what} \\|.*\\| ([^|]*?) \\|$`, "m"))?.[1];
+  const expected = [
+    ["Controls with a UXML element", String(controls)],
+    ["Tokens", String(tokens.length)],
+    ["Contrast pairs below AA", `${accepted.length} of ${pairs}`],
+  ];
+  for (const [what, value] of expected) {
+    const row = latest(what);
+    if (row === undefined) {
+      problems.push(`GOAL.md: no Numbers row "${what}"`);
+    } else if (row !== value && !row.startsWith(`${value},`)) {
+      problems.push(`GOAL.md: "${what}" says ${row}, the repo has ${value}; set that row's Latest to ${value}`);
+    }
+  }
+}
+
 if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);
