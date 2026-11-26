@@ -138,6 +138,8 @@
 - Default 2026-11-26 [needs-review]: an open `HHDialog` pulls stray focus back on the next scheduler
   tick, rather than cancelling the move. Why: `FocusOutEvent` fires mid-switch, and cancelling
   navigation wouldn't catch a pointer, code or a cleared focus. For that one tick, focus sits on the
-  element behind, so a key pressed in that tick reaches it. Of two open dialogs, the one holding
-  focus traps it; the other waits. A dialog with no focusable stops doesn't trap. To change:
+  element behind, so a key pressed in that tick reaches it. Of two open dialogs, only the one on
+  top (later in the tree, as `Open` brings it to the front) traps; the one beneath never pulls. A dialog with no focusable stops doesn't trap. The dialog
+  itself takes focus (outside the tab order) when its scrim is clicked, so a click doesn't clear
+  focus; a window losing focus does clear it, and the dialog then refocuses its first stop. To change:
   `HHDialog.OnFocusOut` and `RefocusTarget`.

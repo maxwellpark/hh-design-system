@@ -28,11 +28,11 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 | What | Command | Latest |
 |---|---|---|
 | Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 15 |
-| Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 8 of 8 |
+| Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 10 of 10 |
 | Tokens | `node Tools~/check.mjs` | 32 |
 | Check cases | `node Tools~/check.test.mjs` | 74/74 |
 | Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 82, both owner decisions |
-| EditMode tests | unity-packages' `unity-verify` | 49 written, 0 run |
+| EditMode tests | unity-packages' `unity-verify` | 50 written, 0 run |
 
 ## Out of scope
 

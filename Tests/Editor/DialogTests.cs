@@ -86,7 +86,7 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
-        public void FocusStopsFollowTheRingAndCountADelegatingFieldOnce()
+        public void FocusStopsCountADelegatingFieldOnce()
         {
             var dialog = new HHDialog();
             var field = new VisualElement { focusable = true, delegatesFocus = true };
@@ -121,26 +121,51 @@ namespace HootonHeroics.DesignSystem.Tests
             dialog.Open();
             Assert.That(dialog.RefocusTarget(last, outside), Is.SameAs(first), "Tab past the last stop");
             Assert.That(dialog.RefocusTarget(first, outside), Is.SameAs(last), "Shift+Tab before the first stop");
-            Assert.That(dialog.RefocusTarget(last, null), Is.SameAs(first), "focus cleared, as by a click on the scrim");
+            Assert.That(dialog.RefocusTarget(last, null), Is.SameAs(first), "focus cleared after the last stop");
+            Assert.That(dialog.RefocusTarget(first, null), Is.SameAs(first), "focus cleared after the first stop isn't a Shift+Tab");
+            Assert.That(dialog.RefocusTarget(first, dialog), Is.Null, "the dialog itself, as after a click on the scrim");
             Assert.That(dialog.RefocusTarget(first, last), Is.Null, "moving inside");
         }
 
         [Test]
-        public void TwoOpenDialogsDoNotFightOverFocus()
+        public void OnlyTheTopOpenDialogTraps()
         {
             var root = new VisualElement();
             var under = new HHDialog();
-            under.AddAction("Stay");
+            var underAction = under.AddAction("Stay");
             var over = new HHDialog();
-            var overAction = over.AddAction("Quit");
+            var overFirst = over.AddAction("Keep");
+            var overLast = over.AddAction("Quit");
             root.Add(under);
             root.Add(over);
             under.Open();
             over.Open();
 
-            Assert.That(under.RefocusTarget(under.Actions[0], overAction), Is.Null);
+            Assert.That(under.RefocusTarget(underAction, overFirst), Is.Null, "the dialog beneath lets the top one have focus");
+            Assert.That(over.RefocusTarget(overFirst, underAction), Is.SameAs(overLast), "Shift+Tab into the dialog beneath wraps");
+            Assert.That(over.RefocusTarget(overLast, underAction), Is.SameAs(overFirst), "Tab into the dialog beneath wraps");
             over.Close();
-            Assert.That(under.RefocusTarget(under.Actions[0], overAction), Is.SameAs(under.Actions[0]));
+            Assert.That(under.RefocusTarget(underAction, overFirst), Is.SameAs(underAction), "once the top one closes");
+        }
+
+        [Test]
+        public void TreeOrderPutsLaterSiblingsAndDescendantsAfter()
+        {
+            var root = new VisualElement();
+            var a = new VisualElement();
+            var b = new VisualElement();
+            var child = new VisualElement();
+            root.Add(a);
+            root.Add(b);
+            a.Add(child);
+
+            Assert.That(HHDialog.IsAfterInTree(b, a), Is.True);
+            Assert.That(HHDialog.IsAfterInTree(a, b), Is.False);
+            Assert.That(HHDialog.IsAfterInTree(child, a), Is.True);
+            Assert.That(HHDialog.IsAfterInTree(a, child), Is.False);
+            Assert.That(HHDialog.IsAfterInTree(b, child), Is.True);
+            Assert.That(HHDialog.IsAfterInTree(a, a), Is.False);
+            Assert.That(HHDialog.IsAfterInTree(a, new VisualElement()), Is.False);
         }
 
         [Test]

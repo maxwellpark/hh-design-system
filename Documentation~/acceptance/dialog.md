@@ -65,9 +65,8 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
 2. Press Escape: it closes and focus returns to whatever had it. Open it again and click the dim
    area: it closes. Click inside the card: it stays.
 3. Set `RequireChoice = true`: Escape and outside clicks do nothing; "Quit" closes it.
-4. Run the EditMode tests: the five in `DialogTests` pass.
+4. Run the EditMode tests: every test in `DialogTests` passes.
 
 ## Unverified
 
-- Rendering, the five tests, and focus and key routing in a live panel.
-- Tab can move focus out of the card (a recorded decision).
+- Rendering, the tests, and focus and key routing in a live panel.
