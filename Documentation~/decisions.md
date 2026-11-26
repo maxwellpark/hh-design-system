@@ -48,3 +48,7 @@
 - Default 2026-11-26 [needs-review]: the gate compiles against 6000.0.85f2, the package's minimum
   line. Why: an API added after 6000.0 should fail here before a game on 6000.0 meets it. To
   change: `HH_UNITY_EDITOR`.
+- Default 2026-11-26 [needs-review]: the gate builds Unity's test runner from the editor's bundled
+  test-framework source each run, rather than skipping test assemblies' runner references. Why: a
+  test using `[UnityTest]` or `IPrebuildSetup` should compile here exactly when it would in Unity.
+  To change: drop the two `addAssembly` calls for the runner, at the cost of that coverage.

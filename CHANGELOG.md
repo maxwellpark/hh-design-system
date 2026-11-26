@@ -1,8 +1,9 @@
 # Changelog
 
 ## [Unreleased]
-- `Tools~/unity-compile.sh` compiles every assembly with Unity's compiler and generators, warnings
-  as errors, and `Tools~/verify.sh` runs it; `Tools~/unity-compile.test.sh` plants failures.
+- `Tools~/unity-compile.sh` compiles every asmdef as Unity would (references, platforms, define
+  constraints, editor and player builds) with Unity's compiler and generators, warnings as errors,
+  and `Tools~/verify.sh` runs it; `Tools~/unity-compile.test.sh` plants ten cases.
 - Motion tokens `--hh-duration-fast` (0.12s), `--hh-duration-normal` (0.2s) and
   `--hh-easing-standard` (ease-out), mirrored in `HHTheme`, `Brand~/tokens.json` (`motion`) and
   the Godot constants, with `Tools~/check-tokens.mjs` checking the new group. Buttons and inputs

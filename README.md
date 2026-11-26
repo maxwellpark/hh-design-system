@@ -51,10 +51,12 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
   It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
   control puts text on a new colour. It also fails on undefined tokens, classes without rules and
   controls without a test. `node Tools~/check.test.mjs` tests the check itself.
-- `bash Tools~/unity-compile.sh` compiles the runtime, editor, test and sample assemblies with
-  Unity's own compiler and UI Toolkit source generators (no licence needed), as `Tools~/verify.sh`
-  does. It finds Unity 6000.0 under Unity Hub, or takes `HH_UNITY_EDITOR`. It doesn't import USS
-  or UXML.
+- `bash Tools~/unity-compile.sh` compiles every committed asmdef, following its references,
+  platforms and define constraints, plus each sample, with Unity's own compiler and UI Toolkit
+  source generators, warnings as errors; runtime code is built for the editor and for a player.
+  Unity's test runner is compiled from the editor's copy, so tests see their real references. No
+  licence is needed. `Tools~/verify.sh` runs it. It finds Unity 6000.0 under Unity Hub, or takes
+  `HH_UNITY_EDITOR`. It doesn't import USS or UXML.
 - EditMode tests live in `Tests/Editor`. To run them in a project, add
   `"testables": ["com.hootonheroics.designsystem"]` to its `Packages/manifest.json`.
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,
