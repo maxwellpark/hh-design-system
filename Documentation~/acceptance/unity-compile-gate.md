@@ -66,6 +66,10 @@ ok   a missing editor exits 2
 
 ## Unverified
 
+- What the gate doesn't model: `versionDefines` apply for a known package whatever their version
+  expression, and platform lists other than `Editor` are approximated (an assembly limited to
+  other platforms is left out of the editor build).
+
 - USS, TSS and UXML import, and running the EditMode tests: both need the editor, which exits 198
   without a licence (under Blocked on owner).
 - Windows.

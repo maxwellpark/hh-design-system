@@ -1,6 +1,6 @@
 // Compiles every committed asmdef with Unity's own compiler, source generators and references, following its references and constraints. Exit 0 clean, 1 failed, 2 setup.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 
@@ -39,15 +39,25 @@ if (!dotnet || !existsSync(csc) || !existsSync(join(managed, "UnityEngine.UIElem
   setupFail(`no Unity 6000.0 compiler under ${editorDir}; set HH_UNITY_EDITOR to an Editor folder`);
 }
 const builtIn = join(data, "Resources", "PackageManager", "BuiltInPackages");
-const versionName = basename(dirname(editorDir)).match(/^\d/) ? basename(dirname(editorDir)) : (spawnSync(join(editorDir, "Unity"), ["-version"], { encoding: "utf8" }).stdout ?? "").trim();
+const testFramework = join(builtIn, "com.unity.test-framework");
+const cecil = join(data, "Resources", "PackageManager", "Editor", "com.unity.nuget.mono-cecil-1.11.6.tgz");
+for (const path of [testFramework, cecil]) {
+  if (!existsSync(path)) {
+    setupFail(`no ${path}; the gate expects Unity 6000.0's bundled test framework and Mono.Cecil`);
+  }
+}
+const unityExe = [join(editorDir, "Unity.exe"), join(editorDir, "Unity")].find(existsSync);
+const versionName = basename(dirname(editorDir)).match(/^\d/) ? basename(dirname(editorDir)) : (unityExe ? spawnSync(unityExe, ["-version"], { encoding: "utf8" }).stdout ?? "" : "").trim();
 
-const work = process.env.HH_WORK ?? join(tmpdir(), "hh-design-system-compile");
+// Each run gets its own folder unless HH_WORK names one, so parallel runs can't trample each other
+const work = process.env.HH_WORK ?? mkdtempSync(join(tmpdir(), "hh-compile-"));
 rmSync(work, { recursive: true, force: true });
 mkdirSync(join(work, "src"), { recursive: true });
 mkdirSync(join(work, "out"), { recursive: true });
 // Only what is committed, as a git install sees it
+// tar runs on relative paths, since Git Bash's GNU tar reads C:\... as a remote host
 const archive = spawnSync("git", ["archive", "--format=tar", "-o", join(work, "src.tar"), rev], { cwd: repo });
-if (archive.status !== 0 || spawnSync("tar", ["-xf", join(work, "src.tar"), "-C", join(work, "src")]).status !== 0) {
+if (archive.status !== 0 || spawnSync("tar", ["-xf", "src.tar", "-C", "src"], { cwd: work }).status !== 0) {
   setupFail(`could not archive ${rev}`);
 }
 const src = join(work, "src");
@@ -100,7 +110,6 @@ function addAssembly(path, origin) {
 for (const path of findAsmdefs(src, (name) => name.endsWith("~"))) {
   addAssembly(path, "package");
 }
-const testFramework = join(builtIn, "com.unity.test-framework");
 for (const name of ["UnityEngine.TestRunner", "UnityEditor.TestRunner"]) {
   addAssembly(join(testFramework, name, `${name}.asmdef`), "unity");
 }
@@ -129,10 +138,9 @@ const precompiled = {
   "nunit.framework.dll": join(builtIn, "com.unity.ext.nunit", "net40", "unity-custom", "nunit.framework.dll"),
 };
 // The test runner needs Mono.Cecil, which Unity ships as a package tarball
-const cecil = join(data, "Resources", "PackageManager", "Editor", "com.unity.nuget.mono-cecil-1.11.6.tgz");
-if (existsSync(cecil)) {
+{
   mkdirSync(join(work, "cecil"), { recursive: true });
-  spawnSync("tar", ["-xzf", cecil, "-C", join(work, "cecil")]);
+  spawnSync("tar", ["-xzf", relative(join(work, "cecil"), cecil).split("\\").join("/"), "-C", "."], { cwd: join(work, "cecil") });
   for (const name of ["Mono.Cecil", "Mono.Cecil.Mdb", "Mono.Cecil.Pdb", "Mono.Cecil.Rocks"]) {
     precompiled[`${name}.dll`] = join(work, "cecil", "package", `${name}.dll`);
   }
@@ -149,7 +157,10 @@ function compileAll(configName) {
   const config = configs[configName];
   const built = new Map();
   const skipped = new Set();
-  const pending = [...assemblies.values()].filter((a) => !(configName === "player" && (a.origin === "unity" || (a.def.includePlatforms ?? []).includes("Editor"))));
+  // Only the Editor platform is modelled: an assembly limited to it skips the player, one excluding it skips the editor
+  const editorOnly = (a) => (a.def.includePlatforms ?? []).includes("Editor");
+  const notInEditor = (a) => (a.def.excludePlatforms ?? []).includes("Editor") || ((a.def.includePlatforms ?? []).length > 0 && !editorOnly(a));
+  const pending = [...assemblies.values()].filter((a) => (configName === "player" ? a.origin !== "unity" && !editorOnly(a) : !notInEditor(a)));
   const outDir = join(work, "out", configName);
   mkdirSync(outDir, { recursive: true });
   while (pending.length > 0) {
@@ -233,5 +244,8 @@ for (const line of lines) {
 if (failed === 0) {
   const count = lines.filter((l) => l.startsWith("ok")).length;
   console.log(`ok   ${rev} compiles: ${count} assembly builds with the compiler and generators of Unity ${versionName}`);
+}
+if (!process.env.HH_WORK) {
+  rmSync(work, { recursive: true, force: true });
 }
 process.exit(failed > 0 ? 1 : 0);
