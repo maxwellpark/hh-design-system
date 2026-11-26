@@ -11,9 +11,7 @@ which fails on a control with no EditMode test.
 
 1. Dialog focus trap: while an `HHDialog` is open, Tab and Shift+Tab wrap inside it and focus that
    leaves by any route comes back. Check: EditMode tests written, the compile gate.
-2. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
-   Check: its test, gallery and reference sections, which `check.mjs` already demands.
-3. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
+2. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
    both samples instead of hand-built cards. Check: the same checks, and the compile gate.
 
 ## Blocked on owner
@@ -51,6 +49,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHRadioGroup`: one choice of several as a segmented row, the checked choice teal with bg text; tests, gallery, reference and six contrast pairs (branch `max/radio-group`).
 - 2026-11-26: non-text contrast: every state-bearing part the audit found has a 3:1 pair in `Tools~/contrast.json`, with new pairs for the slider's focus ring and the dropdown arrow; the one new failure, the empty track on a card at 1.39:1, is accepted and waits on the owner's palette choice (branch `max/non-text-contrast`).
 - 2026-11-26: HUD sample: `Samples~/HUD/HudOverlay.cs`, a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven by its own buttons so it needs neither input system; `check.mjs` fails if it stops using any of them (branch `max/hud-sample`).
 - 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).

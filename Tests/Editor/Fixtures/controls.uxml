@@ -25,4 +25,5 @@
         <ui:Tab name="audio" label="Audio" />
         <ui:Tab name="video" label="Video" />
     </hh:HHTabs>
+    <hh:HHRadioGroup name="radio" label="Difficulty" choices="Easy,Normal,Hard" value="1" />
 </ui:UXML>

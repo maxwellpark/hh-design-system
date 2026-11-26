@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHRadioGroup`: one choice of several, such as difficulty, shown as a segmented row. The checked
+  choice fills teal with dark text; every pair it adds passes AA in both themes.
 - Contrast: the slider's focus ring and the dropdown arrow now have 3:1 pairs, and the empty
   track of a slider, progress bar, segmented bar or scroller is checked against the card at WCAG
   1.4.11's 3:1. It's 1.39:1 in the default theme, accepted until the owner picks a
