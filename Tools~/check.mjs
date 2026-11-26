@@ -165,6 +165,13 @@ for (const file of themeFiles) {
   const text = readFileSync(join("Runtime/Styles", file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
   const list = [...text.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]);
   const names = new Set(list.map(([name]) => name));
+  if (names.size !== list.length) {
+    problems.push(`${file}: a token is defined twice`);
+  }
+  const sheet = `hh-theme-${file.slice("hh-tokens-".length, -".uss".length)}.tss`;
+  if (!existsSync(join("Runtime/Styles", sheet)) || !readFileSync(join("Runtime/Styles", sheet), "utf8").includes(`url("${file}")`)) {
+    problems.push(`${file}: no ${sheet} importing it`);
+  }
   for (const [name] of tokens) {
     if (!names.has(name)) {
       problems.push(`${file}: no --hh-${name}, which hh-tokens.uss defines`);

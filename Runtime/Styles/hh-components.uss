@@ -1,5 +1,7 @@
 /* Components, all styled through the tokens (var(--hh-*)) so a theme swap restyles everything. */
 .hh-card {
+    border-width: 1px;
+    border-color: var(--hh-color-card-edge);
     background-color: var(--hh-color-surface);
     border-radius: var(--hh-radius-lg);
     padding: var(--hh-space-6);
@@ -300,6 +302,8 @@
 }
 
 .hh-dialog .hh-dialog__panel {
+    border-width: 1px;
+    border-color: var(--hh-color-card-edge);
     min-width: 320px;
     max-width: 560px;
     padding: var(--hh-space-6);

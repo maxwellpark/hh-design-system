@@ -1,6 +1,6 @@
 # Acceptance: high-contrast
 
-Node 22 and Unity 6000.0.85f2's compiler. Stacked on the button tokens, which made a passing palette
+Node 22 and Unity 6000.0.85f2's compiler. The button tokens, already on main, made a passing palette
 possible.
 
 ## Claims
@@ -8,7 +8,8 @@ possible.
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | Every contrast pair passes AA in the high-contrast theme, with no accepted exceptions | `node Tools~/check.mjs` | 80 pairs across 2 themes, exit 0 | verified |
-| A theme must define exactly the default's tokens | "a theme missing a token fails", "a theme with an extra token fails" | pass | verified |
+| A theme must define exactly the default's tokens, once each, parse, and have a theme sheet importing it | the five theme cases in `check.test.mjs` | pass | verified |
+| Cards and dialogs show an edge in high contrast (`card-edge` #9A9AC8 is 7.3:1 against the page) and none in the default theme (`card-edge` equals `surface`) | the tokens and the `.hh-card` and dialog panel rules | | unverified (render) |
 | An exception accepted in the default theme doesn't excuse another theme | "a pair accepted in the default theme must pass in another" | pass | verified |
 | The theme sheet imports Unity's default theme, the high-contrast tokens, the components and the dropdown list | `grep -c import Runtime/Styles/hh-theme-high-contrast.tss` | 4 | verified |
 | With the theme picked, every control shows black surfaces, white text, a yellow focus ring and darker buttons | the tokens | | unverified |
