@@ -11,13 +11,9 @@ which fails on a control with no EditMode test.
 
 1. Dialog focus trap: while an `HHDialog` is open, Tab and Shift+Tab wrap inside it and focus that
    leaves by any route comes back. Check: EditMode tests written, the compile gate.
-2. Non-text contrast: WCAG 1.4.11 asks 3:1 for the parts that show a control's state. The focus
-   ring, scroller and tab underline have pairs; the toggle box edge, the text field and dropdown
-   edges, and the progress, segment and slider fills against their track don't yet. Check: those pairs in `Tools~/contrast.json` with
-   `min: 3`; any that fail go to Blocked on owner as palette choices, accepted meanwhile.
-3. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
+2. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
    Check: its test, gallery and reference sections, which `check.mjs` already demands.
-4. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
+3. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
    both samples instead of hand-built cards. Check: the same checks, and the compile gate.
 
 ## Blocked on owner
@@ -55,6 +51,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: non-text contrast: every state-bearing part the audit found has a 3:1 pair in `Tools~/contrast.json`, with new pairs for the slider's focus ring and the dropdown arrow; the one new failure, the empty track on a card at 1.39:1, is accepted and waits on the owner's palette choice (branch `max/non-text-contrast`).
 - 2026-11-26: HUD sample: `Samples~/HUD/HudOverlay.cs`, a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven by its own buttons so it needs neither input system; `check.mjs` fails if it stops using any of them (branch `max/hud-sample`).
 - 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).
 - 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
