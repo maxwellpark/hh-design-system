@@ -213,11 +213,11 @@ const cases = [
   ["a reference example using an unknown element fails", (d) => edit(d, "Documentation~/components.md", '<hh:HHBadge count="3" />', '<hh:HHBadges count="3" />'), 1, /components\.md:\d+: hh:HHBadges isn't in the component reference/],
   ["a stale goal control count fails", (d) => {
     const p = join(d, "GOAL.md");
-    writeFileSync(p, readFileSync(p, "utf8").replace(/^(\| Controls with a UXML element \|.*\| )\d+( \|)$/m, "$118$2"));
+    writeFileSync(p, readFileSync(p, "utf8").replace(/^(\| Controls with a UXML element \|.*\| )\d+( \|)$/m, (_, head, tail) => `${head}18${tail}`));
   }, 1, /GOAL\.md: "Controls with a UXML element" says 18, the repo has \d+/],
   ["a stale goal contrast count fails", (d) => {
     const p = join(d, "GOAL.md");
-    writeFileSync(p, readFileSync(p, "utf8").replace(/(\| Contrast pairs below AA \|[^|]*\| )\d+ of \d+/, "$12 of 80"));
+    writeFileSync(p, readFileSync(p, "utf8").replace(/(\| Contrast pairs below AA \|[^|]*\| )\d+ of \d+/, (_, head) => `${head}2 of 80`));
   }, 1, /GOAL\.md: "Contrast pairs below AA" says 2 of 80/],
   ["a missing goal row fails", (d) => {
     const p = join(d, "GOAL.md");
