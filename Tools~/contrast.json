@@ -22,6 +22,9 @@
     { "use": "Checked toggle against a card", "text": "violet", "on": "surface", "min": 3 },
     { "use": "Slider handle against its track", "text": "teal", "on": "track", "min": 3 },
     { "use": "Progress fill against its track", "text": "teal", "on": "track", "min": 3 },
+    { "use": "Violet progress fill or segment against the track", "text": "violet-light", "on": "track", "min": 3 },
+    { "use": "Pink progress fill or segment against the track", "text": "pink", "on": "track", "min": 3 },
+    { "use": "Peach progress fill or segment against the track", "text": "peach", "on": "track", "min": 3 },
     {
       "use": "Button text",
       "text": "text",
