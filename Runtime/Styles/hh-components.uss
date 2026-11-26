@@ -175,6 +175,42 @@
     border-color: var(--hh-color-focus);
 }
 
+/* The switch: the checkmark becomes a track and the knob slides on the duration tokens, so reduced motion holds */
+.hh-toggle__knob {
+    display: none;
+}
+
+.hh-toggle.hh-toggle--switch.unity-base-field .unity-toggle__checkmark {
+    width: 40px;
+    height: 22px;
+    padding: 2px;
+    border-radius: 11px;
+    background-color: var(--hh-color-track);
+    background-image: none;
+    justify-content: center;
+}
+
+.hh-toggle.hh-toggle--switch.unity-base-field:checked .unity-toggle__checkmark {
+    background-color: var(--hh-color-violet);
+}
+
+.hh-toggle.hh-toggle--switch.unity-base-field .hh-toggle__knob {
+    display: flex;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    margin-left: 0;
+    background-color: var(--hh-color-violet-light);
+    transition-property: margin-left, background-color;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
+}
+
+.hh-toggle.hh-toggle--switch.unity-base-field:checked .hh-toggle__knob {
+    margin-left: 18px;
+    background-color: var(--hh-color-text);
+}
+
 .hh-slider.unity-base-field .unity-base-slider__tracker {
     background-color: var(--hh-color-track);
     border-width: 0;

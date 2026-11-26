@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
+  duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
+  sample's Music uses it.
 - `HHSlider` can show its value beside the track: `show-value` turns it on, and `value-format`
   picks Percent (the default) or Number. The gallery and the Settings sample's volume show it.
 - Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only
