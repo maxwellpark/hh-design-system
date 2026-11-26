@@ -31,7 +31,9 @@ states, defaults and behaviour notes can drift without the check noticing.
 ok   a control with no reference section fails
 ok   a reference section for no control fails
 ok   a class missing from the reference fails
+ok   a modifier named only as a longer class fails
 ok   an attribute missing from the reference fails
+ok   a token a control's rules use, missing from its section, fails
 ok   a reference naming an unknown token fails
 68/68 passed
 ```
