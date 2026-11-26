@@ -209,6 +209,8 @@ const cases = [
   ["a disabled control never added to the page doesn't count", (d) => edit(d, "Editor/HHGallery.cs", ", lockedTabs, lockedList, scroller }", ", lockedTabs, scroller }"), 1, /HHListView\.cs: HHListView is never built disabled/],
   ["a control declared with its type rather than var counts", (d) => edit(d, "Editor/HHGallery.cs", "var stepper = new HHStepper(", "HHStepper stepper = new HHStepper("), 0, /controls referenced/],
   ["a disabled rule on a child only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view.unity-list-view:disabled,\n", ".hh-list-view:disabled .unity-label,\n"), 1, /HHListView\.cs: HHListView can take focus but no :disabled rule/],
+  ["a typo in a reference example fails", (d) => edit(d, "Documentation~/components.md", '<hh:HHBadge count="3" />', '<hh:HHBadge cuont="3" />'), 1, /Documentation~\/components\.md:\d+: hh:HHBadge has no cuont attribute/],
+  ["a reference example using an unknown element fails", (d) => edit(d, "Documentation~/components.md", '<hh:HHBadge count="3" />', '<hh:HHBadges count="3" />'), 1, /components\.md:\d+: hh:HHBadges isn't in the component reference/],
 ];
 
 let failed = 0;

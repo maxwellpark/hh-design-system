@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` holds the component reference's own UXML examples to its attribute lists and
+  Unity's base attributes, so a typo there can no longer widen what guides may use.
+- `HHHoldButton`: a button that confirms only after it is held for `hold-seconds`, with a bar
+  filling along its foot; pointer, Space and Enter hold it. Reduced motion never shortens the hold.
 - Tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, updates it in
   place, and removes it at 0. The gallery's Items tab shows one.
 - Theming guide: `Documentation~/theming.md` makes a theme in a game's own project (tokens, a
