@@ -18,14 +18,15 @@ namespace HootonHeroics.DesignSystem.Tests
             Assert.That(group.ClassListContains(RadioButtonGroup.ussClassName), Is.True);
         }
 
+        // Off a panel the group doesn't check its buttons (it waits to attach), so this holds the value, not the checks
         [Test]
-        public void ChoicesBecomeButtonsAndValueChecksOne()
+        public void ChoicesBecomeButtonsInOrderAndValueHolds()
         {
             var group = new HHRadioGroup("Difficulty", new List<string> { "Easy", "Normal", "Hard" }) { value = 2 };
             var buttons = group.Query<RadioButton>().ToList();
 
             Assert.That(buttons.Select(b => b.text), Is.EqualTo(new[] { "Easy", "Normal", "Hard" }));
-            Assert.That(buttons.Select(b => b.value), Is.EqualTo(new[] { false, false, true }));
+            Assert.That(group.value, Is.EqualTo(2));
         }
 
         [Test]

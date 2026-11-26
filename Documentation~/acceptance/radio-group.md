@@ -8,9 +8,9 @@ needs a licence (Blocked on owner).
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | `HHRadioGroup` compiles for the editor and a player, with its tests | the compile gate | ok | verified |
-| Every `.unity-*` class its rules name exists in Unity 6000.0 (`unity-radio-button-group__container`, `unity-radio-button`, `__text`, `__checkmark-background`) | the gate's Unity class check | ok | verified |
+| Every `.unity-*` class its rules name exists in Unity 6000.0 (`unity-radio-button-group__container`, `unity-radio-button`, `__text`, `__checkmark-background`); the pill goes on `#choicesContentContainer`, since the group's empty UXML container carries the same class | the gate's Unity class check; Unity's `RadioButtonGroup` constructor read in IL by review | ok | verified |
 | It carries `.hh-radio-group` and stays a `RadioButtonGroup` | `RadioGroupTests.RadioGroupCarriesItsStyleClassAndStaysARadioButtonGroup` | | written, not run |
-| Choices become radio buttons in order and `value` checks one | `RadioGroupTests.ChoicesBecomeButtonsAndValueChecksOne` | | written, not run |
+| Choices become radio buttons in order and `value` holds; off a panel Unity doesn't check the buttons, so that's left to the hands-on check | `RadioGroupTests.ChoicesBecomeButtonsInOrderAndValueHolds` | | written, not run |
 | `label`, `choices` and `value` apply from UXML | `RadioGroupTests.UxmlChoicesAndValueApply` with the fixture | | written, not run |
 | Every text and edge it draws meets AA (text) or 3:1 (non-text) in both themes | six pairs in `contrast.json`, below | pass | verified |
 | It's in the gallery and the component reference, and has rules | `check.mjs` | pass | verified |
@@ -28,6 +28,10 @@ Pairs it adds:
 | Focus ring on the checked radio choice | text on bg | 3 |
 
 ## Coverage and complexity
+
+The checked choice's focus ring is text colour: 17:1 against the row outside it, but 1.6:1 against
+the teal fill inside it. The outer edge carries it, so no pair is listed for the inner side.
+
 
 A constructor and a class name; the look is all USS. Keyboard behaviour is Unity's
 `RadioButtonGroup`, not this package's.

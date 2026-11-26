@@ -520,6 +520,10 @@
 /* A segmented row: the radio circles are hidden and the checked choice fills teal, with bg text (badge contrast) */
 .hh-radio-group.unity-base-field .unity-radio-button-group__container {
     flex-direction: row;
+}
+
+/* Two containers carry that class; only the one built from choices gets the pill, not the empty UXML one */
+.hh-radio-group.unity-base-field #choicesContentContainer {
     padding: 2px;
     background-color: var(--hh-color-bg);
     border-width: 2px;
