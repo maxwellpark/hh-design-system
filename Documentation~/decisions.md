@@ -19,3 +19,11 @@
   `.hh-progress-bar .unity-progress-bar__progress`.
 - Default 2026-11-26 [needs-review]: the package checks run by hand (`node Tools~/check.mjs`). Why:
   GitHub Actions is off on these repos. To change: add a workflow once Actions is on.
+- Default 2026-11-26 [needs-review]: the progress title sits above the bar. Why: white on the teal
+  fill is 1.6:1 and dark text fails on the track, so no single colour reads on both. To change:
+  `.hh-progress-bar .unity-progress-bar__title-container` and its padding.
+- Default 2026-11-26 [needs-review]: the ghost hover tint is 22%, not 28%. Why: 28% put its text at
+  4.4:1. To change: `--hh-color-violet-ghost-hover` and `HHTheme.violetGhostHover`.
+- Default 2026-11-26 [needs-review]: the 0.1 button colours are accepted exceptions in the
+  contrast check rather than changed. Why: they are the brand palette, so changing them is the
+  owner's call (Blocked on owner in BACKLOG.md). To change: drop the two `accepted` entries.

@@ -5,7 +5,7 @@
     --hh-color-violet: #8257FF;
     --hh-color-violet-light: #A78BFA;
     --hh-color-violet-ghost: rgba(130, 87, 255, 0.14);
-    --hh-color-violet-ghost-hover: rgba(130, 87, 255, 0.28);
+    --hh-color-violet-ghost-hover: rgba(130, 87, 255, 0.22);
     --hh-color-teal: #45D6C4;
     --hh-color-pink: #FF5C8A;
     --hh-color-peach: #FFB25C;
