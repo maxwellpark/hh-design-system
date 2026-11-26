@@ -13,7 +13,7 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
   Basic UI sample runs. Check: a clean project in Unity 6, console empty after import.
 - [x] 2026-11-26, `Tools~/check.mjs`: every imported asset has a `.meta`, and `HHTheme` matches
   the tokens. Check: `node Tools~/check.mjs` exits 0.
-- [ ] Menus, settings and HUD are covered: button, toggle, slider, dropdown, text field, dialog,
+- [x] 2026-11-26, `Runtime/` (17 UXML controls): menus, settings and HUD are covered: button, toggle, slider, dropdown, text field, dialog,
   tabs, tooltip, toast and progress bar each have a file in `Runtime/` and rules in
   `hh-components.uss`. Check: the controls count in Numbers reaches 10.
 - [ ] Every text colour meets WCAG AA contrast on the surfaces it sits on. Check:
@@ -42,4 +42,4 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 
 ## Last checked
 
-2026-11-26, 44fddb3.
+2026-11-26, 51a7f47.
