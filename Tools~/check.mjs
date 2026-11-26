@@ -257,8 +257,8 @@ function classConstants(source) {
   return values;
 }
 
-// Every sample package.json lists must exist, and the settings, HUD and pause menu samples must use the controls those screens need
-// Each listed sample has a README naming every script in its folder, so its setup steps can't miss one
+// Every sample package.json lists must exist, with a README naming every script in its folder, so its setup steps can't
+// miss one; the settings, HUD and pause menu samples must also use the controls those screens need
 for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ?? []) {
   if (!existsSync(sample.path)) {
     problems.push(`package.json: sample "${sample.displayName}" path ${sample.path} is missing`);

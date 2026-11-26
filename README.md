@@ -58,7 +58,7 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
   - stylesheets that don't parse or use an unknown property;
   - a component reference (`Documentation~/components.md`) out of step with the code;
   - guide UXML using an `hh:` element or attribute the reference doesn't have;
-  - a focusable control with no `:focus` rule.
+  - a focusable control with no `:focus` rule;
   - a listed sample without a README, or with a script its README doesn't name.
   `node Tools~/check.test.mjs` tests the check itself.
 - `bash Tools~/unity-compile.sh` compiles every committed asmdef, following its references,
