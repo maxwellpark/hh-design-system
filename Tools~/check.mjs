@@ -681,7 +681,7 @@ if (existsSync("GOAL.md")) {
     if (row === undefined) {
       problems.push(`GOAL.md: no Numbers row "${what}"`);
     } else if (row !== value && !row.startsWith(`${value},`)) {
-      problems.push(`GOAL.md: "${what}" says ${row}, the repo has ${value}`);
+      problems.push(`GOAL.md: "${what}" says ${row}, the repo has ${value}; set that row's Latest to ${value}`);
     }
   }
 }
