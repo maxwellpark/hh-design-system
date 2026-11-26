@@ -9,20 +9,18 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
-   check can go. Check: tests written, gate.
-2. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+1. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
    theme sheet for each; the contrast check runs every pair against every theme. Check:
    `check.mjs` over all three, gate.
-3. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+2. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
    that cycles the three themes. Check: tests written, gate.
-4. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+3. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
    reference check to fail on a control missing from it.
-5. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+4. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
    compiles it; extend the reference check to fail on a form control it doesn't use.
-6. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+5. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
    and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -35,8 +33,8 @@ which fails on a control with no EditMode test.
 - Button contrast, from the 0.1 palette: white on `--hh-color-button` is 4.0:1 and on
   `--hh-color-button-hover` 2.5:1, both under AA's 4.5:1 (accepted in `Tools~/contrast.json` until
   decided). Options: set `button` to `#754EE6` (4.8:1) and `button-hover` to `#6E4AD9` (5.2:1), or
-  dark text on lighter buttons. Recommended: the darker violets, which keep the look. Since the
-  button tokens are their own, this no longer touches accent text or borders.
+  dark (`bg`) text on the current hover colour, 7.0:1. Recommended: the darker violets, which keep
+  the look. Since the button tokens are their own, this no longer touches accent text or borders.
 - A Unity licence for batch mode, so the gate can also import USS, TSS and UXML and run the tests:
   on Linux, 6000.0 exits 198 ("No valid Unity Editor license found") before importing anything.
   The house standards' route is a Unity account made for automation, activated through `op run`.
@@ -45,6 +43,9 @@ which fails on a control with no EditMode test.
   Unity repos do.
 - The open-core split: which controls stay MIT and which go in the paid Pro pack.
 - Publishing: an OpenUPM listing, then the Asset Store.
+- Drop `HHTheme`'s hand-kept mirror, as the runtime-token item first asked? `HHTokens` now reads
+  resolved tokens, but `HHTheme` also serves code with no styled element (sprites, materials),
+  so the mirror and its check were kept. Keep it, or drop `HHTheme`?
 - Captures of the component gallery and both samples in each theme, from an editor with graphics.
 
 ## Ideas
@@ -55,6 +56,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: button tokens: `--hh-color-button` and `--hh-color-button-hover` split from `violet` and `violet-light`, at the same values, so a theme can set the button apart from accent text (branch `max/button-tokens`).
+- 2026-11-26: `HHTokens`: read resolved token values (`TryGetColor`, `TryGetFloat`, `WhenResolved`) from a styled element at runtime (branch `max/runtime-tokens`).
 - 2026-11-26: dropdown lists: `hh-dropdown-menu.uss`, imported by `hh-theme.tss`, styles Unity's `GenericDropdownMenu` (card, track hover, teal checkmark, separators) (branch `max/dropdown-menu`).
 - 2026-11-26: Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*ussClassName` Unity 6000.0's UI Toolkit assembly assigns (`Tools~/unity-classes.cs`, Mono.Cecil) and fails on a `.unity-*` class a stylesheet styles that isn't one (branch `max/unity-class-check`).
 - 2026-11-26: `HHScrollView` and `HHListView`: slim scrollers with a violet-light handle and no arrow buttons, rows with a track hover and a selection tint plus violet-light edge (branch `max/scroll-list`).
