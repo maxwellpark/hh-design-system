@@ -31,7 +31,8 @@ public class PauseMenu : MonoBehaviour
         root.Add(BuildQuitDialog());
         toasts = new HHToastStack();
         root.Add(toasts);
-        Resume();
+        // Start unpaused without taking focus, which the game may want
+        menu.style.display = DisplayStyle.None;
     }
 
     private VisualElement BuildMenu()
