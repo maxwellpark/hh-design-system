@@ -156,3 +156,7 @@
 - Default 2026-11-26 [needs-review]: the switch is 40 by 22px with a 14px knob, in fixed pixels, and
   its knob is a child added in C# because USS has no pseudo-elements. Why: a size that reads as a
   switch beside 14px text; large text leaves it as it is. To change: the `.hh-toggle--switch` rules.
+- Default 2026-11-26 [needs-review]: a focused `HHStepper` takes left and right to step, so they don't
+  move focus out of it, and its arrows don't take focus. Why: on a gamepad the d-pad is the natural
+  way to change it, and three tab stops for one setting is too many. To change:
+  `HHStepper.OnNavigationMove` and the buttons' `focusable`.

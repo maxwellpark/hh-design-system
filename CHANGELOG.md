@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHStepper`: one value from an ordered list, stepped with its arrows or, when focused, left and
+  right on a keyboard or gamepad; it stops at the ends, disabling the arrow there.
 - `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
   duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
   sample's Music uses it.

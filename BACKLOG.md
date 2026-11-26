@@ -9,10 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
-   (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
-   at the ends with the button there disabled. Check: its test, gallery and reference sections,
-   contrast pairs and the compile gate.
 
 ## Blocked on owner
 
@@ -49,6 +45,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHStepper`: an ordered list stepped with arrows or left and right when focused, clamped with the end arrow disabled; tests, gallery, reference, four contrast pairs, and `BaseField` added to the focus check's focusable bases (branch `max/stepper`).
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
 - 2026-11-26: getting started guide: `Documentation~/getting-started.md` goes from install to a themed card with a toggle and a button, then themes and accessibility; the gate compiles its two C# blocks and `check.mjs` checks its UXML (branch `max/getting-started`).
 - 2026-11-26: focus rule check: `check.mjs` fails on a control built on a focusable Unity base (from a table) with no `:focus` rule on it or a part; `HHListView`, the one without, gains a focus ring (branch `max/focus-rules`).
