@@ -38,5 +38,10 @@ namespace HootonHeroics.DesignSystem
         public float fontSizeMd = 14f;
         public float fontSizeLg = 18f;
         public float fontSizeXl = 28f;
+
+        [Header("Motion")]
+        public float durationFast = 0.12f;
+        public float durationNormal = 0.2f;
+        public string easingStandard = "ease-out";
     }
 }

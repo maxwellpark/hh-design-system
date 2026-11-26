@@ -99,6 +99,9 @@ const cases = [
     edit(d, "Runtime/HHSwitch.cs.meta", /guid: \w+/.exec(readFileSync(join(d, "Runtime/HHSwitch.cs.meta"), "utf8"))[0], "guid: fedcba9876543210fedcba9876543210");
     edit(d, "Runtime/HHSwitch.cs", "[UxmlElement]\n    public partial class HHToggle", "[UxmlElement(\"switch\")]\n    [System.Serializable]\n    public sealed partial class HHSwitch");
   }, 1, /HHSwitch\.cs: HHSwitch has no EditMode test/],
+  ["duration drifts", (d) => edit(d, "Runtime/HHTheme.cs", "durationFast = 0.12f", "durationFast = 0.15f"), 1, /--hh-duration-fast is 0\.12s but HHTheme\.durationFast is 0\.15/],
+  ["duration in ms matches seconds", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-duration-normal: 0.2s;", "--hh-duration-normal: 200ms;"), 0, /tokens match HHTheme/],
+  ["easing drifts", (d) => edit(d, "Runtime/HHTheme.cs", '"ease-out"', '"linear"'), 1, /--hh-easing-standard is ease-out but HHTheme\.easingStandard is linear/],
 ];
 
 let failed = 0;
