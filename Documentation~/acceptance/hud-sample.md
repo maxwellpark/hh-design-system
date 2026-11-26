@@ -41,9 +41,11 @@ ok   a listed sample that's been deleted fails
 1. Import the HUD sample, put `HudOverlay` on a GameObject with a `UIDocument` using
    `hh-theme.tss`, and press Play: a full pink health bar and three peach life segments top left,
    a Bag button top right, and three buttons along the bottom.
-2. Take a hit three times: health empties, a "Life lost" toast shows, and a segment goes dark.
+2. Take a hit twice: health drops to 65, then 30. A third hit costs a life: health refills, a
+   "Life lost" toast shows and a segment goes dark.
 3. Pick up twice: two toasts and a badge reading 2 on Bag. Press Bag: the badge goes.
-4. Lose all three lives: a red "Game over" toast, and the lives refill.
+4. Take six more hits: the second life goes at the sixth hit of the run, leaving one segment; the
+   third life goes at the ninth, with a red "Game over" toast and all three segments back at once.
 
 ## Unverified
 

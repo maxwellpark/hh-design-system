@@ -21,7 +21,7 @@ public class HudOverlay : MonoBehaviour
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        // Re-enabling this component alone keeps the document's root, so start it empty
+        // The sample owns the whole document; re-enabling this component alone keeps its root, so start it empty
         root.Clear();
         root.style.flexGrow = 1;
         root.style.justifyContent = Justify.SpaceBetween;
@@ -80,11 +80,17 @@ public class HudOverlay : MonoBehaviour
         hp -= 35;
         if (hp <= 0)
         {
-            livesLeft -= 1;
             hp = MaxHealth;
-            var over = livesLeft == 0;
-            toasts.Show(over ? "Game over: lives restored" : "Life lost", over ? HHToastTone.Danger : HHToastTone.Warning);
-            livesLeft = over ? MaxLives : livesLeft;
+            livesLeft -= 1;
+            if (livesLeft == 0)
+            {
+                livesLeft = MaxLives;
+                toasts.Show("Game over: lives restored", HHToastTone.Danger);
+            }
+            else
+            {
+                toasts.Show("Life lost", HHToastTone.Warning);
+            }
         }
         Refresh();
     }
