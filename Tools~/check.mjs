@@ -461,8 +461,8 @@ if (!existsSync(referencePath)) {
   }
 }
 
-// UXML in the guides may only use documented hh: elements, with attributes from their reference section (its Attributes
-// list, or one its own example uses on that element), their Unity base's own, or VisualElement's
+// UXML in the guides and the reference's examples may only use documented hh: elements, with attributes from their
+// reference section's Attributes list, their Unity base's own, or VisualElement's
 function fencedBlocks(text, languages) {
   const blocks = [];
   let open = null;
@@ -521,14 +521,10 @@ if (existsSync(referencePath)) {
     for (const [, listed] of (section.match(/^- \*\*Attributes:\*\*\n((?: {2}- .*\n?)*)/m)?.[1] ?? "").matchAll(/^ {2}- `([^`]+)`/gm)) {
       names.add(listed);
     }
-    for (const { code } of fencedBlocks(section, ["xml", "uxml"])) {
-      for (const element of elements(code).filter((e) => e.type === type)) {
-        element.attributes.forEach((a) => names.add(a.name));
-      }
-    }
     allowed.set(type, names);
   }
-  for (const doc of readdirSync("Documentation~").filter((n) => n.endsWith(".md") && n !== "components.md")) {
+  // The reference's own examples are held to the same lists, so a typo there can't pass as documented
+  for (const doc of readdirSync("Documentation~").filter((n) => n.endsWith(".md"))) {
     for (const { code, line } of fencedBlocks(readFileSync(join("Documentation~", doc), "utf8"), ["xml", "uxml"])) {
       for (const { type, attributes } of elements(code)) {
         if (!allowed.has(type)) {
