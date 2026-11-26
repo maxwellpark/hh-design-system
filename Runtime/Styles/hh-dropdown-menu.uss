@@ -1,0 +1,37 @@
+/* Unity opens dropdown lists at the panel root, outside any document, so only hh-theme.tss reaches them */
+/* Each rule starts at .unity-base-dropdown and chains to its part, to outweigh Unity's nested defaults */
+.unity-base-dropdown .unity-base-dropdown__container-outer {
+    border-width: 1px;
+    border-color: var(--hh-color-track);
+    border-radius: var(--hh-radius-md);
+    background-color: var(--hh-color-surface);
+}
+
+.unity-base-dropdown .unity-base-dropdown__container-outer .unity-base-dropdown__container-inner {
+    padding: var(--hh-space-1) 0;
+}
+
+.unity-base-dropdown .unity-base-dropdown__item {
+    padding: var(--hh-space-1) var(--hh-space-3);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-dropdown .unity-base-dropdown__item:hover:enabled {
+    background-color: var(--hh-color-track);
+}
+
+.unity-base-dropdown .unity-base-dropdown__item .unity-base-dropdown__item-content .unity-base-dropdown__label,
+.unity-base-dropdown .unity-base-dropdown__item:hover:enabled .unity-base-dropdown__item-content .unity-base-dropdown__label {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+}
+
+.unity-base-dropdown .unity-base-dropdown__item .unity-base-dropdown__item-content .unity-base-dropdown__checkmark {
+    -unity-background-image-tint-color: var(--hh-color-teal);
+}
+
+.unity-base-dropdown .unity-base-dropdown__container-inner .unity-base-dropdown__separator {
+    height: 1px;
+    margin: var(--hh-space-1) 0;
+    background-color: var(--hh-color-track);
+}

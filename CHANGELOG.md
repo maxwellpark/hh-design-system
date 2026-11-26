@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+- Dropdown lists: `hh-dropdown-menu.uss` styles the list a dropdown opens (a card with a track
+  hover, white labels and a teal checkmark). `hh-theme.tss` imports it; documents styled with the
+  two stylesheets alone keep Unity's list, since it opens at the panel root.
+- The compile gate also checks every `.unity-*` class the stylesheets style against the class
+  names Unity's own UI Toolkit assembly defines, read by `Tools~/unity-classes.cs`.
 - `HHScrollView` and `HHListView`: slim scrollers without arrow buttons and a violet-light handle;
   list rows with a track-coloured hover and, when selected, a violet tint with a violet-light edge.
 - `HHTabs`: Unity 6's `TabView` styled through the tokens: dim labels, white for the hovered and

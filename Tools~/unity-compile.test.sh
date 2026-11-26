@@ -42,6 +42,10 @@ check "tests losing their runtime reference fail" 1 "FAIL HootonHeroics.DesignSy
   sed -i '/"HootonHeroics.DesignSystem",/d' Tests/Editor/HootonHeroics.DesignSystem.Tests.Editor.asmdef
 check "editor-only code in a runtime assembly fails the player build" 1 "\\[player\\]" \
   sed -i 's/public HHProgressBar()/public HHProgressBar(UnityEditor.EditorWindow unused) : this() { }\n        public HHProgressBar()/' Runtime/HHProgressBar.cs
+check "a misspelt Unity class in a stylesheet fails" 1 "\\.unity-scroler--vertical isn't a class Unity" \
+  sed -i 's/\.unity-scroller--vertical/.unity-scroler--vertical/' Runtime/Styles/hh-components.uss
+check "a real Unity class outside *UssClassName fields passes" 0 "class uses checked" \
+  bash -c 'printf "\n.hh-tabs .unity-tab-view__header-container {\n    padding: 0;\n}\n" >> Runtime/Styles/hh-components.uss'
 check "an uncommitted change is not compiled" 0 "compiles: [0-9]+ assembly builds" \
   bash -c 'echo "syntax error" > Runtime/Untracked.cs'
 
