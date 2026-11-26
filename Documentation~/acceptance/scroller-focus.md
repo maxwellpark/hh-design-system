@@ -6,10 +6,10 @@ Node 22, Unity 6000.0.85f2's compiler, and a hand read of its UI Toolkit assembl
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| A scroll view's scrollers take focus in Unity 6000.0 | IL of `UnityEngine.UIElementsModule.dll`: `Scroller` builds `ScrollerSlider`, a plain `Slider`; `BaseField` sets its input focusable with tab index 0; nothing in `Scroller`, `ScrollerSlider`, `ScrollView`, `BaseSlider` or `Slider` turns it off. Recorded in `decisions.md` | yes | verified by reading |
+| A scroll view's scrollers take focus in Unity 6000.0 | IL of `UnityEngine.UIElementsModule.dll`: `Scroller` builds `ScrollerSlider`, a plain `Slider`; `BaseField` sets its input focusable (default tab index 0) and makes itself a composite root, so `:focus` reaches the slider; nothing in `Scroller`, `ScrollerSlider`, `ScrollView`, `BaseSlider` or `Slider` turns it off. Recorded in `decisions.md` | yes | verified by reading |
 | A focused scroller's handle turns the focus colour, in a scroll view and in a list | `.hh-scroll-view` and `.hh-list-view` `.unity-slider:focus .unity-base-slider__dragger` | | unverified in Unity |
 | That handle meets 3:1 against its track in both themes | "Focused scroller handle against its track" | pass | verified |
-| The focus check holds `ScrollView` now, accepting `:focus` on any part after the control's own class, and fails without the rule | the focus check; "a scroll view without a focused scroller rule fails" | pass | verified |
+| The focus check holds `ScrollView` now, accepting `:focus` deeper only for it and only on a `.unity-*` part; the list still needs its own ring | the focus check; four planted cases | pass | verified |
 | Every `.unity-*` class the rule names exists | the gate's class check | ok | verified |
 
 ## Coverage and complexity

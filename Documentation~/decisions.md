@@ -161,7 +161,7 @@
   way to change it, and three tab stops for one setting is too many. To change:
   `HHStepper.OnNavigationMove` and the buttons' `focusable`.
 - Fact 2026-11-26: a scroll view's scrollers take focus in Unity 6000.0. `Scroller` builds a
-  `ScrollerSlider`, which is a plain `Slider`; `BaseField` makes its input focusable with tab index 0,
+  `ScrollerSlider`, which is a plain `Slider`; `BaseField` makes its input focusable (at the default tab index 0) and itself a composite root that delegates focus,
   and nothing in `Scroller`, `ScrollerSlider`, `ScrollView` or the slider classes turns that off (read
   in `UnityEngine.UIElementsModule.dll`'s IL). So `.hh-scroll-view` and `.hh-list-view` colour a
   focused scroller's handle, and the focus check treats `ScrollView` as focusable.
