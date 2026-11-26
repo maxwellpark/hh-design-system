@@ -14,7 +14,7 @@ namespace HootonHeroics.DesignSystem
 
         public HHIconButton() : this(null, null, null) { }
 
-        /// The label becomes the tooltip, the button's only text, so give every icon button one.
+        /// The label is the button's only name, shown as its tooltip, so give every icon button one.
         public HHIconButton(Texture2D icon, string label, Action clickEvent) : base(clickEvent)
         {
             AddToClassList(UssClassName);

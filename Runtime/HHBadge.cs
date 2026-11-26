@@ -19,7 +19,6 @@ namespace HootonHeroics.DesignSystem
         public HHBadge()
         {
             AddToClassList(UssClassName);
-            Count = 0;
         }
 
         /// Shown as text, capped at "99+"; ignored while the badge is a dot.
