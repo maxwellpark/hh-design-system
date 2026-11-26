@@ -314,3 +314,40 @@
 .hh-segmented-bar.hh-segmented-bar--peach .hh-segmented-bar__segment--filled {
     background-color: var(--hh-color-peach);
 }
+
+/* The stack lets clicks through to the game; only the toasts themselves take pointer input */
+.hh-toast-stack {
+    position: absolute;
+    right: var(--hh-space-4);
+    bottom: var(--hh-space-4);
+    width: 320px;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.hh-toast {
+    margin-top: var(--hh-space-2);
+    padding: var(--hh-space-3) var(--hh-space-4);
+    border-left-width: 4px;
+    border-left-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-md);
+    background-color: var(--hh-color-surface);
+}
+
+.hh-toast .hh-toast__text {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+    white-space: normal;
+}
+
+.hh-toast.hh-toast--success {
+    border-left-color: var(--hh-color-teal);
+}
+
+.hh-toast.hh-toast--warning {
+    border-left-color: var(--hh-color-peach);
+}
+
+.hh-toast.hh-toast--danger {
+    border-left-color: var(--hh-color-pink);
+}
