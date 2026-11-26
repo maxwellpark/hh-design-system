@@ -9,6 +9,19 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Theming guide: `Documentation~/theming.md` shows a game making its own theme in its project:
+   copy the tokens, write a theme sheet that imports them and the package's component sheets, check
+   its colours against `Tools~/contrast.json`'s pairs by hand (the package's check covers only themes
+   in the package), and switch with `HHThemes`. Check: the doc snippet gate compiles its C#.
+2. Tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header (new items in an
+   inventory tab), found again by class so it survives Unity rebuilding headers, and 0 removes it;
+   the gallery's tabs show one. Check: EditMode tests written, not run; contrast pairs for the badge
+   on a selected and an unselected header; the reference; the compile gate.
+3. Hold to confirm: `HHHoldButton` fires only after it is held for `hold-seconds` (an attribute,
+   not a duration token, so reduced motion never shortens it). Its fill grows linearly; the timing
+   lives in a pure `Advance(elapsedSeconds)` that tests drive with explicit times, with the
+   scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
+   timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
 
 ## Blocked on owner
 
