@@ -27,12 +27,12 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 
 | What | Command | Latest |
 |---|---|---|
-| Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 6 |
-| Assemblies compiling with Unity's compiler | `bash Tools~/unity-compile.sh` | 4 of 4 |
+| Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 8 |
+| Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 6 of 6 |
 | Tokens | `node Tools~/check.mjs` | 28 |
 | Check cases | `node Tools~/check.test.mjs` | 37/37 |
-| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 17, both owner decisions |
-| EditMode tests | unity-packages' `unity-verify` | 7 written, 0 run |
+| Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 24, both owner decisions |
+| EditMode tests | unity-packages' `unity-verify` | 12 written, 0 run |
 
 ## Out of scope
 

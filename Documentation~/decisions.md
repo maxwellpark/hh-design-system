@@ -52,3 +52,12 @@
   test-framework source each run, rather than skipping test assemblies' runner references. Why: a
   test using `[UnityTest]` or `IPrebuildSetup` should compile here exactly when it would in Unity.
   To change: drop the two `addAssembly` calls for the runner, at the cost of that coverage.
+- Default 2026-11-26 [needs-review]: badges use dark (`bg`) text on every tone, and violet badges
+  use `violet-light`. Why: white is 1.6 to 2.7:1 on the tones, dark is 6.4:1 or more. To change:
+  the `.hh-badge` rules.
+- Default 2026-11-26 [needs-review]: `HHIconButton` sets its icon as the element's tinted
+  background, not through `Button.iconImage`. Why: one tint rule colours any icon, and it works the
+  same in UXML through the `icon` attribute. To change: `HHIconButton.Icon`.
+- Default 2026-11-26 [needs-review]: a badge sits beside or over a control by the game's own
+  layout; nothing positions it inside a button. Why: a Label inside a Button overlaps the button's
+  text, which isn't a layout child. To change: add a corner-anchored `.hh-badge--corner` rule.

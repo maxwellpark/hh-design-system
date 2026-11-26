@@ -4,6 +4,9 @@
 - `Tools~/unity-compile.sh` compiles every asmdef as Unity would (references, platforms, define
   constraints, editor and player builds) with Unity's compiler and generators, warnings as errors,
   and `Tools~/verify.sh` runs it; `Tools~/unity-compile.test.sh` plants ten cases.
+- `HHIconButton`: an icon-only button tinted like ghost text, whose label becomes its tooltip.
+- `HHBadge`: a count (capped at `99+`) or a dot, in violet, teal, pink or peach, always with dark
+  text, since white is under 3:1 on every tone. `HHTone` names the tones.
 - Motion tokens `--hh-duration-fast` (0.12s), `--hh-duration-normal` (0.2s) and
   `--hh-easing-standard` (ease-out), mirrored in `HHTheme`, `Brand~/tokens.json` (`motion`) and
   the Godot constants, with `Tools~/check-tokens.mjs` checking the new group. Buttons and inputs
