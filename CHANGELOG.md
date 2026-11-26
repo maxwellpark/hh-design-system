@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- Component reference: `Documentation~/components.md` lists each control's UXML, classes,
+  attributes, states and tokens. `Tools~/check.mjs` fails when it falls out of step with the code
+  or `hh-components.uss`.
 - Settings sample: a settings screen built from tabs, a toggle, a slider, a dropdown and a text field;
   Save shows a toast and Back asks through a dialog before throwing changes away.
 - Component gallery: Hooton Heroics > Design System > Gallery opens an editor window with every
