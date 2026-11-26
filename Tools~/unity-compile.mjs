@@ -121,6 +121,23 @@ for (const sample of samples) {
   assemblies.set(`Sample.${sample}`, { def: { name: `Sample.${sample}`, references: runtime.map((a) => a.name) }, name: `Sample.${sample}`, dir, origin: "package", sources: sourcesOf(dir) });
 }
 
+// Each fenced csharp block in Documentation~ compiles like a sample, so a guide's code can't rot; #line points errors at the guide
+const docsDir = join(src, "Documentation~");
+const docs = existsSync(docsDir) ? readdirSync(docsDir).filter((n) => n.endsWith(".md")).sort() : [];
+for (const doc of docs) {
+  const text = readFileSync(join(docsDir, doc), "utf8");
+  const blocks = [...text.matchAll(/^```csharp\r?\n([\s\S]*?)^```/gm)].map((m) => ({ code: m[1], line: text.slice(0, m.index).split("\n").length + 1 }));
+  if (blocks.length === 0) {
+    continue;
+  }
+  const name = `Docs.${doc.slice(0, -3).replace(/[^\w]/g, "_")}`;
+  const dir = join(work, "docs", name);
+  mkdirSync(dir, { recursive: true });
+  blocks.forEach(({ code, line }, i) => writeFileSync(join(dir, `Snippet${i + 1}.cs`), `#line ${line} "Documentation~/${doc}"\n${code}`));
+  const runtime = [...assemblies.values()].filter((a) => a.origin === "package" && a.def.autoReferenced !== false && !(a.def.includePlatforms ?? []).includes("Editor") && !a.name.startsWith("Sample.") && !a.name.startsWith("Docs."));
+  assemblies.set(name, { def: { name, references: runtime.map((a) => a.name) }, name, dir, origin: "package", sources: sourcesOf(dir) });
+}
+
 const versionDefined = new Set(["Unity", "com.unity.test-framework", "com.unity.modules.uielements"]);
 // Unity defines every UNITY_<year>_<n>_OR_NEWER up to the editor's own version
 const baseDefines = ["UNITY_5_3_OR_NEWER", "UNITY_5_4_OR_NEWER", "UNITY_5_5_OR_NEWER", "UNITY_5_6_OR_NEWER", "UNITY_6000_0_OR_NEWER"];

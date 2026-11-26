@@ -49,6 +49,11 @@ check "a real Unity class outside *UssClassName fields passes" 0 "class uses che
 check "an uncommitted change is not compiled" 0 "compiles: [0-9]+ assembly builds" \
   bash -c 'echo "syntax error" > Runtime/Untracked.cs'
 
+check "a doc snippet that compiles passes" 0 "Docs.index \\[player\\]" \
+  bash -c 'printf "\n\x60\x60\x60csharp\nusing HootonHeroics.DesignSystem;\n\npublic static class GuideSnippet\n{\n    public static HHCard Card() => new HHCard { Title = \\"Settings\\" };\n}\n\x60\x60\x60\n" >> Documentation~/index.md'
+check "a doc snippet that doesn't compile fails at its line in the guide" 1 "Documentation~/index.md\\([0-9]+,[0-9]+\\): error CS" \
+  bash -c 'printf "\n\x60\x60\x60csharp\npublic static class GuideSnippet\n{\n    public static int Broken() => new HHNotAControl();\n}\n\x60\x60\x60\n" >> Documentation~/index.md'
+
 GATE_EDITOR=/nonexistent check "a missing editor exits 2" 2 "no Unity 6000.0 compiler" true
 
 echo "$failed failed"
