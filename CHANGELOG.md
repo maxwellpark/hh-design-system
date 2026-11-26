@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- An EditMode test holds the gallery page itself to a disabled instance of every focusable control,
+  alongside `check.mjs`'s check of its source.
 - `Tools~/check.mjs` holds the component reference's own UXML examples to its attribute lists and
   Unity's base attributes, so a typo there can no longer widen what guides may use.
 - `HHHoldButton`: a button that confirms only after it is held for `hold-seconds`, with a bar
