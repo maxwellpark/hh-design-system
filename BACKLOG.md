@@ -9,6 +9,20 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Accessibility modifiers: `.hh-reduced-motion` sets every duration token to 0s and
+   `.hh-large-text` scales every font-size token by 1.25, on whatever element carries the class,
+   under any theme; `HHAccessibility` toggles them. The Settings sample gains a toggle for each.
+   Check: `check.mjs` fails if a modifier misses a token of its kind or names one that isn't a
+   token; the compile gate.
+2. Pause menu sample: `Samples~/PauseMenu` with an `HHCard` of Resume, Settings and Quit buttons,
+   Quit asking through a `require-choice` dialog. Check: the compile gate builds `Sample.PauseMenu`,
+   and the sample check holds its controls.
+3. Slider value: `HHSlider` shows its value beside the track when `show-value` is set, formatted
+   as a percentage or a number. Check: EditMode tests written, the reference and contrast pairs.
+4. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
+   install to a themed card with a toggle and a button. Check: the gate compiles every C# snippet
+   in it as a sample-like assembly, and `check.mjs` fails on a UXML snippet naming an `hh:` element
+   or attribute the component reference doesn't have, so it can't rot.
 
 ## Blocked on owner
 
