@@ -54,6 +54,17 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void AnIndexSetBeforeItsChoicesLandsWhenTheyArrive()
+        {
+            var stepper = new HHStepper { Index = 2 };
+            Assert.That(stepper.Index, Is.EqualTo(0));
+
+            stepper.Choices = new List<string> { "720p", "1080p", "1440p" };
+            Assert.That(stepper.Index, Is.EqualTo(2));
+            Assert.That(stepper.Text, Is.EqualTo("1440p"));
+        }
+
+        [Test]
         public void ItsButtonsLeaveFocusToTheField()
         {
             var stepper = Resolutions(0);

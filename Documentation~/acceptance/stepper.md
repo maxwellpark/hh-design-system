@@ -11,6 +11,7 @@ needs a licence (Blocked on owner).
 | It carries `.hh-stepper` and shows the chosen value | `StepperTests.StepperCarriesItsClassAndShowsTheChosenValue` | | written, not run |
 | Stepping stops at the ends and disables the arrow there | `StepperTests.SteppingStopsAtTheEndsAndDisablesThatButton` | | written, not run |
 | The index stays within the choices, including when they change or are cleared | `StepperTests.TheIndexStaysWithinTheChoices` | | written, not run |
+| An index set before its choices, as UXML may set them, lands when they arrive | `StepperTests.AnIndexSetBeforeItsChoicesLandsWhenTheyArrive` | | written, not run |
 | The arrows don't take focus, so the field does | `StepperTests.ItsButtonsLeaveFocusToTheField` | | written, not run |
 | `label`, `choices` and `index` apply from UXML | `StepperTests.UxmlChoicesAndIndexApply` with the fixture | | written, not run |
 | Left and right step it when focused | `HHStepper.OnNavigationMove` | | verified by reading |
@@ -28,7 +29,7 @@ needs a licence (Blocked on owner).
 ## Coverage and complexity
 
 Clamping lives in `SetValueWithoutNotify`, so every route (index, value, step, choices) passes
-through it; four of the five tests drive it.
+through it; five of the six tests drive it.
 
 ## Behaviour transcript
 
@@ -57,4 +58,4 @@ ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity
 
 ## Unverified
 
-Rendering, pad input, and the five tests.
+Rendering, pad input, and the six tests.

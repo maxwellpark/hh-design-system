@@ -16,6 +16,8 @@ namespace HootonHeroics.DesignSystem
         private readonly HHButton next;
         private readonly Label valueLabel;
         private List<string> choices = new List<string>();
+        // The index last asked for, so one set before its choices (as UXML may) lands once they arrive
+        private int requested;
 
         public HHStepper() : this(null, null) { }
 
@@ -45,7 +47,7 @@ namespace HootonHeroics.DesignSystem
             set
             {
                 choices = value ?? new List<string>();
-                SetValueWithoutNotify(this.value);
+                SetValueWithoutNotify(requested);
             }
         }
 
@@ -63,11 +65,12 @@ namespace HootonHeroics.DesignSystem
         /// Moves by delta, stopping at the ends.
         public void Step(int delta)
         {
-            value += delta;
+            value = this.value + delta;
         }
 
         public override void SetValueWithoutNotify(int newValue)
         {
+            requested = newValue;
             var last = choices == null ? -1 : choices.Count - 1;
             var clamped = last < 0 ? 0 : newValue < 0 ? 0 : newValue > last ? last : newValue;
             base.SetValueWithoutNotify(clamped);
