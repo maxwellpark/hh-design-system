@@ -7,22 +7,23 @@ Node 22, from the package root. Pure tooling, so everything here is checked by m
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | A stylesheet using a token that isn't defined fails the check | `check.test.mjs` "stylesheet using an undefined token fails" | pass | verified |
-| A control's `UssClassName` with no rule in `hh-components.uss` fails | "class with no rule fails" | pass | verified |
-| A `[UxmlElement]` control with no EditMode test naming it fails | "control with no test fails" | pass | verified |
+| A control's class constant with no rule in `hh-components.uss` fails, including one built by concatenation (`UssClassName + "--ghost"`) | "class with no rule fails", "ghost rule removed fails, though .hh-button remains" | pass | verified |
+| A `[UxmlElement]` control with no EditMode test naming it fails, however it's declared (arguments, more attributes, `sealed`), and a mention only in a comment doesn't count | "control with no test fails", "control declared with extra attributes is still found", "control named only in a test comment fails" | pass | verified |
+| A token used with a fallback, `var(--hh-x, ...)`, is checked too; one inside a comment is ignored | "undefined token with a fallback fails", "undefined token inside a comment is ignored" | pass | verified |
 | `main`'s six controls all have rules and tests, and every `var(--hh-*)` is defined | `node Tools~/check.mjs` | exit 0, 6 controls | verified |
 
 ## Paths
 
 | Code | Path | Evidence |
 |---|---|---|
-| token references | defined / undefined / inside a comment (ignored) | clean run / case above / none |
-| class rules | rule present / missing / a longer class sharing the prefix (`hh-button--ghost` doesn't satisfy `hh-button`'s check by accident, by the `(?![\w-])` guard) | clean run / case above / none |
-| control tests | named in a test / not named | clean run / case above |
+| token references | defined / undefined / with fallback / inside a comment | clean run and the cases above |
+| class rules | literal / concatenated / unresolvable / missing rule / a rule for a longer class only | clean run, the cases above; unresolvable: none; longer class: the ghost case (`.hh-button-ghostly` doesn't satisfy `hh-button--ghost`) |
+| control tests | named in a test / only in a comment / not named / unusual declaration / marks and classes disagree | clean run and the cases above; disagreement: none |
 
 ## Coverage and complexity
 
-Not measured (child processes). The new block is about 35 lines in three loops, each with one
-branch.
+Not measured (child processes). The new block is about 60 lines: `classConstants` (8 lines) and three loops, none
+over four branches.
 
 ## Behaviour transcript
 
@@ -65,7 +66,12 @@ ok   translucent background without over fails
 ok   stylesheet using an undefined token fails
 ok   class with no rule fails
 ok   control with no test fails
-28/28 passed
+ok   ghost rule removed fails, though .hh-button remains
+ok   undefined token inside a comment is ignored
+ok   undefined token with a fallback fails
+ok   control named only in a test comment fails
+ok   control declared with extra attributes is still found
+33/33 passed
 ```
 
 ## Unverified

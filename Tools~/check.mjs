@@ -169,32 +169,51 @@ for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pair
 }
 
 // Every token a stylesheet uses is defined, every control's class has rules, and every control has a test
+const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 const styles = readdirSync("Runtime/Styles").filter((name) => /\.(uss|tss)$/.test(name));
 const defined = new Set(tokens.map(([name]) => name));
 for (const name of styles) {
-  const text = readFileSync(join("Runtime/Styles", name), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
-  for (const [, token] of text.matchAll(/var\(--hh-([\w-]+)\)/g)) {
+  const text = stripComments(readFileSync(join("Runtime/Styles", name), "utf8"));
+  for (const [, token] of text.matchAll(/var\(\s*--hh-([\w-]+)\s*[,)]/g)) {
     if (!defined.has(token)) {
       problems.push(`${name}: var(--hh-${token}) is not a token`);
     }
   }
 }
 
-const componentRules = readFileSync("Runtime/Styles/hh-components.uss", "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+const componentRules = stripComments(readFileSync("Runtime/Styles/hh-components.uss", "utf8"));
 const testSource = readdirSync("Tests/Editor")
   .filter((name) => name.endsWith(".cs"))
-  .map((name) => readFileSync(join("Tests/Editor", name), "utf8"))
+  .map((name) => stripComments(readFileSync(join("Tests/Editor", name), "utf8")))
   .join("\n");
+
+// Resolves `A = "x"` and `B = A + "--y"` within one file, the forms the controls use
+function classConstants(source) {
+  const values = new Map();
+  for (const [, constant, expression] of source.matchAll(/(?:const|static readonly) string (\w*UssClassName)\s*=\s*([^;]+);/g)) {
+    const parts = expression.split("+").map((part) => part.trim());
+    const resolved = parts.map((part) => (part.startsWith('"') ? part.slice(1, -1) : values.get(part)));
+    values.set(constant, resolved.includes(undefined) ? undefined : resolved.join(""));
+  }
+  return values;
+}
+
 let controls = 0;
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
-  const source = readFileSync(join("Runtime", name), "utf8");
-  for (const [, constant, className] of source.matchAll(/const string (\w*UssClassName) = "([\w-]+)"/g)) {
-    if (!new RegExp(`\\.${className}(?![\\w-])`).test(componentRules)) {
+  const source = stripComments(readFileSync(join("Runtime", name), "utf8"));
+  for (const [constant, className] of classConstants(source)) {
+    if (className === undefined) {
+      problems.push(`${name}: can't resolve ${constant}`);
+    } else if (!new RegExp(`\\.${className}(?![\\w-])`).test(componentRules)) {
       problems.push(`${name}: ${constant} "${className}" has no rule in hh-components.uss`);
     }
   }
-  const control = source.match(/\[UxmlElement\]\s*public (?:partial )?class (\w+)/)?.[1];
-  if (control) {
+  const marked = [...source.matchAll(/\[\s*UxmlElement\b/g)].length;
+  const declared = [...source.matchAll(/\[\s*UxmlElement\b[^\]]*\][\s\S]*?\bclass\s+(\w+)/g)].map((m) => m[1]);
+  if (declared.length !== marked) {
+    problems.push(`${name}: ${marked} [UxmlElement] marks but ${declared.length} classes found after them`);
+  }
+  for (const control of declared) {
     controls += 1;
     if (!new RegExp(`\\b${control}\\b`).test(testSource)) {
       problems.push(`${name}: ${control} has no EditMode test in Tests/Editor`);

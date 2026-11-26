@@ -4,7 +4,7 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
 
 ## Ready
 
-Each item names its check. Unity items are compiled by item 1's gate once it lands: batch mode
+Each item names its check. Unity items are compiled by the compile gate (below) once it lands: batch mode
 compiles without a licence (it refuses only to run tests), using the Unity 6000.0.85f2 editor
 installed in the cloud session. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
@@ -15,7 +15,7 @@ which fails on a control with no EditMode test.
    uncommitted `.meta`, or a USS, TSS or UXML import error. Check: exits 0 on main, and fails on a
    planted compile error and a planted meta-less file.
 2. Fix each compile error and import warning the first gate run of `main` reports, one commit per
-   cause; if it reports none, this item closes with the clean run as its evidence. Check: item 1's
+   cause; if it reports none, this item closes with the clean run as its evidence. Check: the compile
    gate exits 0 on `main`.
 3. Font and motion tokens: `--hh-font-weight-*`, `--hh-duration-fast` and `-normal`, and an easing
    token, replacing hard-coded transition times. Check: `check.mjs` (mirror and references), gate.
@@ -46,13 +46,13 @@ which fails on a control with no EditMode test.
 14. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
     that cycles the three themes. Check: tests written, gate.
 15. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
-    control in each state under the chosen theme. Check: gate compiles it; the reference check
-    fails on a control missing from it.
+    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
+    reference check to fail on a control missing from it.
 16. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
     dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
-    compiles it; the reference check fails on a form control it doesn't use.
+    compiles it; extend the reference check to fail on a form control it doesn't use.
 17. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
-    and tokens. Check: the reference check (item 3) also fails on a control missing from it.
+    and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
 

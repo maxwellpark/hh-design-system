@@ -82,6 +82,23 @@ const cases = [
     edit(d, "Runtime/HHSwitch.cs.meta", /guid: \w+/.exec(readFileSync(join(d, "Runtime/HHSwitch.cs.meta"), "utf8"))[0], "guid: 0123456789abcdef0123456789abcdef");
     edit(d, "Runtime/HHSwitch.cs", "public partial class HHToggle", "public partial class HHSwitch");
   }, 1, /HHSwitch\.cs: HHSwitch has no EditMode test/],
+  ["ghost rule removed fails, though .hh-button remains", (d) => {
+    edit(d, "Runtime/Styles/hh-components.uss", ".hh-button.hh-button--ghost:hover:active {", ".hh-button.hh-button-ghostly:hover:active {");
+    edit(d, "Runtime/Styles/hh-components.uss", ".hh-button.hh-button--ghost:hover {", ".hh-button.hh-button-ghostly:hover {");
+    edit(d, "Runtime/Styles/hh-components.uss", ".hh-button.hh-button--ghost {", ".hh-button.hh-button-ghostly {");
+  }, 1, /HHButton\.cs: GhostUssClassName "hh-button--ghost" has no rule/],
+  ["undefined token inside a comment is ignored", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "/* var(--hh-nothing) */\n.hh-card {"), 0, /controls referenced/],
+  ["undefined token with a fallback fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "background-color: var(--hh-color-surface);", "background-color: var(--hh-color-surfce, #000);"), 1, /var\(--hh-color-surfce\) is not a token/],
+  ["control named only in a test comment fails", (d) => {
+    edit(d, "Tests/Editor/ControlTests.cs", "new HHTextField().ClassListContains(HHTextField.UssClassName)", 'new TextField().ClassListContains("hh-text-field")');
+    edit(d, "Tests/Editor/ControlTests.cs", 'root.Q<HHTextField>("text-field")', '/* HHTextField */ root.Q<TextField>("text-field")');
+  }, 1, /HHTextField\.cs: HHTextField has no EditMode test/],
+  ["control declared with extra attributes is still found", (d) => {
+    cpSync(join(d, "Runtime/HHToggle.cs"), join(d, "Runtime/HHSwitch.cs"));
+    cpSync(join(d, "Runtime/HHToggle.cs.meta"), join(d, "Runtime/HHSwitch.cs.meta"));
+    edit(d, "Runtime/HHSwitch.cs.meta", /guid: \w+/.exec(readFileSync(join(d, "Runtime/HHSwitch.cs.meta"), "utf8"))[0], "guid: fedcba9876543210fedcba9876543210");
+    edit(d, "Runtime/HHSwitch.cs", "[UxmlElement]\n    public partial class HHToggle", "[UxmlElement(\"switch\")]\n    [System.Serializable]\n    public sealed partial class HHSwitch");
+  }, 1, /HHSwitch\.cs: HHSwitch has no EditMode test/],
 ];
 
 let failed = 0;
