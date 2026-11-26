@@ -37,8 +37,9 @@ colours from the same source. Create via **Assets → Create → Hooton Heroics 
 
 ## What's in v0.2
 Tokens (colour, spacing, radius, type) · `hh-theme.tss` · `.hh-card` / `.hh-title` /
-`.hh-text[-dim]` / `.hh-button` (+ ghost, focus, disabled) / `.hh-progress-bar` · `HHButton` and
-`HHProgressBar` controls · `HHTheme` asset · `HHStyles.Apply` helper · Basic UI sample.
+`.hh-text[-dim]` / `.hh-button` (+ ghost, focus, disabled) / `.hh-progress-bar` and the form
+controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField` ·
+`HHTheme` asset · `HHStyles.Apply` helper · Basic UI sample.
 
 ## Notes
 - Target: Unity **6** (6000.0)+. Controls use `[UxmlElement]`, which replaced `UxmlFactory`.

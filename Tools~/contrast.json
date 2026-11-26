@@ -8,6 +8,13 @@
     { "use": "Ghost button text", "text": "violet-light", "on": "violet-ghost", "over": "surface" },
     { "use": "Ghost button text, hovered", "text": "violet-light", "on": "violet-ghost-hover", "over": "surface" },
     { "use": "Focus ring against a card", "text": "focus", "on": "surface", "min": 3 },
+    { "use": "Text in a text field or dropdown", "text": "text", "on": "bg" },
+    { "use": "Focus ring around a text field or dropdown", "text": "focus", "on": "bg", "min": 3 },
+    { "use": "Toggle box border against a card", "text": "violet-light", "on": "surface", "min": 3 },
+    { "use": "Text field and dropdown border against a card", "text": "violet-light", "on": "surface", "min": 3 },
+    { "use": "Checked toggle against a card", "text": "violet", "on": "surface", "min": 3 },
+    { "use": "Slider handle against its track", "text": "teal", "on": "track", "min": 3 },
+    { "use": "Progress fill against its track", "text": "teal", "on": "track", "min": 3 },
     {
       "use": "Button text",
       "text": "text",

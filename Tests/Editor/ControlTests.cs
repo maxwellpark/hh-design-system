@@ -56,6 +56,28 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void FormControlsCarryTheirStyleClasses()
+        {
+            Assert.That(new HHToggle().ClassListContains(HHToggle.UssClassName), Is.True);
+            Assert.That(new HHSlider().ClassListContains(HHSlider.UssClassName), Is.True);
+            Assert.That(new HHDropdown().ClassListContains(HHDropdown.UssClassName), Is.True);
+            Assert.That(new HHTextField().ClassListContains(HHTextField.UssClassName), Is.True);
+        }
+
+        [Test]
+        public void FormControlsKeepTheirUxmlAttributes()
+        {
+            var root = LoadFixture();
+
+            Assert.That(root.Q<HHToggle>("toggle").value, Is.True);
+            Assert.That(root.Q<HHToggle>("toggle").label, Is.EqualTo("Music"));
+            Assert.That(root.Q<HHSlider>("slider").value, Is.EqualTo(0.5f));
+            Assert.That(root.Q<HHSlider>("slider").highValue, Is.EqualTo(1f));
+            Assert.That(root.Q<HHDropdown>("dropdown").value, Is.EqualTo("High"));
+            Assert.That(root.Q<HHTextField>("text-field").value, Is.EqualTo("Northwind"));
+        }
+
+        [Test]
         public void ApplyAddsEachStyleSheetOnce()
         {
             var root = new VisualElement();

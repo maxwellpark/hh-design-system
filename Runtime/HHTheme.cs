@@ -9,6 +9,7 @@ namespace HootonHeroics.DesignSystem
         [Header("Colours")]
         public Color background = new Color32(0x0E, 0x0F, 0x20, 0xFF);
         public Color surface = new Color32(0x19, 0x1B, 0x38, 0xFF);
+        public Color track = new Color32(0x2E, 0x31, 0x66, 0xFF);
         public Color violet = new Color32(0x82, 0x57, 0xFF, 0xFF);
         public Color violetLight = new Color32(0xA7, 0x8B, 0xFA, 0xFF);
         public Color violetGhost = new Color32(0x82, 0x57, 0xFF, 0x24);
