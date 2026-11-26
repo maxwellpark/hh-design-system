@@ -452,6 +452,10 @@
     -unity-text-align: middle-left;
 }
 
+.hh-list-view .unity-collection-view__item .unity-label {
+    color: var(--hh-color-text);
+}
+
 .hh-list-view .unity-collection-view__item:hover {
     background-color: var(--hh-color-track);
 }

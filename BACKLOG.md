@@ -9,7 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*UssClassName` from Unity's
+1. Unity class names in the gate: `Tools~/unity-compile.mjs` reads every field named `*ussClassName` (any case) from Unity's
    UI Toolkit assemblies with Mono.Cecil and fails when a stylesheet styles a `.unity-*` class that
    doesn't exist. Check: a planted misspelt `.unity-*` class fails the gate.
 2. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
