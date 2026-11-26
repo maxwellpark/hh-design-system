@@ -2,7 +2,7 @@ using HootonHeroics.DesignSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// Drop this on a GameObject with a UIDocument, assign the two USS assets and press Play.
+/// Drop this on a GameObject with a UIDocument and press Play; assign the USS unless the panel uses hh-theme.tss.
 [RequireComponent(typeof(UIDocument))]
 public class DemoPanel : MonoBehaviour
 {
