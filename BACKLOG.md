@@ -57,7 +57,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
-- 2026-11-26: `HHTabs`: Unity 6's `TabView` with dim unselected labels, white selected labels, a teal underline on the `:checked` tab and a teal focus edge (branch `max/tabs`).
+- 2026-11-26: `HHTabs`: Unity 6's `TabView` with dim unselected labels, white selected labels, a teal underline on the `:checked` tab, and headers made focusable with submit selecting the tab (branch `max/tabs`).
 - 2026-11-26: `HHTooltip`: a manipulator that shows a label below its target after a 500ms hover or focus delay and hides on leave, blur, Escape or detach; `HHIconButton` carries one for its label (branch `max/tooltip`).
 - 2026-11-26: `HHToast` and `HHToastStack`: cards with info, success, warning and danger edges, stacked in a corner, newest last, capped by `max-visible`, each dismissing itself after its time (branch `max/toast`).
 - 2026-11-26: `HHDialog`: modal card on a `--hh-color-scrim` scrim, title, UXML body, `AddAction`; Escape, gamepad cancel and scrim clicks close it unless `require-choice`; focus moves to the first action and back on close (branch `max/dialog`).

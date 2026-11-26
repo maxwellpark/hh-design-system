@@ -2,8 +2,9 @@
 
 ## [Unreleased]
 - `HHTabs`: Unity 6's `TabView` styled through the tokens: dim labels, white for the hovered and
-  selected tab, a teal underline under the selected one and a teal focus edge. Use `ui:Tab`
-  children as with `TabView`.
+  selected tab, a teal underline under the selected one and a teal focus edge. Unlike `TabView`,
+  its headers take keyboard and gamepad focus, and Enter, Space or submit selects the tab. Use
+  `ui:Tab` children as with `TabView`.
 - `HHTooltip`, a manipulator: `element.AddManipulator(new HHTooltip("Text"))` shows the text below
   the element after a 500ms hover or focus, and hides it on leave, blur, Escape, a click or detach. It draws in the element's document root. With no
   text it shows the element's `tooltip`. `HHIconButton` carries one, since runtime panels don't show

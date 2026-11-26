@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
@@ -11,6 +12,38 @@ namespace HootonHeroics.DesignSystem
         public HHTabs()
         {
             AddToClassList(UssClassName);
+            RegisterCallback<AttachToPanelEvent>(_ => MakeHeadersFocusable());
+            RegisterCallback<GeometryChangedEvent>(_ => MakeHeadersFocusable());
+        }
+
+        // Unity's tab headers aren't focusable, so keyboard and gamepad users couldn't reach them
+        internal void MakeHeadersFocusable()
+        {
+            this.Query<Tab>().ForEach(Wire);
+        }
+
+        internal void Select(Tab tab)
+        {
+            activeTab = tab;
+        }
+
+        private void Wire(Tab tab)
+        {
+            var header = tab.tabHeader;
+            if (header == null || header.focusable)
+            {
+                return;
+            }
+            header.focusable = true;
+            header.RegisterCallback<NavigationSubmitEvent>(_ => Select(tab));
+            header.RegisterCallback<KeyDownEvent>(e =>
+            {
+                if (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter || e.keyCode == KeyCode.Space)
+                {
+                    Select(tab);
+                    e.StopPropagation();
+                }
+            });
         }
     }
 }

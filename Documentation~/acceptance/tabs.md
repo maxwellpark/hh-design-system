@@ -12,11 +12,12 @@ Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh`).
 | Unselected labels and the selected underline read on a card | two new contrast pairs (6.5:1 and 9.3:1) | pass | verified |
 | `HHTabs` keeps the `TabView` class and adds `hh-tabs` | `TabsCarryTheirStyleClassAndStayATabView` | compiled, not run | unverified |
 | `ui:Tab` children from UXML land in the view | `UxmlTabsLandInTheView` | compiled, not run | unverified |
+| Headers become focusable, and submitting one selects its tab (Unity's own headers can't take focus) | `HeadersBecomeFocusableAndSubmitSelectsTheirTab` | compiled, not run | unverified |
 | The rules outrank Unity's defaults for these parts | `.unity-tab-view` added to each selector | | unverified (check in UI Builder) |
 
 ## Coverage and complexity
 
-One constructor; nothing to measure.
+`Wire` is 20 lines with two branches; the rest are one-liners.
 
 ## Behaviour transcript
 
@@ -44,10 +45,11 @@ ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 
 
 1. Add `<hh:HHTabs><ui:Tab label="Audio" /><ui:Tab label="Video" /></hh:HHTabs>` to a card with the
    theme sheet: two bold labels, the first white with a teal underline, the second dim.
-2. Hover the second: it brightens. Click it: the underline moves. Tab to a header: a teal edge.
+2. Hover the second: it brightens. Click it: the underline moves. Press Tab until a header is
+   focused: it shows a teal edge; press Enter or the gamepad's submit: that tab opens.
 3. In UI Builder, select a header and confirm the `.hh-tabs` rules apply over Unity's.
-4. Run the EditMode tests: the two in `TabsTests` pass.
+4. Run the EditMode tests: the three in `TabsTests` pass.
 
 ## Unverified
 
-Rendering, the precedence over Unity's default theme, and the two tests.
+Rendering, the precedence over Unity's default theme, and the three tests.

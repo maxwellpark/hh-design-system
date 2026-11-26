@@ -411,7 +411,7 @@
     border-left-color: var(--hh-color-pink);
 }
 
-/* Unity marks the active tab and its header :checked; .unity-tab-view adds weight over its defaults */
+/* Unity marks the active tab and its header :checked; HHTabs makes headers focusable; .unity-tab-view adds weight */
 .hh-tabs.unity-tab-view .unity-tab__header {
     padding: var(--hh-space-2) var(--hh-space-4);
     border-width: 2px;

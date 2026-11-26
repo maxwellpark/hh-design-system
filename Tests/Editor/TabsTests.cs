@@ -17,6 +17,23 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void HeadersBecomeFocusableAndSubmitSelectsTheirTab()
+        {
+            var tabs = new HHTabs();
+            var audio = new Tab("Audio");
+            var video = new Tab("Video");
+            tabs.Add(audio);
+            tabs.Add(video);
+
+            tabs.MakeHeadersFocusable();
+            Assert.That(audio.tabHeader.focusable, Is.True);
+            Assert.That(video.tabHeader.focusable, Is.True);
+
+            tabs.Select(video);
+            Assert.That(tabs.activeTab, Is.SameAs(video));
+        }
+
+        [Test]
         public void UxmlTabsLandInTheView()
         {
             var root = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Fixture).Instantiate();
