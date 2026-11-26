@@ -7,7 +7,7 @@ needs a licence (Blocked on owner).
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| `HHDialog` and its tests compile, editor and player | the compile gate | ok | verified |
+| `HHDialog` and its tests compile, editor and player | the compile gate | 10 of 10 | verified |
 | The dialog's tab stops follow Unity's focus ring: elements that can grab focus with a tab index of 0 or more, in order, including a focusable container's children, with a delegating field counted once | `DialogTests.FocusStopsFollowTheRingAndCountADelegatingFieldOnce` | | written, not run |
 | While open, focus leaving the last stop goes to the first, leaving the first goes to the last, and cleared focus comes back; moving inside is left alone; a closed dialog never pulls | `DialogTests.FocusLeavingAnOpenDialogWrapsBackInside` | | written, not run |
 | Of two open dialogs, the one holding focus keeps it and the other doesn't pull, until it closes | `DialogTests.TwoOpenDialogsDoNotFightOverFocus` | | written, not run |
@@ -29,14 +29,14 @@ panel. For one scheduler tick, focus sits on the element behind
 
 ```
 ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (11 files)
-ok   HEAD compiles: 8 assembly builds with the compiler and generators of Unity 6000.0.85f2
+ok   HEAD compiles: 10 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line), `node Tools~/check.test.mjs`:
 
 ```
 58 .meta files ok, 32 tokens match HHTheme, 82 contrast pairs checked across 2 theme(s), 15 controls referenced, 16 types in the component reference
-73/73 passed
+74/74 passed
 ```
 
 ## Hands-on checklist (Unity 6, five minutes)
