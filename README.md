@@ -30,7 +30,8 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
   <hh:HHButton text="Back" ghost="true" />
 </ui:VisualElement>
 ```
-Import the **Basic UI** sample from the Package Manager for a working demo.
+Import the **Basic UI** sample from the Package Manager for a working demo, or open **Hooton Heroics >
+Design System > Gallery** to see every control in its states.
 
 ## Theming
 All components are styled through `var(--hh-*)` tokens in `hh-tokens.uss`, so restyling is a

@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- Component gallery: Hooton Heroics > Design System > Gallery opens an editor window with every
+  control in its states, previewed under the default or high-contrast tokens. `Tools~/check.mjs`
+  fails on a control missing from it.
 - `HHThemes.Apply(panelSettings, theme)` and `HHThemes.Next(panelSettings, themes)` switch a panel's
   theme sheet at runtime. They change the PanelSettings asset, so in the editor the change outlives
   Play mode; the Basic UI sample cycles themes on a runtime copy instead.
