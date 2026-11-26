@@ -9,6 +9,16 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Goal numbers check: `check.mjs` fails when GOAL.md's Numbers rows disagree with what it counts:
+   the Controls row with its class count, Tokens with its token count, and the contrast row's
+   "N of M" with its accepted and checked pairs. A row is found by its label, and its Latest is the
+   last cell. Rows it can't count (gate builds, check cases, tests) and the Done-when prose stay
+   hand-kept. A branch adding a pair or token then edits that row, so the failure names the value
+   expected. Check: planted cases in `Tools~/check.test.mjs`.
+
+2. HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const in the
+   sample), showing the card over gameplay. Check: the sample table requires `HHCard` for the HUD,
+   with a planted case that drops it, and the compile gate builds the sample.
 
 ## Blocked on owner
 
