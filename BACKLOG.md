@@ -31,13 +31,15 @@ which fails on a control with no EditMode test.
   decided). Options: set `button` to `#754EE6` (4.8:1) and `button-hover` to `#6E4AD9` (5.2:1), or
   dark (`bg`) text on the current hover colour, 7.0:1. Recommended: the darker violets, which keep
   the look. Since the button tokens are their own, this no longer touches accent text or borders.
-- Track contrast, from the 0.1 palette: an empty slider, progress or segment track
+- Track contrast, from the 0.1 palette: an empty slider, progress, segment or scroller track
   (`--hh-color-track`) is 1.39:1 on a card, under the 3:1 WCAG 1.4.11 asks of the parts that show
-  a control's extent (accepted in `Tools~/contrast.json` until decided; high contrast passes).
-  Lightening the track to 3:1 (`#6266A8`) drops the pink fill to 1.8:1 and violet to 1.9:1, so that's
-  out. Options: a 1px edge on tracks from a new `--hh-color-track-edge` (`#7A7EC0` is 4.4:1 on a
-  card and 3.2:1 against the track), or accept it as is, since the fill and handle carry the value.
-  Recommended: the edge token.
+  a control's extent (accepted in `Tools~/contrast.json` until decided; high contrast passes at
+  3.02). The same token is the only hover cue on list rows and dropdown items, so the choice covers
+  those too. Lightening the track to 3:1 (`#6266A8`) drops every fill under 3:1 against it (pink
+  1.8, violet 1.9, teal and peach 2.9), so that's out. Options: a 1px edge on tracks from a new
+  `--hh-color-track-edge`, `#7A7EC0` by default (4.4:1 on a card, 3.2:1 against the track) and
+  `#C0C0EE` in high contrast (11.2:1 and 3.7:1); or accept it as is, since the fill and handle
+  carry the value. Recommended: the edge token.
 - A Unity licence for batch mode, so the gate can also import USS, TSS and UXML and run the tests:
   on Linux, 6000.0 exits 198 ("No valid Unity Editor license found") before importing anything.
   The house standards' route is a Unity account made for automation, activated through `op run`.
@@ -61,7 +63,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
-- 2026-11-26: non-text contrast: every part that shows a control's state or extent has a 3:1 pair in `Tools~/contrast.json`; the one new failure, the empty track on a card at 1.39:1, is accepted and waits on the owner's palette choice (branch `max/non-text-contrast`).
+- 2026-11-26: non-text contrast: every state-bearing part the audit found has a 3:1 pair in `Tools~/contrast.json`, with new pairs for the slider's focus ring and the dropdown arrow; the one new failure, the empty track on a card at 1.39:1, is accepted and waits on the owner's palette choice (branch `max/non-text-contrast`).
 - 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).
 - 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
 - 2026-11-26: component gallery: `Editor/HHGallery.cs` (Hooton Heroics > Design System > Gallery) shows every control in its states under a picked token file; `check.mjs` fails on a control missing from it (branch `max/gallery`).
