@@ -4,6 +4,7 @@
 - `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField`, styled through the tokens, with hover,
   focus and disabled states. The dropdown's open list keeps Unity's default look for now.
 - New `--hh-color-track` token for slider and progress tracks, which were invisible on a card.
+- Form-control selectors carry `.unity-base-field` and `:enabled` so they outrank Unity's defaults.
 - EditMode tests in `Tests/Editor`. Run them by adding the package to a project's `testables`.
 - `Tools~/check.mjs` checks WCAG AA contrast for every text and focus pair listed in
   `Tools~/contrast.json`, blending translucent colours onto what they sit over.

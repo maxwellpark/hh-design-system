@@ -98,23 +98,23 @@
     -unity-text-align: lower-left;
 }
 
-/* Form controls: labels, then each control's parts as Unity names them */
-.hh-toggle .unity-base-field__label,
-.hh-slider .unity-base-field__label,
-.hh-dropdown .unity-base-field__label,
-.hh-text-field .unity-base-field__label {
+/* .unity-base-field adds weight so these outrank Unity's default theme rules for the same parts */
+.hh-toggle.unity-base-field .unity-base-field__label,
+.hh-slider.unity-base-field .unity-base-field__label,
+.hh-dropdown.unity-base-field .unity-base-field__label,
+.hh-text-field.unity-base-field .unity-base-field__label {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-md);
 }
 
-.hh-toggle:disabled,
-.hh-slider:disabled,
-.hh-dropdown:disabled,
-.hh-text-field:disabled {
+.hh-toggle.unity-base-field:disabled,
+.hh-slider.unity-base-field:disabled,
+.hh-dropdown.unity-base-field:disabled,
+.hh-text-field.unity-base-field:disabled {
     opacity: 0.4;
 }
 
-.hh-toggle .unity-toggle__checkmark {
+.hh-toggle.unity-base-field .unity-toggle__checkmark {
     width: 20px;
     height: 20px;
     background-color: var(--hh-color-bg);
@@ -123,61 +123,69 @@
     border-radius: var(--hh-radius-sm);
 }
 
-.hh-toggle:hover .unity-toggle__checkmark {
+.hh-toggle.unity-base-field:hover:enabled .unity-toggle__checkmark {
     border-color: var(--hh-color-text);
 }
 
-.hh-toggle:checked .unity-toggle__checkmark {
+.hh-toggle.unity-base-field:checked .unity-toggle__checkmark {
     background-color: var(--hh-color-violet);
     border-color: var(--hh-color-violet);
     -unity-background-image-tint-color: var(--hh-color-text);
 }
 
-.hh-toggle:focus .unity-toggle__checkmark {
+.hh-toggle.unity-base-field:checked:hover:enabled .unity-toggle__checkmark {
+    background-color: var(--hh-color-violet-light);
+    border-color: var(--hh-color-violet-light);
+}
+
+.hh-toggle.unity-base-field:focus:enabled .unity-toggle__checkmark {
     border-color: var(--hh-color-focus);
 }
 
-.hh-slider .unity-base-slider__tracker {
+.hh-slider.unity-base-field .unity-base-slider__tracker {
     background-color: var(--hh-color-track);
     border-width: 0;
     border-radius: var(--hh-radius-sm);
 }
 
-.hh-slider .unity-base-slider__dragger {
+.hh-slider.unity-base-field .unity-base-slider__dragger,
+.hh-slider.unity-base-field:hover:enabled .unity-base-slider__dragger,
+.hh-slider.unity-base-field:active:enabled .unity-base-slider__dragger {
     background-color: var(--hh-color-teal);
     border-width: 2px;
     border-color: rgba(0, 0, 0, 0);
     border-radius: var(--hh-radius-sm);
 }
 
-.hh-slider:focus .unity-base-slider__dragger {
+.hh-slider.unity-base-field:focus:enabled .unity-base-slider__dragger {
     border-color: var(--hh-color-text);
 }
 
-.hh-dropdown .unity-base-popup-field__input,
-.hh-text-field .unity-base-text-field__input {
+/* The resting border is violet-light because track on a card is 1.4:1, under the 3:1 a control's edge needs */
+.hh-dropdown.unity-base-field .unity-base-popup-field__input,
+.hh-text-field.unity-base-field .unity-base-text-field__input {
     background-color: var(--hh-color-bg);
     color: var(--hh-color-text);
     border-width: 2px;
-    border-color: var(--hh-color-track);
+    border-color: var(--hh-color-violet-light);
     border-radius: var(--hh-radius-sm);
     padding: var(--hh-space-1) var(--hh-space-2);
 }
 
-.hh-dropdown .unity-base-popup-field__text {
+.hh-dropdown.unity-base-field .unity-base-popup-field__text {
     color: var(--hh-color-text);
 }
 
-.hh-dropdown .unity-base-popup-field__arrow {
+.hh-dropdown.unity-base-field .unity-base-popup-field__arrow {
     -unity-background-image-tint-color: var(--hh-color-violet-light);
 }
 
-.hh-dropdown:hover .unity-base-popup-field__input,
-.hh-text-field:hover .unity-base-text-field__input {
-    border-color: var(--hh-color-violet-light);
+.hh-dropdown.unity-base-field:hover:enabled .unity-base-popup-field__input,
+.hh-text-field.unity-base-field:hover:enabled .unity-base-text-field__input {
+    border-color: var(--hh-color-text);
 }
 
-.hh-dropdown:focus .unity-base-popup-field__input,
-.hh-text-field:focus .unity-base-text-field__input {
+.hh-dropdown.unity-base-field:focus:enabled .unity-base-popup-field__input,
+.hh-text-field.unity-base-field:focus:enabled .unity-base-text-field__input {
     border-color: var(--hh-color-focus);
 }

@@ -20,9 +20,12 @@
 - Default 2026-11-26 [needs-review]: the package checks run by hand (`node Tools~/check.mjs`). Why:
   GitHub Actions is off on these repos. To change: add a workflow once Actions is on.
 - Default 2026-11-26 [needs-review]: tracks use a new `--hh-color-track` (#2E3166), and text
-  fields and dropdowns use `bg` with a `track` border. Why: tracks in `surface` vanished on a card,
-  and inputs darker than the card read as wells. To change: the token and the input rules in
-  `hh-components.uss`.
+  fields and dropdowns use `bg` with a `violet-light` border. Why: tracks in `surface` vanished on
+  a card, and a control's edge needs 3:1 against the card (a `track` border was 1.4:1). To change:
+  the token and the input rules in `hh-components.uss`.
+- Default 2026-11-26 [needs-review]: form-control selectors add `.unity-base-field` and `:enabled`.
+  Why: Unity's default theme reaches its parts through longer selectors, which would otherwise win.
+  To change: drop the extra class once UI Builder shows the plain `.hh-*` rules applying.
 - Default 2026-11-26 [needs-review]: the progress title sits above the bar. Why: white on the teal
   fill is 1.6:1 and dark text fails on the track, so no single colour reads on both. To change:
   `.hh-progress-bar .unity-progress-bar__title-container` and its padding.
