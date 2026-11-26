@@ -17,6 +17,10 @@
     <hh:HHSegmentedBar name="ammo" filled="8" segments="10" />
     <hh:HHToastStack name="toasts" max-visible="2" />
     <hh:HHToast name="toast" text="Saved" tone="Success" />
+    <hh:HHScrollView name="scroll">
+        <ui:Label name="scroll-content" text="Long content" />
+    </hh:HHScrollView>
+    <hh:HHListView name="list" fixed-item-height="36" />
     <hh:HHTabs name="tabs">
         <ui:Tab name="audio" label="Audio" />
         <ui:Tab name="video" label="Video" />

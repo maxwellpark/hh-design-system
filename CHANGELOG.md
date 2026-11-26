@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHScrollView` and `HHListView`: slim scrollers without arrow buttons and a violet-light handle;
+  list rows with a track-coloured hover and, when selected, a violet tint with a violet-light edge.
 - `HHTabs`: Unity 6's `TabView` styled through the tokens: dim labels, white for the hovered and
   selected tab, a teal underline under the selected one and a teal focus edge. Unlike `TabView`,
   its headers take keyboard and gamepad focus, and Enter, Space or submit selects the tab. Use
