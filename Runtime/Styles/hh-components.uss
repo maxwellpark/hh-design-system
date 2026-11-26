@@ -217,7 +217,8 @@
     background-position-y: center;
     -unity-background-image-tint-color: var(--hh-color-violet-light);
     transition-property: background-color, border-color;
-    transition-duration: 0.12s;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
 }
 
 .hh-icon-button:hover {

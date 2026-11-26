@@ -17,39 +17,36 @@ which fails on a control with no EditMode test.
 2. Fix each compile error and import warning the first gate run of `main` reports, one commit per
    cause; if it reports none, this item closes with the clean run as its evidence. Check: the compile
    gate exits 0 on `main`.
-3. Icon button and badge: `HHIconButton` (square, icon-only, needs an accessible name via
-   `tooltip`) and `HHBadge` (count or dot, tones). Check: contrast pairs, EditMode tests written,
-   gate.
-4. Progress bar variants: tone modifiers (teal, pink, peach) and `HHSegmentedBar` for health and
+3. Progress bar variants: tone modifiers (teal, pink, peach) and `HHSegmentedBar` for health and
    resource bars. Check: contrast pairs for each tone on the track, tests written, gate.
-5. `HHDialog`: a modal with scrim, title, body and actions; Escape and the scrim close it unless
+4. `HHDialog`: a modal with scrim, title, body and actions; Escape and the scrim close it unless
    it's set to require a choice; focus moves to its first action and returns on close. Check: tests
    written for open, close and focus; gate.
-6. `HHToast`: timed notifications stacked in a corner, with info, success, warning and danger
+5. `HHToast`: timed notifications stacked in a corner, with info, success, warning and danger
    tones; a newer one pushes older ones up and each removes itself. Check: tone contrast pairs,
    tests written, gate.
-7. Tooltip: an `HHTooltip` manipulator that shows a label after a hover or focus delay and hides on
+6. Tooltip: an `HHTooltip` manipulator that shows a label after a hover or focus delay and hides on
    leave, blur or Escape. Check: tests written, gate.
-8. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
+7. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
    Check: contrast pairs for selected and unselected tab text, gate.
-9. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
+8. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
    for selected-row text, gate.
-10. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
-    sheet. Check: contrast pairs, gate.
-11. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
+9. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
+   sheet. Check: contrast pairs, gate.
+10. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
     check can go. Check: tests written, gate.
-12. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+11. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
     theme sheet for each; the contrast check runs every pair against every theme. Check:
     `check.mjs` over all three, gate.
-13. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+12. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
     that cycles the three themes. Check: tests written, gate.
-14. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+13. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
     control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
     reference check to fail on a control missing from it.
-15. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+14. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
     dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
     compiles it; extend the reference check to fail on a form control it doesn't use.
-16. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+15. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
     and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -77,6 +74,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHIconButton` (icon as tinted background, label as tooltip) and `HHBadge` (count capped at 99+, dot, four tones with dark text), with `HHTone` (branch `max/icon-button-badge`).
 - 2026-11-26: motion tokens (`--hh-duration-fast`, `-normal`, `--hh-easing-standard`) on buttons, inputs and the progress fill; no font-weight token, since USS has none (branch `max/motion-tokens`).
 - 2026-11-26: reference check: undefined tokens, classes without rules and controls without tests fail `Tools~/check.mjs` (branch `max/reference-check`).
 - 2026-11-26: engine-neutral brand kit in `Brand~/` (tokens mirror, studio mark, splash, logo and credits rules), the Godot studio splash in `Godot~/addons/hh_studio` with its headless tests, and `Tools~/check-tokens.mjs` (branch `max/brand-kit`).
