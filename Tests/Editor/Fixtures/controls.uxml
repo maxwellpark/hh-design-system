@@ -32,4 +32,5 @@
     <hh:HHSlider name="valued-slider" low-value="0" high-value="10" value="3" show-value="true" value-format="Number" />
     <hh:HHStepper name="stepper" label="Resolution" choices="720p,1080p,1440p" index="1" />
     <hh:HHToggle name="switch" label="Subtitles" switch="true" />
+    <hh:HHHoldButton name="hold" text="Hold to quit" hold-seconds="1.5" />
 </ui:UXML>
