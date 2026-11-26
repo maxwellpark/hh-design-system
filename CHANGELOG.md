@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- High-contrast theme: `hh-theme-high-contrast.tss` with `hh-tokens-high-contrast.uss`, black and near
+  black surfaces, white text, a yellow focus ring and darker buttons. Every contrast pair passes AA
+  in it outright; `Tools~/check.mjs` now checks each pair in each `hh-tokens-*.uss` theme, which must
+  define the same tokens as `hh-tokens.uss`.
 - `--hh-color-button` and `--hh-color-button-hover` (mirrored in `HHTheme`, `Brand~/tokens.json` and
   Godot) now colour the button; they take today's violet values, so nothing changes on screen.
 - `HHTokens` reads the tokens an element resolves at runtime: `TryGetColor(element, "color-teal",

@@ -9,18 +9,15 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
-   theme sheet for each; the contrast check runs every pair against every theme. Check:
-   `check.mjs` over all three, gate.
-2. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
-   that cycles the three themes. Check: tests written, gate.
-3. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+1. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+   that cycles the available themes. Check: tests written, gate.
+2. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
    reference check to fail on a control missing from it.
-4. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+3. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
    compiles it; extend the reference check to fail on a form control it doesn't use.
-5. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+4. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
    and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -43,6 +40,9 @@ which fails on a control with no EditMode test.
   Unity repos do.
 - The open-core split: which controls stay MIT and which go in the paid Pro pack.
 - Publishing: an OpenUPM listing, then the Asset Store.
+- A light theme's palette. Mechanically it's a `hh-tokens-light.uss` the contrast check holds to AA,
+  but it inverts every colour role (accent text dark on white, button text dark or light), which is
+  a brand choice. With the palette, the theme sheet and check are a short item.
 - Drop `HHTheme`'s hand-kept mirror, as the runtime-token item first asked? `HHTokens` now reads
   resolved tokens, but `HHTheme` also serves code with no styled element (sprites, materials),
   so the mirror and its check were kept. Keep it, or drop `HHTheme`?
@@ -55,6 +55,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: high-contrast theme: `hh-tokens-high-contrast.uss` and `hh-theme-high-contrast.tss`; the contrast check runs every pair in every theme, and only the default theme may hold accepted exceptions (branch `max/high-contrast`).
 - 2026-11-26: button tokens: `--hh-color-button` and `--hh-color-button-hover` split from `violet` and `violet-light`, at the same values, so a theme can set the button apart from accent text (branch `max/button-tokens`).
 - 2026-11-26: `HHTokens`: read resolved token values (`TryGetColor`, `TryGetFloat`, `WhenResolved`) from a styled element at runtime (branch `max/runtime-tokens`).
 - 2026-11-26: dropdown lists: `hh-dropdown-menu.uss`, imported by `hh-theme.tss`, styles Unity's `GenericDropdownMenu` (card, track hover, teal checkmark, separators) (branch `max/dropdown-menu`).

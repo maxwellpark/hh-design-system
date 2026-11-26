@@ -1,0 +1,5 @@
+/* The high-contrast theme: pick it as a PanelSettings' Theme Style Sheet in place of hh-theme.tss */
+@import url("unity-theme://default");
+@import url("hh-tokens-high-contrast.uss");
+@import url("hh-components.uss");
+@import url("hh-dropdown-menu.uss");

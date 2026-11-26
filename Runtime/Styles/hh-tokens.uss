@@ -2,6 +2,7 @@
 :root {
     --hh-color-bg: #0E0F20;
     --hh-color-surface: #191B38;
+    --hh-color-card-edge: #191B38;
     --hh-color-track: #2E3166;
     --hh-color-violet: #8257FF;
     --hh-color-violet-light: #A78BFA;

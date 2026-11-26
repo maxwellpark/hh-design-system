@@ -9,6 +9,7 @@
     { "use": "Ghost button text", "text": "violet-light", "on": "violet-ghost", "over": "surface" },
     { "use": "Ghost button text, hovered", "text": "violet-light", "on": "violet-ghost-hover", "over": "surface" },
     { "use": "Focus ring against a card", "text": "focus", "on": "surface", "min": 3 },
+    { "use": "Checked toggle tick on its fill", "text": "text", "on": "violet", "min": 3 },
     { "use": "Dropdown list item text", "text": "text", "on": "surface" },
     { "use": "Dropdown list checkmark", "text": "teal", "on": "surface", "min": 3 },
     { "use": "Hovered list row text", "text": "text", "on": "track" },
