@@ -2,8 +2,7 @@
 
 A settings screen built from the design system: tabs of a music switch, a volume slider, a quality
 dropdown, a resolution stepper, a name field and a difficulty radio row, reduced motion and large
-text on an Access tab, Save showing a toast, and Back asking
-before it throws changes away.
+text on an Access tab, Save showing a toast, and Back asking before it throws changes away.
 
 Put `SettingsMenu.cs` on a GameObject with a `UIDocument` whose PanelSettings' Theme Style Sheet is
 `hh-theme.tss` (or `hh-theme-high-contrast.tss`), and press Play. Change something and press Back:
