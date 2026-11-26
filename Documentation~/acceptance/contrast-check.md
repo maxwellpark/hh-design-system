@@ -29,7 +29,8 @@ Not measured: the test runs `check.mjs` in child processes. The paths table stan
 
 ## Complexity
 
-By reading, the contrast loop is about 30 lines with five branches; under 10 and 60.
+By reading, `contrast()` is about 20 lines with five early returns and the loop about 25 lines
+with a five-way branch on the result; each is under 10 and 60.
 
 ## Behaviour transcript
 
@@ -66,9 +67,10 @@ ok   blended ratio is measured
 ok   3:1 minimum applies to the focus ring
 ok   accepted pair getting worse fails
 ok   accepted pair that now passes fails
+ok   accepted without a ratio fails
 ok   pair missing a key fails readably
 ok   translucent background without over fails
-24/24 passed
+25/25 passed
 ```
 
 ## Captures

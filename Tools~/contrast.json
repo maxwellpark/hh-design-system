@@ -17,7 +17,7 @@
       "use": "Button text",
       "text": "text",
       "on": "violet",
-      "accepted": { "ratio": 4.0, "why": "palette from 0.1, waits on the owner's choice in BACKLOG.md" }
+      "accepted": { "ratio": 4.00, "why": "palette from 0.1, waits on the owner's choice in BACKLOG.md" }
     },
     {
       "use": "Button text, hovered",
