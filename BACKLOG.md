@@ -9,6 +9,28 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
+1. Accessibility modifiers: `.hh-reduced-motion` sets every duration token to 0s and
+   `.hh-large-text` sets every font-size token to 1.25 times its `hh-tokens.uss` value (USS has no
+   `calc()`, so as written pixels), on whatever element carries the class, under any theme. The
+   rules sit at the end of `hh-components.uss`, after the token files, outside the `HHTheme`
+   mirror. `HHAccessibility` toggles them; the Settings sample gains a toggle for each, and the
+   1.25 goes in `decisions.md`. Check: `check.mjs` fails if a modifier misses a token of its kind,
+   sets one off the scale, or names one that isn't a token; the compile gate. The USS stays
+   unverified in Unity until a licence.
+2. Pause menu sample: `Samples~/PauseMenu` with an `HHCard` of Resume, Settings and Quit buttons
+   and a `package.json` entry. Resume hides the menu, Settings shows a toast pointing to the
+   Settings sample, and Quit asks through a `require-choice` dialog. Check: the compile gate
+   builds `Sample.PauseMenu`, and the sample check holds its controls.
+3. Slider value: Unity's `show-input-field` shows a float field but can't format, so `HHSlider`
+   gains a value label beside the track, with `show-value` and a `value-format` (percent or
+   number) attribute. Check: EditMode tests written, its reference section, and a contrast pair for
+   the value text.
+4. Doc snippet gate: a gate step extracts each fenced `csharp` block from `Documentation~/*.md`,
+   compiles it as a sample-like assembly, and fails on one that doesn't; `check.mjs` fails on a
+   fenced `xml` block naming an `hh:` element or attribute the component reference doesn't have.
+   Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
+5. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
+   install to a themed card with a toggle and a button. Check: the doc snippet gate.
 
 ## Blocked on owner
 
