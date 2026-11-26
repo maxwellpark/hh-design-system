@@ -6,16 +6,22 @@ Node 22 and Unity 6000.0.85f2's compiler.
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| Each fenced `csharp` block in `Documentation~/*.md` compiles as a sample-like `Docs.<guide>` assembly, editor and player | "a doc snippet that compiles passes" in `unity-compile.test.sh` | pass | verified |
+| Each fenced C# block (`csharp`, `cs`, `c#`, any case, indented or with trailing spaces) in `Documentation~/*.md` compiles as its own `Docs.<guide>.<n>` assembly, editor and player, so steps may redefine a type | "a doc snippet that compiles passes", "two steps of a guide may define the same type", "a cs fence is compiled too" | pass | verified |
+| Two guides whose assembly names clash stop the gate rather than one hiding the other | "two guides whose snippet names clash stop the gate" | pass | verified |
 | A snippet that doesn't compile fails the gate, reported at the guide's own line | "a doc snippet that doesn't compile fails at its line in the guide" (`Documentation~/index.md(line,col): error CS`) | pass | verified |
-| The gate's other twelve cases still hold | `unity-compile.test.sh` | 14 of 14 | verified |
-| Guide UXML may use only `hh:` elements in the component reference, with their listed or example attributes or VisualElement's own | three planted cases in `check.test.mjs` | 3 of 3 | verified |
+| The gate's other cases still hold | `unity-compile.test.sh` | 17 of 17 | verified |
+| Guide UXML may use only `hh:` elements in the component reference, with their listed or example attributes, their Unity base's own (a table in `check.mjs`) or VisualElement's; fences are read like the gate's, a fence shown inside a longer one is skipped, values may hold `=` or `>`, and a bad attribute is reported at its own line | eight planted cases in `check.test.mjs` | 8 of 8 | verified |
 | `components.md` itself and the acceptance packs aren't scanned | `check.mjs` skips `components.md`; only top-level `Documentation~/*.md` is read | | verified by reading |
 
 ## Coverage and complexity
 
-About 15 lines in the gate and 35 in `check.mjs`. Only `csharp` fences compile; `cs` or
-`c#` fences are left alone, so a guide opts in by the fence name.
+A fence scanner in each of the gate and `check.mjs`. Snippets compile as runtime code only, with
+warnings as errors; a guide about editor scripts would need an opt-out the gate doesn't have yet.
+The base attribute table in `check.mjs` is kept by hand, so a missing entry fails safe.
+
+The suite run below shows "a doc snippet that compiles passes" failing on exit 0: the gate passed,
+but the case still expected the old assembly name. The pattern was corrected to `Docs.index.1`,
+and that case was rerun on its own afterwards.
 
 ## Behaviour transcript
 
@@ -33,10 +39,13 @@ ok   editor-only code in a runtime assembly fails the player build
 ok   a misspelt Unity class in a stylesheet fails
 ok   a real Unity class outside *UssClassName fields passes
 ok   an uncommitted change is not compiled
-ok   a doc snippet that compiles passes
+FAIL a doc snippet that compiles passes: exit 0
 ok   a doc snippet that doesn't compile fails at its line in the guide
+ok   two steps of a guide may define the same type
+ok   a cs fence is compiled too
+ok   two guides whose snippet names clash stop the gate
 ok   a missing editor exits 2
-0 failed
+1 failed
 ```
 
 `node Tools~/check.mjs` (last line), `node Tools~/check.test.mjs` (guide cases and total):
