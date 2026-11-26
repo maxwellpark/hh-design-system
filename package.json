@@ -28,7 +28,7 @@
     },
     {
       "displayName": "Pause Menu",
-      "description": "A pause menu: a card of buttons and a quit confirmation.",
+      "description": "A pause menu: a card of buttons and a hold to quit button.",
       "path": "Samples~/PauseMenu"
     }
   ]

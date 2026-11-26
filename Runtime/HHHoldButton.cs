@@ -78,7 +78,7 @@ namespace HootonHeroics.DesignSystem
             }
             holdPointer = e.pointerId;
             this.CapturePointer(e.pointerId);
-            Begin();
+            StartHold();
         }
 
         private void OnKeyDown(KeyDownEvent e)
@@ -90,7 +90,7 @@ namespace HootonHeroics.DesignSystem
             if (holdKey == KeyCode.None)
             {
                 holdKey = e.keyCode;
-                Begin();
+                StartHold();
             }
             e.StopPropagation();
         }
@@ -109,7 +109,18 @@ namespace HootonHeroics.DesignSystem
             Release();
         }
 
-        internal void Begin()
+        /// Starts a hold, as a pointer or key press does; a game can call it from its own input, such as a pad button.
+        /// Only on a button in a panel, whose scheduler drives the hold; moving focus away cancels it.
+        public void Begin()
+        {
+            if (panel != null)
+            {
+                StartHold();
+            }
+        }
+
+        // Begin's work, without the panel check, so tests can drive a detached button through Advance
+        internal void StartHold()
         {
             if (IsHolding || awaitRelease || !enabledInHierarchy)
             {
@@ -160,8 +171,8 @@ namespace HootonHeroics.DesignSystem
             return true;
         }
 
-        /// The key or pointer let go: stops any hold, and allows the next.
-        internal void Release()
+        /// The key or pointer let go: stops any hold, and allows the next. Pair it with Begin for a game's own input.
+        public void Release()
         {
             awaitRelease = false;
             Cancel();
