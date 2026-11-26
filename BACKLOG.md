@@ -10,10 +10,24 @@ since the editor won't open a project without a licence. "Tests written" items a
 which fails on a control with no EditMode test.
 
 1. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
-   instance of each focusable control (button, icon button, hold button once merged, toggle, slider,
+   instance of each focusable control (button, icon button, hold button, toggle, slider,
    dropdown, text field, radio group, stepper, tabs, list, scroll view), found with
    `page.Query<T>().Where(e => !e.enabledSelf)`, so the built page is held, not only its source.
    Check: the test written, not run; `bash Tools~/unity-compile.sh`.
+
+2. Adding a control guide: `Documentation~/adding-a-control.md`, linked from `index.md`, lists
+   what `check.mjs` and the gate hold a new control to (its `.meta`; a rule per class constant; a
+   reference section whose lists match exactly; a test outside `GalleryTests.cs`; a gallery entry,
+   and a disabled one if focusable; focus and disabled rules on its own class; tokens only, through
+   the modifiers; known USS properties and Unity classes; contrast pairs by convention), naming
+   `check.mjs` as the authority. Its C# example is a doc-only class with a name no real control has,
+   kept out of the guide's UXML. Check: the doc snippet gate compiles the example.
+
+3. Pause menu hold to quit: the Pause Menu sample's Quit becomes an `HHHoldButton` ("Hold to quit")
+   whose `Confirmed` shows the warning toast, in place of the confirm dialog. That touches
+   `PauseMenu.cs`, its README, the `package.json` description, the sample table in `check.mjs`
+   (`HHHoldButton` for `HHDialog`, which Settings still covers), its planted case and the sample's
+   pack. Check: the planted case fails without `HHHoldButton`, and the compile gate builds the sample.
 
 ## Blocked on owner
 
