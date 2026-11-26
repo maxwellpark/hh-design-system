@@ -3,6 +3,10 @@
 ## [Unreleased]
 - Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only
   its buttons can close.
+- Accessibility: `HHAccessibility.SetReducedMotion` and `SetLargeText` add `.hh-reduced-motion`
+  (every duration 0s) and `.hh-large-text` (every font size 1.25 times) to an element, under any
+  theme. The Settings sample gains an Access tab with both (applied on Save), and the gallery a toggle
+  for each.
 - `HHCard`: the `.hh-card` surface as a control with a `title` attribute; children go in its body.
   The gallery and the Basic UI and Settings samples now use it. The `.hh-card` class alone still works.
 - `HHRadioGroup`: one choice of several, such as difficulty, shown as a segmented row. The checked

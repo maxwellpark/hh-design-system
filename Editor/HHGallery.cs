@@ -35,7 +35,13 @@ namespace HootonHeroics.DesignSystem.Editor
             var files = TokenFiles();
             var picker = new DropdownField("Theme", files.Select(System.IO.Path.GetFileNameWithoutExtension).ToList(), 0);
             var page = new VisualElement();
+            var reduceMotion = new Toggle("Reduce motion");
+            var largeText = new Toggle("Large text");
+            reduceMotion.RegisterValueChangedCallback(e => HHAccessibility.SetReducedMotion(rootVisualElement, e.newValue));
+            largeText.RegisterValueChangedCallback(e => HHAccessibility.SetLargeText(rootVisualElement, e.newValue));
             rootVisualElement.Add(picker);
+            rootVisualElement.Add(reduceMotion);
+            rootVisualElement.Add(largeText);
             rootVisualElement.Add(page);
             // On the window root, so the tokens' :root and the dropdown list rules reach everything in it
             picker.RegisterValueChangedCallback(_ => Style(rootVisualElement, files.ElementAtOrDefault(picker.index)));

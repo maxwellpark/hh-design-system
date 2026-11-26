@@ -9,23 +9,15 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Accessibility modifiers: `.hh-reduced-motion` sets every duration token to 0s and
-   `.hh-large-text` sets every font-size token to 1.25 times its `hh-tokens.uss` value (USS has no
-   `calc()`, so as written pixels), on whatever element carries the class, under any theme. The
-   rules sit at the end of `hh-components.uss`, after the token files, outside the `HHTheme`
-   mirror. `HHAccessibility` toggles them; the Settings sample gains a toggle for each, and the
-   1.25 goes in `decisions.md`. Check: `check.mjs` fails if a modifier misses a token of its kind,
-   sets one off the scale, or names one that isn't a token; the compile gate. The USS stays
-   unverified in Unity until a licence.
-2. Slider value: Unity's `show-input-field` shows a float field but can't format, so `HHSlider`
+1. Slider value: Unity's `show-input-field` shows a float field but can't format, so `HHSlider`
    gains a value label beside the track, with `show-value` and a `value-format` (percent or
    number) attribute. Check: EditMode tests written, its reference section, and a contrast pair for
    the value text.
-3. Doc snippet gate: a gate step extracts each fenced `csharp` block from `Documentation~/*.md`,
+2. Doc snippet gate: a gate step extracts each fenced `csharp` block from `Documentation~/*.md`,
    compiles it as a sample-like assembly, and fails on one that doesn't; `check.mjs` fails on a
    fenced `xml` block naming an `hh:` element or attribute the component reference doesn't have.
    Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
-4. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
+3. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
 
 ## Blocked on owner
@@ -64,6 +56,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: pause menu sample: `Samples~/PauseMenu/PauseMenu.cs`, an `HHCard` of Resume, Settings and Quit, Quit asking through a `require-choice` dialog, opened by its own Pause button so it needs neither input system; `check.mjs` holds its controls (branch `max/pause-menu`).
+- 2026-11-26: accessibility modifiers: `.hh-reduced-motion` (every duration 0s) and `.hh-large-text` (every font size 1.25 times, as pixels) override tokens under any theme; `HHAccessibility` toggles them, the Settings sample has an Access tab and the gallery a toggle for each; `check.mjs` holds both to the tokens (branch `max/a11y-modifiers`).
 - 2026-11-26: `HHCard`: the card as a control with a `title` attribute and a body; the gallery and the Basic UI and Settings samples use it instead of hand-built cards (branch `max/card`).
 - 2026-11-26: `HHRadioGroup`: one choice of several as a segmented row, the checked choice teal with bg text; tests, gallery, reference and six contrast pairs (branch `max/radio-group`).
 - 2026-11-26: dialog focus trap: while an `HHDialog` is open, Tab past its last stop wraps to the first and Shift+Tab before the first wraps to the last; focus that leaves by any other route comes back on the next tick (branch `max/dialog-focus`).

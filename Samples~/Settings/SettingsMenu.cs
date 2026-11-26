@@ -11,6 +11,9 @@ public class SettingsMenu : MonoBehaviour
     private HHSlider volume;
     private HHDropdown quality;
     private HHTextField playerName;
+    private HHToggle reduceMotion;
+    private HHToggle largeText;
+    private VisualElement root;
     private HHDialog discard;
     private HHToastStack toasts;
     private Settings saved = new Settings { Music = true, Volume = 0.8f, Quality = 1, PlayerName = "Northwind" };
@@ -21,11 +24,13 @@ public class SettingsMenu : MonoBehaviour
         public float Volume;
         public int Quality;
         public string PlayerName;
+        public bool ReduceMotion;
+        public bool LargeText;
     }
 
     private void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement;
         // Re-enabling this component alone keeps the document's root, so start it empty
         root.Clear();
         root.style.paddingTop = 40;
@@ -46,10 +51,13 @@ public class SettingsMenu : MonoBehaviour
         volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f };
         quality = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "Medium", "High" } };
         playerName = new HHTextField { label = "Name" };
+        reduceMotion = new HHToggle { label = "Reduce motion" };
+        largeText = new HHToggle { label = "Large text" };
         var tabs = new HHTabs();
         tabs.Add(TabWith("Audio", music, volume));
         tabs.Add(TabWith("Video", quality));
         tabs.Add(TabWith("Player", playerName));
+        tabs.Add(TabWith("Access", reduceMotion, largeText));
         card.Add(tabs);
         card.Add(BuildActions());
         return card;
@@ -86,13 +94,22 @@ public class SettingsMenu : MonoBehaviour
         return tab;
     }
 
-    private Settings Current => new Settings { Music = music.value, Volume = volume.value, Quality = quality.index, PlayerName = playerName.value };
+    private Settings Current => new Settings
+    {
+        Music = music.value,
+        Volume = volume.value,
+        Quality = quality.index,
+        PlayerName = playerName.value,
+        ReduceMotion = reduceMotion.value,
+        LargeText = largeText.value,
+    };
 
     private bool Changed => !Current.Equals(saved);
 
     private void Save()
     {
         saved = Current;
+        ApplyAccess();
         toasts.Show("Settings saved", HHToastTone.Success);
     }
 
@@ -110,5 +127,15 @@ public class SettingsMenu : MonoBehaviour
         volume.value = saved.Volume;
         quality.index = saved.Quality;
         playerName.value = saved.PlayerName;
+        reduceMotion.value = saved.ReduceMotion;
+        largeText.value = saved.LargeText;
+        ApplyAccess();
+    }
+
+    // Saved settings apply to the whole document, so every control follows them
+    private void ApplyAccess()
+    {
+        HHAccessibility.SetReducedMotion(root, saved.ReduceMotion);
+        HHAccessibility.SetLargeText(root, saved.LargeText);
     }
 }
