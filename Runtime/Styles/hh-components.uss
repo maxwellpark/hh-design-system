@@ -733,3 +733,30 @@
 .hh-scroll-view.unity-scroll-view:disabled {
     opacity: 0.4;
 }
+
+/* A hold button is a button with a bar along its foot, in the text colour, filling while held; the bar is driven from C#
+   each tick, linearly, with no transition, so reduced motion changes nothing about it */
+.hh-hold-button {
+    overflow: hidden;
+}
+
+.hh-hold-button .hh-hold-button__fill {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: var(--hh-color-text);
+}
+
+/* It keeps the button's own fill when hovered, so its bar always sits on button, where it meets 3:1 */
+.hh-button.hh-hold-button:hover {
+    background-color: var(--hh-color-button);
+}
+
+.hh-hold-button:focus {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-hold-button:disabled {
+    opacity: 0.4;
+}
