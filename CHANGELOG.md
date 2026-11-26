@@ -1,7 +1,7 @@
 # Changelog
 
 ## [Unreleased]
-- HUD sample: the health and lives sit in a Player `HHCard`, so they read against any scene.
+- HUD sample: the health and lives sit in a Player `HHCard`, on the card's surface rather than the scene.
 - `Tools~/check.mjs` fails when GOAL.md's Numbers rows for controls, tokens and contrast pairs
   disagree with what it counts.
 - Adding a control: `Documentation~/adding-a-control.md` lists what `check.mjs` and the gate hold
