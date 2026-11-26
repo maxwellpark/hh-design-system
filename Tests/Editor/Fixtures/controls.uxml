@@ -28,4 +28,5 @@
     <hh:HHCard name="card" title="Audio">
         <hh:HHToggle name="card-toggle" label="Music" />
     </hh:HHCard>
+    <hh:HHRadioGroup name="radio" label="Difficulty" choices="Easy,Normal,Hard" value="1" />
 </ui:UXML>

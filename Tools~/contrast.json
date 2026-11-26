@@ -41,6 +41,12 @@
     { "use": "Violet progress fill or segment against the track", "text": "violet-light", "on": "track", "min": 3 },
     { "use": "Pink progress fill or segment against the track", "text": "pink", "on": "track", "min": 3 },
     { "use": "Peach progress fill or segment against the track", "text": "peach", "on": "track", "min": 3 },
+    { "use": "Radio choice text in its row", "text": "text-dim", "on": "bg" },
+    { "use": "Checked radio choice text", "text": "bg", "on": "teal" },
+    { "use": "Checked radio choice against its row", "text": "teal", "on": "bg", "min": 3 },
+    { "use": "Radio group edge against a card", "text": "violet-light", "on": "surface", "min": 3 },
+    { "use": "Focus ring on a radio choice", "text": "focus", "on": "bg", "min": 3 },
+    { "use": "Focus ring on the checked radio choice", "text": "text", "on": "bg", "min": 3 },
     {
       "use": "Empty track of a slider, progress bar, segmented bar or scroller against a card",
       "text": "track",
