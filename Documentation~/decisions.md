@@ -72,3 +72,7 @@
   `FocusOutEvent` handler that returns focus to the first action when it leaves the card.
 - Default 2026-11-26 [needs-review]: the scrim is `bg` at 72%. Why: dark enough to set the card
   apart from a busy game scene behind it. To change: `--hh-color-scrim` and its mirrors.
+- Default 2026-11-26 [needs-review]: Escape closes a dialog on its `KeyDownEvent`, and the
+  `NavigationCancelEvent` Unity sends for the same key goes on to whatever regains focus. Why:
+  harmless with one dialog open. To change: with stacked dialogs, ignore a cancel in the frame a
+  key Escape was handled.

@@ -327,6 +327,8 @@
 
 .hh-dialog .hh-dialog__actions .hh-button {
     margin-left: var(--hh-space-2);
+}
+
 /* Segments share the progress bar's track and tones; violet fills use violet-light, as decisions.md records */
 .hh-segmented-bar {
     flex-direction: row;
