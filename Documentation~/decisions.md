@@ -107,3 +107,7 @@
 - Default 2026-11-26 [needs-review]: `HHTabs` makes each tab header focusable and selects its tab on
   submit, Enter or Space. Why: Unity 6000.0's headers aren't focusable, so a menu built on them was
   mouse-only. To change: `HHTabs.Wire`.
+- Default 2026-11-26 [needs-review]: dropdown list rules live in their own `hh-dropdown-menu.uss`,
+  imported only by `hh-theme.tss`, and style every dropdown list on the panel. Why: Unity opens the
+  list at the panel root, outside any document, and `DropdownField` offers no public way to tag the
+  list it opens. To change: a custom dropdown that builds its own `GenericDropdownMenu`.

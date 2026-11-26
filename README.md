@@ -18,6 +18,7 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
      `Runtime/Styles/hh-theme.tss`. It brings Unity's default control styles plus the tokens
      and components, for every document on that panel.
    - **Per document:** add `Runtime/Styles/hh-tokens.uss` and `Runtime/Styles/hh-components.uss`
+     (dropdown lists open at the panel root, so only the theme styles them)
      to the document, or call `HHStyles.Apply(root, tokens, components)`.
 3. Use the classes / components:
 ```xml
