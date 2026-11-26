@@ -15,6 +15,14 @@ which fails on a control with no EditMode test.
    scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
    timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
 
+2. Reference examples check: the UXML examples in `Documentation~/components.md` widen what guides
+   may use, so a typo there would pass everywhere. `check.mjs` fails on an example attribute that is
+   neither the type's own `[UxmlAttribute]` nor in its Unity base's table. Check: planted cases in
+   `Tools~/check.test.mjs`.
+3. Gallery disabled test: an EditMode test that the gallery's Disabled section holds one disabled
+   instance of each focusable control, so the page itself is held, not only its source text. Check:
+   the test written, not run, and the compile gate.
+
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
