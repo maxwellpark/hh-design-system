@@ -1,13 +1,12 @@
 # Acceptance: progress-variants
 
-Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh`). Stacked on the icon button
-and badge PR, which adds `HHTone`.
+Node 22 and Unity 6000.0.85f2's compiler (`Tools~/unity-compile.sh`).
 
 ## Claims
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| Progress tones, `HHSegmentedBar` and their tests compile with Unity's compiler and generator | the compile gate | 4 of 4 assemblies | verified |
+| Progress tones, `HHSegmentedBar` and their tests compile with Unity's compiler and generator, editor and player | the compile gate | 6 builds | verified |
 | Every tone's fill reads against the track at 3:1 or more | `node Tools~/check.mjs`, three new pairs | 27 pairs pass | verified |
 | A progress bar is teal until given another tone, and returns to no tone class for teal | `ProgressBarIsTealUntilGivenAnotherTone` | compiled, not run | unverified |
 | A segmented bar keeps one child per segment, clamped to 1 to 50, and fills from the start, clamping `filled` when segments shrink | `SegmentedBarBuildsOneChildPerSegment`, `SegmentedBarFillsFromTheStartAndClamps` | compiled, not run | unverified |
@@ -39,11 +38,13 @@ accepted: Button text, hovered: text on violet-light is 2.47:1, needs 4.5 (palet
 `bash Tools~/unity-compile.sh HEAD`:
 
 ```
-ok   HootonHeroics.DesignSystem (13 files)
-ok   HootonHeroics.DesignSystem.Editor (1 files)
-ok   HootonHeroics.DesignSystem.Tests.Editor (3 files)
-ok   BasicUISample (1 files)
-ok   HEAD compiles with the compiler and generators of Unity 6000.0.85f2
+ok   HootonHeroics.DesignSystem [editor] (13 files)
+ok   HootonHeroics.DesignSystem.Editor [editor] (1 files)
+ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (3 files)
+ok   Sample.BasicUI [editor] (1 files)
+ok   HootonHeroics.DesignSystem [player] (13 files)
+ok   Sample.BasicUI [player] (1 files)
+ok   HEAD compiles: 6 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 ## Hands-on checklist (Unity 6, five minutes)
@@ -51,8 +52,8 @@ ok   HEAD compiles with the compiler and generators of Unity 6000.0.85f2
 1. Add `<hh:HHProgressBar value="60" tone="Pink" />`: a pink fill on the dark track.
 2. Add `<hh:HHSegmentedBar segments="5" filled="3" tone="Peach" />`: five rounded segments with
    small gaps, the first three peach.
-3. Run the EditMode tests: the four in `ProgressVariantTests` pass.
+3. Run the EditMode tests: the five in `ProgressVariantTests` pass.
 
 ## Unverified
 
-Rendering, and the four tests, which need a licensed editor.
+Rendering, and the five tests, which need a licensed editor.

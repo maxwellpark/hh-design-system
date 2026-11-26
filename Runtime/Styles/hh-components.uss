@@ -282,7 +282,7 @@
     border-radius: 4px;
 }
 
-/* Segments share the progress bar's track and tone colours; violet uses violet-light, 2.7:1 otherwise */
+/* Segments share the progress bar's track and tones; violet fills use violet-light, as decisions.md records */
 .hh-segmented-bar {
     flex-direction: row;
     min-height: var(--hh-space-3);
