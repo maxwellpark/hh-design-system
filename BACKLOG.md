@@ -9,10 +9,11 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
+1. Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*UssClassName` from Unity's
+   UI Toolkit assemblies with Mono.Cecil and fails when a stylesheet styles a `.unity-*` class that
+   doesn't exist. Check: a planted misspelt `.unity-*` class fails the gate.
+2. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
    Check: contrast pairs for selected and unselected tab text, gate.
-2. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
-   for selected-row text, gate.
 3. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
    sheet. Check: contrast pairs, gate.
 4. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
@@ -59,6 +60,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHScrollView` and `HHListView`: slim scrollers with a violet-light handle and no arrow buttons, rows with a track hover and a selection tint plus violet-light edge (branch `max/scroll-list`).
 - 2026-11-26: `HHTooltip`: a manipulator that shows a label below its target after a 500ms hover or focus delay and hides on leave, blur, Escape or detach; `HHIconButton` carries one for its label (branch `max/tooltip`).
 - 2026-11-26: `HHToast` and `HHToastStack`: cards with info, success, warning and danger edges, stacked in a corner, newest last, capped by `max-visible`, each dismissing itself after its time (branch `max/toast`).
 - 2026-11-26: `HHDialog`: modal card on a `--hh-color-scrim` scrim, title, UXML body, `AddAction`; Escape, gamepad cancel and scrim clicks close it unless `require-choice`; focus moves to the first action and back on close (branch `max/dialog`).

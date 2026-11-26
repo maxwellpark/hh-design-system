@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHScrollView` and `HHListView`: slim scrollers without arrow buttons and a violet-light handle;
+  list rows with a track-coloured hover and, when selected, a violet tint with a violet-light edge.
 - `HHTooltip`, a manipulator: `element.AddManipulator(new HHTooltip("Text"))` shows the text below
   the element after a 500ms hover or focus, and hides it on leave, blur, Escape, a click or detach. It draws in the element's document root. With no
   text it shows the element's `tooltip`. `HHIconButton` carries one, since runtime panels don't show
