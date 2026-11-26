@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:hh="HootonHeroics.DesignSystem">
+    <hh:HHProgressBar name="progress" title="Loading" value="40" />
+    <hh:HHButton name="ghost" text="Back" ghost="true" />
+    <hh:HHButton name="plain" text="Play" />
+    <hh:HHToggle name="toggle" label="Music" value="true" />
+    <hh:HHSlider name="slider" label="Volume" low-value="0" high-value="1" value="0.5" />
+    <hh:HHDropdown name="dropdown" label="Quality" choices="Low,High" index="1" />
+    <hh:HHTextField name="text-field" label="Name" value="Northwind" />
+</ui:UXML>

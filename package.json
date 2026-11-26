@@ -2,20 +2,10 @@
   "name": "com.hootonheroics.designsystem",
   "version": "0.2.0",
   "displayName": "Hooton Heroics Design System",
-  "description": "Hooton Heroics design system: brand tokens and a themeable UI Toolkit kit for Unity, plus the engine-neutral brand kit (tokens, studio mark, splash spec) and a Godot 4 studio splash add-on.",
-  "unity": "2022.3",
-  "keywords": [
-    "ui",
-    "ui-toolkit",
-    "design-system",
-    "theme",
-    "uss",
-    "uxml"
-  ],
-  "author": {
-    "name": "Hooton Heroics",
-    "url": "https://hootonheroics.com"
-  },
+  "description": "A themeable UI Toolkit design system for Unity: design tokens (USS variables), a ScriptableObject theme, and ready-to-use components. Open-core, by Hooton Heroics.",
+  "unity": "6000.0",
+  "keywords": ["ui", "ui-toolkit", "design-system", "theme", "uss", "uxml", "progress-bar"],
+  "author": { "name": "Hooton Heroics", "url": "https://hootonheroics.com" },
   "license": "MIT",
   "documentationUrl": "https://github.com/maxwellpark/hh-design-system",
   "changelogUrl": "https://github.com/maxwellpark/hh-design-system/blob/main/CHANGELOG.md",

@@ -26,7 +26,9 @@
     color: var(--hh-color-text);
     border-radius: var(--hh-radius-md);
     padding: var(--hh-space-3) var(--hh-space-6);
-    border-width: 0;
+    /* Always 2px, transparent until focused, so focus doesn't shift the layout */
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
     -unity-font-style: bold;
     transition-duration: 0.12s;
 }
@@ -35,7 +37,159 @@
     background-color: var(--hh-color-violet-light);
 }
 
-.hh-button--ghost {
-    background-color: rgba(130, 87, 255, 0.14);
+/* Unity's .unity-button:hover:active outranks .hh-button:hover, so pressed needs its own rule */
+.hh-button:hover:active {
+    background-color: var(--hh-color-violet);
+}
+
+.hh-button:focus {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-button:disabled {
+    opacity: 0.4;
+}
+
+/* Two classes so ghost outranks .hh-button:hover, which paints violet-light behind violet-light text */
+.hh-button.hh-button--ghost {
+    background-color: var(--hh-color-violet-ghost);
     color: var(--hh-color-violet-light);
+}
+
+.hh-button.hh-button--ghost:hover {
+    background-color: var(--hh-color-violet-ghost-hover);
+}
+
+.hh-button.hh-button--ghost:hover:active {
+    background-color: var(--hh-color-violet-ghost);
+}
+
+/* The title sits above the bar, on the card, since no text colour reads on both the fill and the track */
+.hh-progress-bar {
+    padding-top: var(--hh-space-6);
+}
+
+.hh-progress-bar .unity-progress-bar__background {
+    background-color: var(--hh-color-track);
+    border-width: 0;
+    border-radius: var(--hh-radius-sm);
+    min-height: var(--hh-space-3);
+}
+
+.hh-progress-bar .unity-progress-bar__progress {
+    background-color: var(--hh-color-teal);
+    border-width: 0;
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-progress-bar .unity-progress-bar__title-container {
+    top: auto;
+    bottom: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-bottom: var(--hh-space-1);
+}
+
+.hh-progress-bar .unity-progress-bar__title {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-sm);
+    -unity-font-style: bold;
+    -unity-text-align: lower-left;
+}
+
+/* .unity-base-field adds weight so these outrank Unity's default theme rules for the same parts */
+.hh-toggle.unity-base-field .unity-base-field__label,
+.hh-slider.unity-base-field .unity-base-field__label,
+.hh-dropdown.unity-base-field .unity-base-field__label,
+.hh-text-field.unity-base-field .unity-base-field__label {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+}
+
+.hh-toggle.unity-base-field:disabled,
+.hh-slider.unity-base-field:disabled,
+.hh-dropdown.unity-base-field:disabled,
+.hh-text-field.unity-base-field:disabled {
+    opacity: 0.4;
+}
+
+.hh-toggle.unity-base-field .unity-toggle__checkmark {
+    width: 20px;
+    height: 20px;
+    background-color: var(--hh-color-bg);
+    border-width: 2px;
+    border-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-toggle.unity-base-field:hover:enabled .unity-toggle__checkmark {
+    border-color: var(--hh-color-text);
+}
+
+.hh-toggle.unity-base-field:checked .unity-toggle__checkmark {
+    background-color: var(--hh-color-violet);
+    border-color: var(--hh-color-violet);
+    -unity-background-image-tint-color: var(--hh-color-text);
+}
+
+/* The fill stays violet on hover, since the white tick on violet-light is 2.5:1 */
+.hh-toggle.unity-base-field:checked:hover:enabled .unity-toggle__checkmark {
+    border-color: var(--hh-color-text);
+}
+
+.hh-toggle.unity-base-field:checked:focus:enabled .unity-toggle__checkmark {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-toggle.unity-base-field:focus:enabled .unity-toggle__checkmark {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-slider.unity-base-field .unity-base-slider__tracker {
+    background-color: var(--hh-color-track);
+    border-width: 0;
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-slider.unity-base-field .unity-base-slider__dragger,
+.hh-slider.unity-base-field:hover:enabled .unity-base-slider__dragger,
+.hh-slider.unity-base-field:active:enabled .unity-base-slider__dragger {
+    background-color: var(--hh-color-teal);
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-slider.unity-base-field:focus:enabled .unity-base-slider__dragger {
+    border-color: var(--hh-color-text);
+}
+
+/* The resting border is violet-light because track on a card is 1.4:1, under the 3:1 a control's edge needs */
+.hh-dropdown.unity-base-field .unity-base-popup-field__input,
+.hh-text-field.unity-base-field .unity-base-text-field__input {
+    background-color: var(--hh-color-bg);
+    color: var(--hh-color-text);
+    border-width: 2px;
+    border-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-sm);
+    padding: var(--hh-space-1) var(--hh-space-2);
+}
+
+.hh-dropdown.unity-base-field .unity-base-popup-field__text {
+    color: var(--hh-color-text);
+}
+
+.hh-dropdown.unity-base-field .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: var(--hh-color-violet-light);
+}
+
+.hh-dropdown.unity-base-field:hover:enabled .unity-base-popup-field__input,
+.hh-text-field.unity-base-field:hover:enabled .unity-base-text-field__input {
+    border-color: var(--hh-color-text);
+}
+
+.hh-dropdown.unity-base-field:focus:enabled .unity-base-popup-field__input,
+.hh-text-field.unity-base-field:focus:enabled .unity-base-text-field__input {
+    border-color: var(--hh-color-focus);
 }
