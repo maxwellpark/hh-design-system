@@ -1,9 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:hh="HootonHeroics.DesignSystem">
-    <ui:VisualElement class="hh-card" style="width: 320px;">
-        <ui:Label text="Hooton Heroics" class="hh-title" />
+    <hh:HHCard title="Hooton Heroics" style="width: 320px;">
         <ui:Label text="Design system demo" class="hh-text-dim" />
         <hh:HHProgressBar title="Loading" value="40" style="margin-top: 16px;" />
         <hh:HHButton text="Play" style="margin-top: 16px;" />
         <hh:HHButton text="Reset" ghost="true" style="margin-top: 8px;" />
-    </ui:VisualElement>
+    </hh:HHCard>
 </ui:UXML>

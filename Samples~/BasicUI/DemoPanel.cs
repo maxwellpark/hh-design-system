@@ -34,12 +34,8 @@ public class DemoPanel : MonoBehaviour
         root.style.paddingTop = 40;
         root.style.paddingLeft = 40;
 
-        var card = new VisualElement();
-        card.AddToClassList("hh-card");
+        var card = new HHCard { Title = "Hooton Heroics" };
         card.style.width = 320;
-
-        var title = new Label("Hooton Heroics");
-        title.AddToClassList("hh-title");
 
         var sub = new Label("Design system demo");
         sub.AddToClassList("hh-text-dim");
@@ -53,7 +49,6 @@ public class DemoPanel : MonoBehaviour
         var back = new HHButton(() => progress.value = progress.lowValue) { text = "Reset", Ghost = true };
         back.style.marginTop = 8;
 
-        card.Add(title);
         card.Add(sub);
         card.Add(progress);
         card.Add(play);
