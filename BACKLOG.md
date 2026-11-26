@@ -9,22 +9,20 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
-   sheet. Check: contrast pairs, gate.
-2. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
+1. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
    check can go. Check: tests written, gate.
-3. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+2. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
    theme sheet for each; the contrast check runs every pair against every theme. Check:
    `check.mjs` over all three, gate.
-4. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+3. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
    that cycles the three themes. Check: tests written, gate.
-5. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+4. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
    reference check to fail on a control missing from it.
-6. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+5. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
    compiles it; extend the reference check to fail on a form control it doesn't use.
-7. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+6. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
    and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -55,6 +53,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: dropdown lists: `hh-dropdown-menu.uss`, imported by `hh-theme.tss`, styles Unity's `GenericDropdownMenu` (card, track hover, teal checkmark, separators) (branch `max/dropdown-menu`).
 - 2026-11-26: Unity class names in the gate: `Tools~/unity-compile.mjs` reads every `*ussClassName` Unity 6000.0's UI Toolkit assembly assigns (`Tools~/unity-classes.cs`, Mono.Cecil) and fails on a `.unity-*` class a stylesheet styles that isn't one (branch `max/unity-class-check`).
 - 2026-11-26: `HHScrollView` and `HHListView`: slim scrollers with a violet-light handle and no arrow buttons, rows with a track hover and a selection tint plus violet-light edge (branch `max/scroll-list`).
 - 2026-11-26: `HHTabs`: Unity 6's `TabView` with dim unselected labels, white selected labels, a teal underline on the `:checked` tab, and headers made focusable with submit selecting the tab (branch `max/tabs`).

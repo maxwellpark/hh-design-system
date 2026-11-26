@@ -19,6 +19,7 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
      and components, for every document on that panel.
    - **Per document:** add `Runtime/Styles/hh-tokens.uss` and `Runtime/Styles/hh-components.uss`
      to the document, or call `HHStyles.Apply(root, tokens, components)`.
+     Dropdown lists open at the panel root, so only the theme styles them.
 3. Use the classes / components:
 ```xml
 <ui:VisualElement class="hh-card">
