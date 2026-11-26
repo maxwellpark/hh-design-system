@@ -152,11 +152,14 @@ for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pair
   }
   pairs += 1;
   const min = pair.min ?? 4.5;
-  const line = `${pair.use}: ${pair.text} on ${pair.on} is ${ratio.toFixed(2)}:1, needs ${min}`;
+  const shown = ratio.toFixed(2);
+  const line = `${pair.use}: ${pair.text} on ${pair.on} is ${shown}:1, needs ${min}`;
   // An accepted pair holds its recorded ratio, so it can't quietly get worse or outlive its reason
-  if (pair.accepted && ratio >= min) {
+  if (pair.accepted && (typeof pair.accepted.ratio !== "number" || typeof pair.accepted.why !== "string")) {
+    problems.push(`${pair.use}: accepted needs a numeric ratio and a why`);
+  } else if (pair.accepted && ratio >= min) {
     problems.push(`${line}: passes now, drop its accepted entry`);
-  } else if (pair.accepted && ratio < pair.accepted.ratio - 0.005) {
+  } else if (pair.accepted && Number(shown) < pair.accepted.ratio) {
     problems.push(`${line}, and fell below its accepted ${pair.accepted.ratio}`);
   } else if (pair.accepted) {
     accepted.push(`accepted: ${line} (${pair.accepted.why})`);

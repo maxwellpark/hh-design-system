@@ -71,6 +71,7 @@ const cases = [
     edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-color-violet: #8257FF;", "--hh-color-violet: #6E4AD9;");
     edit(d, "Runtime/HHTheme.cs", "0x82, 0x57, 0xFF, 0xFF", "0x6E, 0x4A, 0xD9, 0xFF");
   }, 1, /Button text: .*passes now, drop its accepted entry/],
+  ["accepted without a ratio fails", (d) => edit(d, "Tools~/contrast.json", '"accepted": { "ratio": 2.47, "why": "palette from 0.1, waits on the owner\'s choice in BACKLOG.md" }', '"accepted": "palette from 0.1"'), 1, /Button text, hovered: accepted needs a numeric ratio and a why/],
   ["pair missing a key fails readably", (d) => edit(d, "Tools~/contrast.json", '{ "use": "Body text on the page", "text": "text", "on": "bg" }', '{ "use": "Body text on the page", "text": "text" }'), 1, /Body text on the page: needs both text and on/],
   ["translucent background without over fails", (d) => edit(d, "Tools~/contrast.json", ', "over": "surface" }', " }"), 1, /Ghost button text: violet-ghost is translucent, say what it sits over/],
 ];
