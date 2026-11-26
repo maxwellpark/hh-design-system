@@ -38,11 +38,11 @@ A constructor and a class name; the look is all USS. Keyboard behaviour is Unity
 
 ## Behaviour transcript
 
-`node Tools~/unity-compile.mjs HEAD` (last lines):
+`node Tools~/unity-compile.mjs HEAD` (excerpt):
 
 ```
 ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (12 files)
-ok   154 .unity-* class uses checked against 319 Unity class names
+ok   155 .unity-* class uses checked against 319 Unity class names
 ok   HEAD compiles: 10 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
