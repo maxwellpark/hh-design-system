@@ -1,6 +1,6 @@
 // Compiles every committed asmdef with Unity's own compiler, source generators and references, following its references and constraints. Exit 0 clean, 1 failed, 2 setup.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 
@@ -238,11 +238,50 @@ function compileAll(configName) {
 
 compileAll("editor");
 compileAll("player");
+
+// Every .unity-* class a stylesheet styles must exist; the names come from Unity's own assembly, read by Tools~/unity-classes.cs
+function unityClassNames() {
+  const runtimeDir = join(data, "NetCoreRuntime", "shared", "Microsoft.NETCore.App");
+  const runtime = join(runtimeDir, readdirSync(runtimeDir).sort().at(-1));
+  const tool = join(work, "unity-classes");
+  mkdirSync(tool, { recursive: true });
+  const refs = readdirSync(runtime).filter((f) => f.endsWith(".dll") && !/Native|clrjit|coreclr/.test(f)).map((f) => `-r:${join(runtime, f)}`);
+  const build = spawnSync(dotnet, [csc, "-nologo", "-nostdlib", "-target:exe", `-out:${join(tool, "unity-classes.dll")}`, ...refs, `-r:${precompiled["Mono.Cecil.dll"]}`, join(src, "Tools~", "unity-classes.cs")], { encoding: "utf8" });
+  if (build.status !== 0) {
+    return { error: `could not build the class reader: ${build.stdout.split(/\r?\n/).filter((l) => / error /.test(l)).slice(0, 3).join("; ")}` };
+  }
+  spawnSync("cp", [precompiled["Mono.Cecil.dll"], tool]);
+  writeFileSync(join(tool, "unity-classes.runtimeconfig.json"), JSON.stringify({ runtimeOptions: { tfm: "net6.0", framework: { name: "Microsoft.NETCore.App", version: basename(runtime) } } }));
+  const run = spawnSync(dotnet, [join(tool, "unity-classes.dll"), join(managed, "UnityEngine.UIElementsModule.dll")], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  return run.status === 0 ? { names: new Set(run.stdout.split(/\r?\n/).filter(Boolean)) } : { error: `the class reader failed: ${run.stderr.trim().slice(0, 200)}` };
+}
+
+if (failed === 0 && existsSync(join(src, "Tools~", "unity-classes.cs"))) {
+  const result = unityClassNames();
+  if (result.error) {
+    lines.push(`FAIL ${result.error}`);
+    failed += 1;
+  } else {
+    let used = 0;
+    const stylesDir = join(src, "Runtime", "Styles");
+    for (const name of readdirSync(stylesDir).filter((f) => /\.(uss|tss)$/.test(f))) {
+      const text = readFileSync(join(stylesDir, name), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+      for (const [, cls] of text.matchAll(/\.(unity-[A-Za-z0-9_-]+)/g)) {
+        used += 1;
+        if (!result.names.has(cls)) {
+          lines.push(`FAIL ${name}: .${cls} isn't a class Unity ${versionName} defines`);
+          failed += 1;
+        }
+      }
+    }
+    lines.push(`ok   ${used} .unity-* class uses checked against ${result.names.size} Unity class names`);
+  }
+}
 for (const line of lines) {
   console.log(line);
 }
 if (failed === 0) {
-  const count = lines.filter((l) => l.startsWith("ok")).length;
+  const count = lines.filter((l) => l.startsWith("ok") && l.includes("[")).length;
   console.log(`ok   ${rev} compiles: ${count} assembly builds with the compiler and generators of Unity ${versionName}`);
 }
 if (!process.env.HH_WORK) {
