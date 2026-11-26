@@ -14,13 +14,9 @@ which fails on a control with no EditMode test.
 2. HUD sample: `Samples~/HUD` with a health `HHProgressBar`, an `HHSegmentedBar` for lives, an
    `HHBadge` and an `HHToastStack`, driven by its own buttons so it needs neither input system. Check: the compile gate builds `Sample.HUD`,
    and `check.mjs` fails if the sample stops using any of them, as for Settings.
-3. Non-text contrast: WCAG 1.4.11 asks 3:1 for the parts that show a control's state. The focus
-   ring, scroller and tab underline have pairs; the toggle box edge, the text field and dropdown
-   edges, and the progress, segment and slider fills against their track don't yet. Check: those pairs in `Tools~/contrast.json` with
-   `min: 3`; any that fail go to Blocked on owner as palette choices, accepted meanwhile.
-4. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
+3. `HHRadioGroup`: a one-of-several choice (difficulty, colour mode) styled as a segmented row.
    Check: its test, gallery and reference sections, which `check.mjs` already demands.
-5. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
+4. `HHCard`: the `.hh-card` panel as a control with a `title` attribute, used by the gallery and
    both samples instead of hand-built cards. Check: the same checks, and the compile gate.
 
 ## Blocked on owner
@@ -35,6 +31,13 @@ which fails on a control with no EditMode test.
   decided). Options: set `button` to `#754EE6` (4.8:1) and `button-hover` to `#6E4AD9` (5.2:1), or
   dark (`bg`) text on the current hover colour, 7.0:1. Recommended: the darker violets, which keep
   the look. Since the button tokens are their own, this no longer touches accent text or borders.
+- Track contrast, from the 0.1 palette: an empty slider, progress or segment track
+  (`--hh-color-track`) is 1.39:1 on a card, under the 3:1 WCAG 1.4.11 asks of the parts that show
+  a control's extent (accepted in `Tools~/contrast.json` until decided; high contrast passes).
+  Lightening the track to 3:1 (`#6266A8`) drops the pink fill to 1.8:1 and violet to 1.9:1, so that's
+  out. Options: a 1px edge on tracks from a new `--hh-color-track-edge` (`#7A7EC0` is 4.4:1 on a
+  card and 3.2:1 against the track), or accept it as is, since the fill and handle carry the value.
+  Recommended: the edge token.
 - A Unity licence for batch mode, so the gate can also import USS, TSS and UXML and run the tests:
   on Linux, 6000.0 exits 198 ("No valid Unity Editor license found") before importing anything.
   The house standards' route is a Unity account made for automation, activated through `op run`.
@@ -58,6 +61,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: non-text contrast: every part that shows a control's state or extent has a 3:1 pair in `Tools~/contrast.json`; the one new failure, the empty track on a card at 1.39:1, is accepted and waits on the owner's palette choice (branch `max/non-text-contrast`).
 - 2026-11-26: component reference: `Documentation~/components.md` gives each control and `HHTooltip` its UXML, classes, attributes, states and tokens; `check.mjs` fails on a missing section, class, attribute or token, a token that isn't defined, or a section for no control (branch `max/component-reference`).
 - 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
 - 2026-11-26: component gallery: `Editor/HHGallery.cs` (Hooton Heroics > Design System > Gallery) shows every control in its states under a picked token file; `check.mjs` fails on a control missing from it (branch `max/gallery`).

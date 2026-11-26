@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- Contrast: the empty track of a slider, progress bar or segmented bar is now checked against
+  the card at WCAG 1.4.11's 3:1. It's 1.39:1 in the default theme, accepted until the owner picks a
+  fix in BACKLOG.md, and passes in high contrast.
 - Component reference: `Documentation~/components.md` lists each control's UXML, classes,
   attributes, states and tokens. `Tools~/check.mjs` fails when it falls out of step with the code
   or `hh-components.uss`.
