@@ -84,5 +84,41 @@ namespace HootonHeroics.DesignSystem.Tests
             Assert.That(root.Q<HHToast>("toast").Text, Is.EqualTo("Saved"));
             Assert.That(root.Q<HHToast>("toast").Tone, Is.EqualTo(HHToastTone.Success));
         }
+
+        [Test]
+        public void AToastHasNoActionUntilOneIsSet()
+        {
+            var toast = new HHToast { Text = "Saved" };
+            Assert.That(toast.Action, Is.Null);
+
+            toast.SetAction("Undo", null);
+            Assert.That(toast.Action.text, Is.EqualTo("Undo"));
+            Assert.That(toast.Action.Ghost, Is.True);
+            Assert.That(toast.Action.ClassListContains(HHToast.ActionUssClassName), Is.True);
+
+            toast.SetAction("View", null);
+            Assert.That(toast.Query<HHButton>().ToList().Count, Is.EqualTo(1));
+            Assert.That(toast.Action.text, Is.EqualTo("View"));
+        }
+
+        [Test]
+        public void AnActionRunsItsCallbackThenDismisses()
+        {
+            var stack = new HHToastStack();
+            var ran = 0;
+            var toast = stack.Show("Item sold", HHToastTone.Info, 0f, "Undo", () => ran++);
+
+            Assert.That(toast.Action, Is.Not.Null);
+            toast.RunAction();
+            Assert.That(ran, Is.EqualTo(1));
+            Assert.That(toast.parent, Is.Null);
+        }
+
+        [Test]
+        public void ShowWithoutAnActionLeavesNone()
+        {
+            var stack = new HHToastStack();
+            Assert.That(stack.Show("Saved").Action, Is.Null);
+        }
     }
 }

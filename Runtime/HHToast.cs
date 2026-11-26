@@ -20,9 +20,11 @@ namespace HootonHeroics.DesignSystem
         public const string SuccessUssClassName = UssClassName + "--success";
         public const string WarningUssClassName = UssClassName + "--warning";
         public const string DangerUssClassName = UssClassName + "--danger";
+        public const string ActionUssClassName = UssClassName + "__action";
 
         private readonly Label label;
         private HHToastTone tone;
+        private Action onAction;
 
         /// Raised once, when the toast leaves its stack.
         public event Action Dismissed;
@@ -53,6 +55,28 @@ namespace HootonHeroics.DesignSystem
                 EnableInClassList(WarningUssClassName, value == HHToastTone.Warning);
                 EnableInClassList(DangerUssClassName, value == HHToastTone.Danger);
             }
+        }
+
+        /// The action button, or null until SetAction adds one.
+        public HHButton Action { get; private set; }
+
+        /// Adds a ghost button (Undo, View) that runs onAction and dismisses the toast; a second call relabels it.
+        public void SetAction(string actionLabel, Action onAction)
+        {
+            this.onAction = onAction;
+            if (Action == null)
+            {
+                Action = new HHButton(RunAction) { Ghost = true };
+                Action.AddToClassList(ActionUssClassName);
+                Add(Action);
+            }
+            Action.text = actionLabel;
+        }
+
+        internal void RunAction()
+        {
+            onAction?.Invoke();
+            Dismiss();
         }
 
         public void Dismiss()

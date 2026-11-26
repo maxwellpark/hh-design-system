@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine.UIElements;
 
@@ -31,9 +32,14 @@ namespace HootonHeroics.DesignSystem
         }
 
         /// Shows a toast that dismisses itself after the given seconds, or stays until dismissed if seconds is 0.
-        public HHToast Show(string text, HHToastTone tone = HHToastTone.Info, float seconds = DefaultSeconds)
+        /// With an action label it carries a button that runs onAction and dismisses it.
+        public HHToast Show(string text, HHToastTone tone = HHToastTone.Info, float seconds = DefaultSeconds, string actionLabel = null, Action onAction = null)
         {
             var toast = new HHToast { Text = text, Tone = tone };
+            if (actionLabel != null)
+            {
+                toast.SetAction(actionLabel, onAction);
+            }
             Add(toast);
             Trim();
             if (seconds > 0f)

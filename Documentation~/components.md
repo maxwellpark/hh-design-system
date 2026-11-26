@@ -139,14 +139,15 @@ A labelled choice list. Its open menu is drawn at the panel root, so its rules l
 
 ## HHTextField
 
-A single-line text input with a label. Extends `TextField`.
+A single-line text input with a label, and an optional placeholder hint drawn dim while it's empty. Extends `TextField`.
 
 ```xml
 <hh:HHTextField label="Name" value="Northwind" />
+<hh:HHTextField label="Callsign" placeholder-text="Pick a callsign" />
 ```
 
 - **Classes:** `.hh-text-field`
-- **States:** `:hover`, `:focus` (focus ring), `:disabled`.
+- **States:** `:hover`, `:focus` (focus ring), `:disabled`; an empty field with `placeholder-text` shows it in `--hh-color-text-dim`.
 - **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
 ## HHRadioGroup
@@ -234,22 +235,22 @@ A modal over a scrim, with a title, body and action buttons. Call `Open()`, `Clo
 
 ## HHToast
 
-One notification card. `HHToastStack.Show` creates these; `Dismiss()` removes one and fires `Dismissed`. Extends `VisualElement`.
+One notification card. `HHToastStack.Show` creates these; `Dismiss()` removes one and fires `Dismissed`. `SetAction(label, onAction)` adds a ghost button at its right (Undo, View) that runs the callback and dismisses it. Extends `VisualElement`.
 
 ```xml
 <hh:HHToast text="Saved" tone="Success" />
 ```
 
-- **Classes:** `.hh-toast`, `.hh-toast__text`, `.hh-toast--success`, `.hh-toast--warning`, `.hh-toast--danger`
+- **Classes:** `.hh-toast`, `.hh-toast__text`, `.hh-toast--success`, `.hh-toast--warning`, `.hh-toast--danger`, `.hh-toast__action`
 - **Attributes:**
   - `text` (string, default empty): The message.
   - `tone` (HHToastTone, default Info): Info, Success, Warning or Danger; Info has no modifier class.
 - **States:** No interactive states. Tone is a class.
-- **Tokens:** `--hh-color-peach`, `--hh-color-pink`, `--hh-color-surface`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-md`, `--hh-space-2`, `--hh-space-3`, `--hh-space-4`
+- **Tokens:** `--hh-color-peach`, `--hh-color-pink`, `--hh-color-surface`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-font-size-md`, `--hh-radius-md`, `--hh-space-1`, `--hh-space-2`, `--hh-space-3`, `--hh-space-4`
 
 ## HHToastStack
 
-The corner that holds toasts. `Show(text, tone, seconds)` adds one that dismisses itself after `seconds` (4 by default); 0 or less keeps it until dismissed. Extends `VisualElement`.
+The corner that holds toasts. `Show(text, tone, seconds, actionLabel, onAction)` adds one that dismisses itself after `seconds` (4 by default); 0 or less keeps it until dismissed, and an action label gives it a button. Extends `VisualElement`.
 
 ```xml
 <hh:HHToastStack max-visible="3" />
