@@ -257,16 +257,22 @@ function classConstants(source) {
   return values;
 }
 
-// Every sample package.json lists must exist, and the settings sample must use the controls a settings screen needs
+// Every sample package.json lists must exist, and the settings and HUD samples must use the controls those screens need
 for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ?? []) {
   if (!existsSync(sample.path)) {
     problems.push(`package.json: sample "${sample.displayName}" path ${sample.path} is missing`);
   }
 }
-const settingsSample = existsSync("Samples~/Settings/SettingsMenu.cs") ? stripComments(readFileSync("Samples~/Settings/SettingsMenu.cs", "utf8"), true) : null;
-for (const control of ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack"]) {
-  if (settingsSample !== null && !new RegExp(`\\b${control}\\b`).test(settingsSample)) {
-    problems.push(`Samples~/Settings/SettingsMenu.cs: doesn't use ${control}`);
+const sampleControls = {
+  "Samples~/Settings/SettingsMenu.cs": ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack"],
+  "Samples~/HUD/HudOverlay.cs": ["HHProgressBar", "HHSegmentedBar", "HHBadge", "HHButton", "HHToastStack"],
+};
+for (const [path, needed] of Object.entries(sampleControls)) {
+  const source = existsSync(path) ? stripComments(readFileSync(path, "utf8"), true) : null;
+  for (const control of needed) {
+    if (source !== null && !new RegExp(`\\b${control}\\b`).test(source)) {
+      problems.push(`${path}: doesn't use ${control}`);
+    }
   }
 }
 
