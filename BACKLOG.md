@@ -4,17 +4,22 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
 
 ## Ready
 
-Each item names its check. Unity items are compiled by item 1's gate once it lands.
+Each item names its check. Unity items are compiled by item 1's gate once it lands: batch mode
+compiles without a licence (it refuses only to run tests), using the Unity 6000.0.85f2 editor
+installed in the cloud session. "Tests written" items are also held by item 3's reference check,
+which fails on a control with no EditMode test.
 
 1. Unity compile gate: `Tools~/unity-compile.sh` installs a `git archive` tarball of the package
    into a throwaway Unity 6000.0 project, with the package in `testables` and the Basic UI sample
    copied into `Assets`, compiles in batch mode, and fails on a compile error, a missing or
    uncommitted `.meta`, or a USS, TSS or UXML import error. Check: exits 0 on main, and fails on a
    planted compile error and a planted meta-less file.
-2. Fix whatever the first Unity compile of `main` reports. Check: item 1's gate exits 0.
+2. Fix each compile error and import warning the first gate run of `main` reports, one commit per
+   cause; if it reports none, this item closes with the clean run as its evidence. Check: item 1's
+   gate exits 0 on `main`.
 3. Reference check: `Tools~/check.mjs` fails when a stylesheet uses an undefined `var(--hh-*)`,
-   or a C# `UssClassName` has no rule in `hh-components.uss`. Check: planted cases in
-   `check.test.mjs`.
+   a C# `UssClassName` has no rule in `hh-components.uss`, or a control in `Runtime/` has no
+   EditMode test naming it. Check: planted cases in `check.test.mjs`.
 4. Font and motion tokens: `--hh-font-weight-*`, `--hh-duration-fast` and `-normal`, and an easing
    token, replacing hard-coded transition times. Check: `check.mjs` (mirror and references), gate.
 5. Icon button and badge: `HHIconButton` (square, icon-only, needs an accessible name via
@@ -36,17 +41,19 @@ Each item names its check. Unity items are compiled by item 1's gate once it lan
     for selected-row text, gate.
 12. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
     sheet. Check: contrast pairs, gate.
-13. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+13. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
+    check can go. Check: tests written, gate.
+14. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
     theme sheet for each; the contrast check runs every pair against every theme. Check:
     `check.mjs` over all three, gate.
-14. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+15. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
     that cycles the three themes. Check: tests written, gate.
-15. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
-    check can go. Check: tests written, gate.
 16. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
-    control in each state under the chosen theme. Check: gate; captures need the owner's editor.
-17. Settings screen sample: a second sample building a real settings menu from the controls.
-    Check: gate compiles it.
+    control in each state under the chosen theme. Check: gate compiles it; the reference check
+    fails on a control missing from it.
+17. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
+    compiles it; the reference check fails on a form control it doesn't use.
 18. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
     and tokens. Check: the reference check (item 3) also fails on a control missing from it.
 
@@ -65,6 +72,7 @@ Each item names its check. Unity items are compiled by item 1's gate once it lan
   Unity repos do.
 - The open-core split: which controls stay MIT and which go in the paid Pro pack.
 - Publishing: an OpenUPM listing, then the Asset Store.
+- Captures of the component gallery and both samples in each theme, from an editor with graphics.
 
 ## Ideas
 
