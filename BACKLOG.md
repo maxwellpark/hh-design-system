@@ -13,18 +13,18 @@ which fails on a control with no EditMode test.
    (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
    at the ends with the button there disabled. Check: its test, gallery and reference sections,
    contrast pairs and the compile gate.
-2. Settings sample shows the newer controls: a Difficulty `HHRadioGroup` and a Resolution
-   `HHStepper` on the Video tab, saved and reverted with the rest. Check: the sample check requires
-   both, and the compile gate builds the sample.
-3. Scroller focus: a scroll view's scrollers are sliders, which Unity may let take focus, and
-   `.hh-scroll-view` has no focus rule. Read Unity 6000.0's `Scroller` in IL to settle whether
-   they take focus; if they do, add a focus rule on the scroller's dragger and a 3:1 pair. Check:
-   `check.mjs` and, if a rule is added, a planted case.
-4. Sample README check: `check.mjs` fails on a sample folder with no `README.md`, or whose README
-   doesn't name the script it tells you to add. Check: planted cases in `Tools~/check.test.mjs`.
-5. Changelog sections: group `[Unreleased]` under Added, Changed and Fixed, as Keep a Changelog
-   does, so a release note is ready when the owner tags. Check: `check.mjs` fails on an Unreleased
-   entry outside those headings, with a planted case.
+2. Settings sample shows the newer controls, after item 1: a Difficulty `HHRadioGroup` and a
+   Resolution `HHStepper` on the Video tab, in the `Settings` struct, `Current` and `Revert`, and
+   in the sample's README. Check: `check.mjs`'s sample table requires both, with a planted
+   "drops a control fails" case for each, and the compile gate builds the sample.
+3. Scroller focus: settle whether a scroll view's scrollers (sliders inside `Scroller`) take focus
+   in Unity 6000.0, by having `Tools~/unity-classes.cs` read it from the UI Toolkit assembly and
+   the gate print it, with a `decisions.md` line either way. If they do, `.hh-scroll-view` gains a
+   focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
+   output names the answer, with a planted case, and the focus check still passes.
+4. Sample README check: `check.mjs` fails when a `package.json` sample has no `README.md`, or when
+   a `*.cs` file in a sample folder isn't named in its README. Check: a planted case for each in
+   `Tools~/check.test.mjs`.
 
 ## Blocked on owner
 
@@ -56,6 +56,8 @@ which fails on a control with no EditMode test.
 
 ## Ideas
 
+- Changelog sections: group `[Unreleased]` under Added, Changed and Fixed before a release. It
+  changes how every session adds an entry, so it waits until the owner plans a tag.
 - A shared compile smoke in unity-packages that takes any package path, so this repo's gate and
   `tools/smoke-artifacts.sh` become one tool.
 
