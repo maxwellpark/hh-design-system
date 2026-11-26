@@ -87,6 +87,18 @@
     border-radius: var(--hh-radius-sm);
 }
 
+.hh-progress-bar.hh-progress-bar--violet .unity-progress-bar__progress {
+    background-color: var(--hh-color-violet-light);
+}
+
+.hh-progress-bar.hh-progress-bar--pink .unity-progress-bar__progress {
+    background-color: var(--hh-color-pink);
+}
+
+.hh-progress-bar.hh-progress-bar--peach .unity-progress-bar__progress {
+    background-color: var(--hh-color-peach);
+}
+
 .hh-progress-bar .unity-progress-bar__title-container {
     top: auto;
     bottom: 100%;
@@ -268,4 +280,37 @@
     height: 8px;
     padding: 0;
     border-radius: 4px;
+}
+
+/* Segments share the progress bar's track and tones; violet fills use violet-light, as decisions.md records */
+.hh-segmented-bar {
+    flex-direction: row;
+    min-height: var(--hh-space-3);
+}
+
+.hh-segmented-bar .hh-segmented-bar__segment {
+    flex-grow: 1;
+    margin-right: var(--hh-space-1);
+    border-radius: var(--hh-radius-sm);
+    background-color: var(--hh-color-track);
+}
+
+.hh-segmented-bar .hh-segmented-bar__segment:last-child {
+    margin-right: 0;
+}
+
+.hh-segmented-bar .hh-segmented-bar__segment--filled {
+    background-color: var(--hh-color-teal);
+}
+
+.hh-segmented-bar.hh-segmented-bar--violet .hh-segmented-bar__segment--filled {
+    background-color: var(--hh-color-violet-light);
+}
+
+.hh-segmented-bar.hh-segmented-bar--pink .hh-segmented-bar__segment--filled {
+    background-color: var(--hh-color-pink);
+}
+
+.hh-segmented-bar.hh-segmented-bar--peach .hh-segmented-bar__segment--filled {
+    background-color: var(--hh-color-peach);
 }

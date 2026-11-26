@@ -58,6 +58,12 @@
 - Default 2026-11-26 [needs-review]: `HHIconButton` sets its icon as the element's tinted
   background, not through `Button.iconImage`. Why: one tint rule colours any icon, and it works the
   same in UXML through the `icon` attribute. To change: `HHIconButton.Icon`.
+- Default 2026-11-26 [needs-review]: violet fills use `violet-light`. Why: plain violet is 2.7:1 on
+  the track, under the 3:1 a fill needs. To change: the `--violet` rules.
+- Default 2026-11-26 [needs-review]: empty segments are `track` on the card, 1.4:1, so a bar's
+  length reads from the gaps rather than the empty segments' edges. Why: filled segments, which
+  carry the value, are 4.1:1 or more against empty ones. To change: give empty segments a
+  `violet-light` border, which the contrast check would then hold to 3:1.
 - Default 2026-11-26 [needs-review]: a badge sits beside or over a control by the game's own
   layout; nothing positions it inside a button. Why: a Label inside a Button overlaps the button's
   text, which isn't a layout child. To change: add a corner-anchored `.hh-badge--corner` rule.
