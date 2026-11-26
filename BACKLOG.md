@@ -9,10 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
-   dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
-   compiles it; extend the reference check to fail on a form control it doesn't use.
-2. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+1. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
    and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -50,6 +47,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: Settings sample: `Samples~/Settings/SettingsMenu.cs`, a settings screen of tabs, toggle, slider, dropdown and text field, Save with a toast and Back asking through a dialog before discarding; `check.mjs` fails if it stops using any of them (branch `max/settings-sample`).
 - 2026-11-26: component gallery: `Editor/HHGallery.cs` (Hooton Heroics > Design System > Gallery) shows every control in its states under a picked token file; `check.mjs` fails on a control missing from it (branch `max/gallery`).
 - 2026-11-26: runtime theme switching: `HHThemes.Apply` and `HHThemes.Next` set or cycle a PanelSettings' theme sheet; the Basic UI sample's Theme button cycles them on a runtime copy of its PanelSettings (branch `max/theme-switching`).
 - 2026-11-26: high-contrast theme: `hh-tokens-high-contrast.uss` and `hh-theme-high-contrast.tss`; the contrast check runs every pair in every theme, and only the default theme may hold accepted exceptions (branch `max/high-contrast`).
