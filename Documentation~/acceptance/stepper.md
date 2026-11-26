@@ -14,7 +14,7 @@ needs a licence (Blocked on owner).
 | An index set before its choices, as UXML may set them, lands when they arrive | `StepperTests.AnIndexSetBeforeItsChoicesLandsWhenTheyArrive` | | written, not run |
 | The arrows don't take focus, so the field does | `StepperTests.ItsButtonsLeaveFocusToTheField` | | written, not run |
 | `label`, `choices` and `index` apply from UXML | `StepperTests.UxmlChoicesAndIndexApply` with the fixture | | written, not run |
-| Left and right step it when focused | `HHStepper.OnNavigationMove` | | verified by reading |
+| Left and right step it when focused; a step against an end is clamped first, so it sends no change event | `HHStepper.OnNavigationMove`, `Step` | | verified by reading |
 | Its focus ring, value and arrows meet AA (text) or 3:1 (non-text) in both themes | four pairs, below | pass | verified |
 | The focus check holds it (`BaseField` added to the focusable bases) and the reference matches | `check.mjs` | pass | verified |
 | It looks right and steps with a pad | | | unverified |
@@ -39,7 +39,7 @@ through it; five of the six tests drive it.
 ok   HootonHeroics.DesignSystem [editor] (27 files)
 ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (17 files)
 ok   HootonHeroics.DesignSystem [player] (27 files)
-ok   170 .unity-* class uses checked against 319 Unity class names
+ok   171 .unity-* class uses checked against 319 Unity class names
 ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
@@ -47,7 +47,7 @@ ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity
 
 ```
 68 .meta files ok, 32 tokens match HHTheme, 120 contrast pairs checked across 2 theme(s), 18 controls referenced, 20 types in the component reference
-94/94 passed
+97/97 passed
 ```
 
 ## Hands-on checklist (Unity 6, five minutes)
