@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only
+  its buttons can close.
 - `HHCard`: the `.hh-card` surface as a control with a `title` attribute; children go in its body.
   The gallery and the Basic UI and Settings samples now use it. The `.hh-card` class alone still works.
 - `HHRadioGroup`: one choice of several, such as difficulty, shown as a segmented row. The checked

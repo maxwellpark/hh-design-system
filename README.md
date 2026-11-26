@@ -29,7 +29,7 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
   <hh:HHButton text="Back" ghost="true" />
 </hh:HHCard>
 ```
-Import the **Basic UI**, **Settings** or **HUD** sample from the Package Manager for a working demo, or open **Hooton Heroics >
+Import the **Basic UI**, **Settings**, **HUD** or **Pause Menu** sample from the Package Manager for a working demo, or open **Hooton Heroics >
 Design System > Gallery** to see every control in its states.
 
 ## Theming
