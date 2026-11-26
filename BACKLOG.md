@@ -15,6 +15,18 @@ which fails on a control with no EditMode test.
    focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
    output names the answer, with a planted case, and the focus check still passes.
 
+2. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`) is left to
+   Unity's default colour, unchecked against the field's `bg`. Style it in `--hh-color-text-dim`
+   with a contrast pair, and show one in the gallery. Check: the pair in `Tools~/contrast.json`,
+   the gate's Unity class check for the placeholder class, and the reference.
+3. Toast action: `HHToastStack.Show` takes an optional action label and callback (Undo, View),
+   drawn as a ghost button on the toast that runs the callback and dismisses it. Check: EditMode
+   tests written, contrast pairs for the button on the toast card, the reference, and the compile
+   gate.
+4. Disabled states in the gallery: every focusable control appears once disabled, so a reviewer
+   sees each control's `:disabled` look. Check: `check.mjs` fails on a focusable control the
+   gallery never builds disabled (`SetEnabled(false)` on it), with a planted case.
+
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
