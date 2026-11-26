@@ -67,3 +67,9 @@
 - Default 2026-11-26 [needs-review]: a badge sits beside or over a control by the game's own
   layout; nothing positions it inside a button. Why: a Label inside a Button overlaps the button's
   text, which isn't a layout child. To change: add a corner-anchored `.hh-badge--corner` rule.
+- Default 2026-11-26 [needs-review]: stylesheets are checked by a small parser in `check.mjs`, with
+  the property list taken from strings in Unity 6000.0's `UnityEngine.UIElementsModule.dll`, plus
+  `top` and `all`, which aren't among them. Why: the
+  compile gate can't import USS without a licence, and a merge once dropped a brace that only a
+  reviewer caught. To change: once batch mode is licensed, let the editor's importer judge instead.
+  To refresh the list: `strings -e l UnityEngine.UIElementsModule.dll`, keep the property families.
