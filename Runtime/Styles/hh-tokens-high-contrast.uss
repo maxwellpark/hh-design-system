@@ -1,0 +1,38 @@
+/* The high-contrast theme: the same tokens as hh-tokens.uss, with every contrast pair passing AA outright */
+:root {
+    --hh-color-bg: #000000;
+    --hh-color-surface: #0B0B16;
+    --hh-color-track: #5A5A86;
+    --hh-color-violet: #8F6BFF;
+    --hh-color-violet-light: #D2C4FF;
+    --hh-color-violet-ghost: rgba(210, 196, 255, 0.12);
+    --hh-color-button: #5225C8;
+    --hh-color-button-hover: #3E1A9E;
+    --hh-color-violet-ghost-hover: rgba(210, 196, 255, 0.20);
+    --hh-color-teal: #5EEAD4;
+    --hh-color-pink: #FF8FB1;
+    --hh-color-peach: #FFC98A;
+    --hh-color-text: #FFFFFF;
+    --hh-color-text-dim: rgba(255, 255, 255, 0.82);
+    --hh-color-focus: #FFE14D;
+    --hh-color-scrim: rgba(0, 0, 0, 0.82);
+
+    --hh-space-1: 4px;
+    --hh-space-2: 8px;
+    --hh-space-3: 12px;
+    --hh-space-4: 16px;
+    --hh-space-6: 24px;
+
+    --hh-radius-sm: 6px;
+    --hh-radius-md: 12px;
+    --hh-radius-lg: 20px;
+
+    --hh-font-size-sm: 12px;
+    --hh-font-size-md: 14px;
+    --hh-font-size-lg: 18px;
+    --hh-font-size-xl: 28px;
+
+    --hh-duration-fast: 0.12s;
+    --hh-duration-normal: 0.2s;
+    --hh-easing-standard: ease-out;
+}

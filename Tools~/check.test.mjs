@@ -118,6 +118,9 @@ const cases = [
   ["custom properties and an empty rule pass", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", ".hh-empty {\n}\n\n.hh-local {\n    --hh-local-gap: 4px;\n}\n\n.hh-card {"), 0, /controls referenced/],
   ["an @import missing its semicolon before a rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '@import url("x.uss")\n.hh-card {'), 1, /an @import runs into a rule; it needs a semicolon/],
   ["an unterminated quote fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-quote {\n    background-image: url("x.png);\n}\n\n.hh-card {'), 1, /never closed|after the last rule/],
+  ["a theme missing a token fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;\n", ""), 1, /hh-tokens-high-contrast\.uss: no --hh-space-1/],
+  ["a theme with an extra token fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;", "    --hh-space-1: 4px;\n    --hh-space-9: 36px;"), 1, /--hh-space-9 isn't a token in hh-tokens\.uss/],
+  ["a pair accepted in the default theme must pass in another", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "--hh-color-button: #5225C8;", "--hh-color-button: #8257FF;"), 1, /Button text \[high-contrast\]: text on button is [\d.]+:1, needs 4\.5/],
 ];
 
 let failed = 0;
