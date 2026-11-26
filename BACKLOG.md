@@ -13,11 +13,6 @@ which fails on a control with no EditMode test.
    Resolution `HHStepper` on the Video tab, in the `Settings` struct, `Current` and `Revert`, and
    in the sample's README. Check: `check.mjs`'s sample table requires both, with a planted
    "drops a control fails" case for each, and the compile gate builds the sample.
-2. Scroller focus: settle whether a scroll view's scrollers (sliders inside `Scroller`) take focus
-   in Unity 6000.0, by having `Tools~/unity-classes.cs` read it from the UI Toolkit assembly and
-   the gate print it, with a `decisions.md` line either way. If they do, `.hh-scroll-view` gains a
-   focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
-   output names the answer, with a planted case, and the focus check still passes.
 
 ## Blocked on owner
 
@@ -56,6 +51,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: scroller focus: Unity 6000.0's IL shows a scroller is a plain `Slider`, so it takes focus (recorded in `decisions.md`); a focused scroller's handle in a scroll view or list turns the focus colour, with a 3:1 pair, and the focus check holds `ScrollView`. The IL was read once by hand rather than by the gate, since the lasting check is the focus rule (branch `max/scroller-focus`).
 - 2026-11-26: `HHStepper`: an ordered list stepped with arrows or left and right when focused, clamped with the end arrow disabled; tests, gallery, reference, four contrast pairs, and `BaseField` added to the focus check's focusable bases (branch `max/stepper`).
 - 2026-11-26: sample README check: `check.mjs` fails on a listed sample with no `README.md`, or with a `*.cs` its README doesn't name; all four samples pass (branch `max/sample-readmes`).
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
