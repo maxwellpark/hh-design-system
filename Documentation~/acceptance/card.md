@@ -22,23 +22,24 @@ the title is text on `surface`, which "Body text on a card" holds.
 
 ## Behaviour transcript
 
-`node Tools~/unity-compile.mjs HEAD` (last lines):
+`node Tools~/unity-compile.mjs HEAD` (excerpt):
 
 ```
-ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (12 files)
+ok   HootonHeroics.DesignSystem.Tests.Editor [editor] (13 files)
 ok   Sample.BasicUI [editor] (1 files)
 ok   Sample.HUD [editor] (1 files)
 ok   Sample.Settings [editor] (1 files)
 ok   Sample.BasicUI [player] (1 files)
 ok   Sample.HUD [player] (1 files)
 ok   Sample.Settings [player] (1 files)
+ok   155 .unity-* class uses checked against 319 Unity class names
 ok   HEAD compiles: 10 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line), `node Tools~/check.test.mjs`:
 
 ```
-60 .meta files ok, 32 tokens match HHTheme, 88 contrast pairs checked across 2 theme(s), 16 controls referenced, 17 types in the component reference
+62 .meta files ok, 32 tokens match HHTheme, 100 contrast pairs checked across 2 theme(s), 17 controls referenced, 18 types in the component reference
 74/74 passed
 ```
 
