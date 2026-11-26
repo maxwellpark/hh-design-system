@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- HUD sample: a health bar, lives as a segmented bar, a bag button with a badge and toasts, driven
+  by its own buttons so it runs under either input system.
 - Component reference: `Documentation~/components.md` lists each control's UXML, classes,
   attributes, states and tokens. `Tools~/check.mjs` fails when it falls out of step with the code
   or `hh-components.uss`.
