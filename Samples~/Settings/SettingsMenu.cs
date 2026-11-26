@@ -48,7 +48,7 @@ public class SettingsMenu : MonoBehaviour
         card.style.width = 420;
 
         music = new HHToggle { label = "Music" };
-        volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f };
+        volume = new HHSlider { label = "Volume", lowValue = 0f, highValue = 1f, ShowValue = true };
         quality = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "Medium", "High" } };
         playerName = new HHTextField { label = "Name" };
         reduceMotion = new HHToggle { label = "Reduce motion" };

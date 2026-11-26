@@ -194,6 +194,15 @@
     border-color: var(--hh-color-text);
 }
 
+/* Wide enough for "100%", so the track doesn't shift as the value changes */
+.hh-slider.unity-base-field .hh-slider__value {
+    min-width: 48px;
+    margin-left: var(--hh-space-2);
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+    -unity-text-align: middle-right;
+}
+
 /* The resting border is violet-light because track on a card is 1.4:1, under the 3:1 a control's edge needs */
 .hh-dropdown.unity-base-field .unity-base-popup-field__input,
 .hh-text-field.unity-base-field .unity-base-text-field__input {

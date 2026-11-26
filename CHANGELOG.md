@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHSlider` can show its value beside the track: `show-value` turns it on, and `value-format`
+  picks Percent (the default) or Number. The gallery and the Settings sample's volume show it.
 - Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only
   its buttons can close.
 - Accessibility: `HHAccessibility.SetReducedMotion` and `SetLargeText` add `.hh-reduced-motion`

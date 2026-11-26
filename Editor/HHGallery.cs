@@ -98,7 +98,7 @@ namespace HootonHeroics.DesignSystem.Editor
             var offToggle = new HHToggle { label = "Subtitles" };
             offToggle.SetEnabled(false);
             form.Add(offToggle);
-            form.Add(new HHSlider { label = "Volume", lowValue = 0, highValue = 1, value = 0.6f });
+            form.Add(new HHSlider { label = "Volume", lowValue = 0, highValue = 1, value = 0.6f, ShowValue = true });
             form.Add(new HHDropdown { label = "Quality", choices = new List<string> { "Low", "High" }, index = 1 });
             form.Add(new HHTextField { label = "Name", value = "Northwind" });
             form.Add(new HHRadioGroup("Difficulty", new List<string> { "Easy", "Normal", "Hard" }) { value = 1 });
