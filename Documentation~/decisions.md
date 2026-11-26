@@ -135,3 +135,6 @@
 - Default 2026-11-26 [needs-review]: `HHThemes` changes the PanelSettings asset it's given rather than
   copying it. Why: a game usually wants every panel on that asset to switch together. To change:
   pass a runtime copy, as the sample does, to keep the asset untouched.
+- Default 2026-11-26 [needs-review]: the gallery previews a theme by swapping its token file on the
+  page, not by changing a PanelSettings theme. Why: an editor window has no PanelSettings, and the
+  tokens are the only thing that differs between themes. To change: `HHGallery.Style`.

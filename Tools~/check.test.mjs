@@ -128,6 +128,11 @@ const cases = [
     const p = join(d, "Samples~/Settings/SettingsMenu.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/HHSlider/g, "Slider"));
   }, 1, /SettingsMenu\.cs: doesn't use HHSlider/],
+  ["removing one of several uses from the gallery passes", (d) => edit(d, "Editor/HHGallery.cs", "            badges.Add(new HHBadge { Dot = true });\n", "            badges.Add(new Label());\n"), 0, /controls referenced/],
+  ["a control never in the gallery fails", (d) => {
+    const p = join(d, "Editor/HHGallery.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/HHSegmentedBar/g, "VisualElement").replace("Segments = 5, Filled = 3, Tone = HHTone.Peach", ""));
+  }, 1, /HHSegmentedBar\.cs: HHSegmentedBar isn't in the gallery/],
 ];
 
 let failed = 0;

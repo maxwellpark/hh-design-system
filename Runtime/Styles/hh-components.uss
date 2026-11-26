@@ -509,3 +509,8 @@
 .hh-tabs.unity-tab-view .unity-tab-view__content-container {
     padding-top: var(--hh-space-4);
 }
+
+/* A full page in the theme's background, as the gallery uses */
+.hh-page {
+    background-color: var(--hh-color-bg);
+}

@@ -240,8 +240,9 @@ for (const name of styles) {
 }
 
 const componentRules = stripComments(readFileSync("Runtime/Styles/hh-components.uss", "utf8"));
+// The gallery's test names every control by design, so it can't stand in for a control's own test
 const testSource = readdirSync("Tests/Editor")
-  .filter((name) => name.endsWith(".cs"))
+  .filter((name) => name.endsWith(".cs") && name !== "GalleryTests.cs")
   .map((name) => stripComments(readFileSync(join("Tests/Editor", name), "utf8"), true))
   .join("\n");
 
@@ -264,6 +265,8 @@ for (const control of ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextFi
   }
 }
 
+// The gallery must show every control
+const gallery = existsSync("Editor/HHGallery.cs") ? stripComments(readFileSync("Editor/HHGallery.cs", "utf8"), true) : null;
 let controls = 0;
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
   const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
@@ -283,6 +286,9 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
     controls += 1;
     if (!new RegExp(`\\b${control}\\b`).test(testSource)) {
       problems.push(`${name}: ${control} has no EditMode test in Tests/Editor`);
+    }
+    if (gallery !== null && !new RegExp(`\\b${control}\\b`).test(gallery)) {
+      problems.push(`${name}: ${control} isn't in the gallery, Editor/HHGallery.cs`);
     }
   }
 }
