@@ -35,7 +35,7 @@ which fails on a control with no EditMode test.
 - Button contrast, from the 0.1 palette: white on `--hh-color-button` is 4.0:1 and on
   `--hh-color-button-hover` 2.5:1, both under AA's 4.5:1 (accepted in `Tools~/contrast.json` until
   decided). Options: set `button` to `#754EE6` (4.8:1) and `button-hover` to `#6E4AD9` (5.2:1), or
-  dark text on lighter buttons. Recommended: the darker violets, which keep the look. Since the
+  dark (`bg`) text on the current hover colour, 7.0:1. Recommended: the darker violets, which keep the look. Since the
   button tokens are their own, this no longer touches accent text or borders.
 - A Unity licence for batch mode, so the gate can also import USS, TSS and UXML and run the tests:
   on Linux, 6000.0 exits 198 ("No valid Unity Editor license found") before importing anything.

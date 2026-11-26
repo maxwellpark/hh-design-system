@@ -52,7 +52,7 @@
     opacity: 0.4;
 }
 
-/* Two classes so ghost outranks .hh-button:hover, which paints violet-light behind violet-light text */
+/* Two classes so ghost outranks .hh-button:hover, which paints button-hover behind violet-light text */
 .hh-button.hh-button--ghost {
     background-color: var(--hh-color-violet-ghost);
     color: var(--hh-color-violet-light);

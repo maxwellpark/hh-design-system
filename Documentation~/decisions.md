@@ -117,4 +117,4 @@
   misspelt Unity part name otherwise styles nothing, silently. To change: `Tools~/unity-classes.cs`.
 - Default 2026-11-26 [needs-review]: buttons have their own colour tokens. Why: `violet-light` was both
   the hover background under white text and accent text on dark cards, and no value serves both, so
-  no theme could pass contrast for both. To change: point the `.hh-button` rules back at `violet`.
+  no theme could pass contrast for both. To change: point the `.hh-button` rules back at `violet` and `violet-light`.
