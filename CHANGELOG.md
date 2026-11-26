@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+- Theming guide: `Documentation~/theming.md` makes a theme in a game's own project (tokens, a
+  theme sheet importing the package's components, a contrast check by hand against the pairs) and
+  switches to it with `HHThemes`. The gate compiles its C#.
 - Disabled states: the gallery's Disabled section builds every focusable control disabled; tabs,
   lists and scroll views fade when disabled, and `check.mjs` holds both.
 - Toast actions: `HHToast.SetAction(label, onAction)` adds a ghost button (Undo, View) that runs the
