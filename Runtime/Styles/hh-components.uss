@@ -121,7 +121,8 @@
 .hh-toggle.unity-base-field .unity-base-field__label,
 .hh-slider.unity-base-field .unity-base-field__label,
 .hh-dropdown.unity-base-field .unity-base-field__label,
-.hh-text-field.unity-base-field .unity-base-field__label {
+.hh-text-field.unity-base-field .unity-base-field__label,
+.hh-radio-group.unity-base-field .unity-base-field__label {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-md);
 }
@@ -129,7 +130,8 @@
 .hh-toggle.unity-base-field:disabled,
 .hh-slider.unity-base-field:disabled,
 .hh-dropdown.unity-base-field:disabled,
-.hh-text-field.unity-base-field:disabled {
+.hh-text-field.unity-base-field:disabled,
+.hh-radio-group.unity-base-field:disabled {
     opacity: 0.4;
 }
 
@@ -513,4 +515,64 @@
 /* A full page in the theme's background, as the gallery uses */
 .hh-page {
     background-color: var(--hh-color-bg);
+}
+
+/* A segmented row: the radio circles are hidden and the checked choice fills teal, with bg text (badge contrast) */
+.hh-radio-group.unity-base-field .unity-radio-button-group__container {
+    flex-direction: row;
+}
+
+/* Two containers carry that class; only the one built from choices gets the pill, not the empty UXML one */
+.hh-radio-group.unity-base-field #choicesContentContainer {
+    padding: 2px;
+    background-color: var(--hh-color-bg);
+    border-width: 2px;
+    border-color: var(--hh-color-violet-light);
+    border-radius: var(--hh-radius-md);
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button {
+    margin: 0;
+    padding: var(--hh-space-1) var(--hh-space-3);
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-sm);
+    background-color: rgba(0, 0, 0, 0);
+    transition-property: background-color, border-color;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button .unity-base-field__label,
+.hh-radio-group.unity-base-field .unity-radio-button .unity-radio-button__checkmark-background {
+    display: none;
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button .unity-radio-button__text {
+    margin: 0;
+    color: var(--hh-color-text-dim);
+    font-size: var(--hh-font-size-md);
+    -unity-font-style: bold;
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button:hover:enabled .unity-radio-button__text {
+    color: var(--hh-color-text);
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button:checked {
+    background-color: var(--hh-color-teal);
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button:checked .unity-radio-button__text,
+.hh-radio-group.unity-base-field .unity-radio-button:checked:hover:enabled .unity-radio-button__text {
+    color: var(--hh-color-bg);
+}
+
+.hh-radio-group.unity-base-field .unity-radio-button:focus {
+    border-color: var(--hh-color-focus);
+}
+
+/* The focus colour can match the checked fill, so the checked choice's ring is text, against the row's bg */
+.hh-radio-group.unity-base-field .unity-radio-button:checked:focus {
+    border-color: var(--hh-color-text);
 }

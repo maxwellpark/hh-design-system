@@ -95,6 +95,7 @@ namespace HootonHeroics.DesignSystem.Editor
             form.Add(new HHSlider { label = "Volume", lowValue = 0, highValue = 1, value = 0.6f });
             form.Add(new HHDropdown { label = "Quality", choices = new List<string> { "Low", "High" }, index = 1 });
             form.Add(new HHTextField { label = "Name", value = "Northwind" });
+            form.Add(new HHRadioGroup("Difficulty", new List<string> { "Easy", "Normal", "Hard" }) { value = 1 });
 
             var tabs = new HHTabs();
             tabs.Add(new Tab("Audio"));

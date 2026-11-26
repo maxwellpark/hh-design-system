@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHRadioGroup`: one choice of several, such as difficulty, shown as a segmented row. The checked
+  choice fills teal with dark text; every pair it adds passes AA in both themes.
 - `HHDialog` keeps focus inside while open: Tab past the last stop wraps to the first, and
   Shift+Tab before the first wraps to the last. Focus moved outside by a pointer or code, or
   cleared, comes back on the next tick. With two open, only the one on top traps. A dialog with no

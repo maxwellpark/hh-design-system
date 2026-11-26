@@ -127,6 +127,18 @@ A single-line text input with a label. Extends `TextField`.
 - **States:** `:hover`, `:focus` (focus ring), `:disabled`.
 - **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
+## HHRadioGroup
+
+One choice of several, for settings such as difficulty, shown as a segmented row: the radio circles are hidden and the checked choice fills teal. Extends `RadioButtonGroup`.
+
+```xml
+<hh:HHRadioGroup label="Difficulty" choices="Easy,Normal,Hard" value="1" />
+```
+
+- **Classes:** `.hh-radio-group`
+- **States:** The checked choice is `:checked` (teal fill, bg text); `:hover` brightens a choice's text; `:focus` rings a choice in the focus colour, or in text colour on the checked one, since the focus colour can match the fill; `:disabled`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-3`
+
 ## HHTabs
 
 Tabs whose headers take keyboard focus. Extends `TabView`.
