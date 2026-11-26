@@ -4,17 +4,23 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-// Prints every *UssClassName a Unity assembly's static constructors assign, folding ldstr, ldsfld and String.Concat.
+// Prints every unity-* value a *ClassName field gets in Unity assemblies' static constructors, folding ldstr, ldsfld and String.Concat.
 static class UnityClasses
 {
     static void Main(string[] args)
     {
         var known = new Dictionary<string, string>();
         var names = new SortedSet<string>(StringComparer.Ordinal);
-        foreach (var path in args)
+        var cctors = args
+            .SelectMany(path => ModuleDefinition.ReadModule(path).Types.SelectMany(t => new[] { t }.Concat(t.NestedTypes)))
+            .Select(t => t.Methods.FirstOrDefault(m => m.Name == ".cctor"))
+            .Where(m => m?.HasBody == true)
+            .ToList();
+        // Fields can be built from other types' fields, so passes repeat until nothing new resolves
+        for (var pass = 0; pass < 5; pass++)
         {
-            var types = ModuleDefinition.ReadModule(path).Types.SelectMany(t => new[] { t }.Concat(t.NestedTypes));
-            foreach (var cctor in types.Select(t => t.Methods.FirstOrDefault(m => m.Name == ".cctor")).Where(m => m?.HasBody == true))
+            var before = known.Count(kv => kv.Value != null);
+            foreach (var cctor in cctors)
             {
                 var stack = new Stack<string>();
                 foreach (var ins in cctor.Body.Instructions)
@@ -30,19 +36,25 @@ static class UnityClasses
                     }
                     else if (ins.OpCode == OpCodes.Call && ((MethodReference)ins.Operand).Name == "Concat")
                     {
+                        var parameters = ((MethodReference)ins.Operand).Parameters;
                         var parts = new List<string>();
-                        for (var i = 0; i < ((MethodReference)ins.Operand).Parameters.Count && stack.Count > 0; i++)
+                        for (var i = 0; i < parameters.Count && stack.Count > 0; i++)
                         {
                             parts.Insert(0, stack.Pop());
                         }
-                        stack.Push(parts.Any(p => p == null) ? null : string.Concat(parts));
+                        var foldable = parameters.Count >= 2 && parameters.All(p => p.ParameterType.FullName == "System.String") && parts.Count == parameters.Count;
+                        stack.Push(!foldable || parts.Any(p => p == null) ? null : string.Concat(parts));
                     }
                     else if (ins.OpCode == OpCodes.Stsfld)
                     {
                         var field = (FieldReference)ins.Operand;
                         var value = stack.Count > 0 ? stack.Pop() : null;
-                        known[field.DeclaringType.FullName + "." + field.Name] = value;
-                        if (value != null && field.Name.EndsWith("UssClassName", StringComparison.OrdinalIgnoreCase))
+                        var key = field.DeclaringType.FullName + "." + field.Name;
+                        if (value != null || !known.ContainsKey(key))
+                        {
+                            known[key] = value;
+                        }
+                        if (value != null && value.StartsWith("unity-") && field.Name.EndsWith("ClassName", StringComparison.OrdinalIgnoreCase))
                         {
                             names.Add(value);
                         }
@@ -52,6 +64,10 @@ static class UnityClasses
                         stack.Clear();
                     }
                 }
+            }
+            if (known.Count(kv => kv.Value != null) == before)
+            {
+                break;
             }
         }
         foreach (var name in names)

@@ -1,6 +1,6 @@
 // Compiles every committed asmdef with Unity's own compiler, source generators and references, following its references and constraints. Exit 0 clean, 1 failed, 2 setup.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 
@@ -250,9 +250,11 @@ function unityClassNames() {
   if (build.status !== 0) {
     return { error: `could not build the class reader: ${build.stdout.split(/\r?\n/).filter((l) => / error /.test(l)).slice(0, 3).join("; ")}` };
   }
-  spawnSync("cp", [precompiled["Mono.Cecil.dll"], tool]);
-  writeFileSync(join(tool, "unity-classes.runtimeconfig.json"), JSON.stringify({ runtimeOptions: { tfm: "net6.0", framework: { name: "Microsoft.NETCore.App", version: basename(runtime) } } }));
-  const run = spawnSync(dotnet, [join(tool, "unity-classes.dll"), join(managed, "UnityEngine.UIElementsModule.dll")], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  copyFileSync(precompiled["Mono.Cecil.dll"], join(tool, "Mono.Cecil.dll"));
+  const version = basename(runtime);
+  writeFileSync(join(tool, "unity-classes.runtimeconfig.json"), JSON.stringify({ runtimeOptions: { tfm: `net${version.split(".")[0]}.0`, framework: { name: "Microsoft.NETCore.App", version } } }));
+  const assemblies = ["UnityEngine.UIElementsModule.dll", "UnityEditor.UIElementsModule.dll"].map((f) => join(managed, f)).filter(existsSync);
+  const run = spawnSync(dotnet, [join(tool, "unity-classes.dll"), ...assemblies], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
   return run.status === 0 ? { names: new Set(run.stdout.split(/\r?\n/).filter(Boolean)) } : { error: `the class reader failed: ${run.stderr.trim().slice(0, 200)}` };
 }
 
@@ -265,7 +267,7 @@ if (failed === 0 && existsSync(join(src, "Tools~", "unity-classes.cs"))) {
     let used = 0;
     const stylesDir = join(src, "Runtime", "Styles");
     for (const name of readdirSync(stylesDir).filter((f) => /\.(uss|tss)$/.test(f))) {
-      const text = readFileSync(join(stylesDir, name), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+      const text = readFileSync(join(stylesDir, name), "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/url\([^)]*\)/g, "url()");
       for (const [, cls] of text.matchAll(/\.(unity-[A-Za-z0-9_-]+)/g)) {
         used += 1;
         if (!result.names.has(cls)) {

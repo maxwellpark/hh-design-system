@@ -6,8 +6,9 @@ Run in a cloud session with Unity 6000.0.85f2 in `/opt/unity/Editor`.
 
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
-| The gate reads Unity's own class names from its UI Toolkit assembly | `Tools~/unity-classes.cs`, built and run by the gate | 275 names | verified |
-| Every `.unity-*` class the stylesheets style exists | the gate on this branch | 57 uses, all known | verified |
+| The gate reads Unity's own class names from its runtime and editor UI Toolkit assemblies: every `unity-*` value a `*ClassName` field gets, resolving fields built from other types' fields | `Tools~/unity-classes.cs`, built and run by the gate | 319 names | verified |
+| Every `.unity-*` class the stylesheets style exists | the gate on this branch | 99 uses, all known | verified |
+| A real class held in a field not named `*UssClassName` passes | "a real Unity class outside *UssClassName fields passes" (`unity-tab-view__header-container`) | pass | verified |
 | A misspelt Unity class fails the gate, naming the class | `unity-compile.test.sh` "a misspelt Unity class in a stylesheet fails" | pass | verified |
 | The earlier controls' Unity classes were real all along | the same check over main's stylesheets | pass | verified |
 
@@ -20,7 +21,7 @@ Run in a cloud session with Unity 6000.0.85f2 in `/opt/unity/Editor`.
 
 ## Coverage and complexity
 
-Not measured. The reader is one 40-line loop over IL with five instruction kinds.
+Not measured. The reader is a 45-line loop over IL handling four instructions, repeated until no new field resolves.
 
 ## Behaviour transcript
 
