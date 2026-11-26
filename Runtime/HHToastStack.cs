@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,9 @@ namespace HootonHeroics.DesignSystem
     {
         public const string UssClassName = "hh-toast-stack";
         public const float DefaultSeconds = 4f;
+
+        /// The least time a toast with an action stays, so a keyboard or pad user can reach its button.
+        public const float ActionSeconds = 8f;
 
         private int maxVisible = 4;
 
@@ -31,9 +35,16 @@ namespace HootonHeroics.DesignSystem
         }
 
         /// Shows a toast that dismisses itself after the given seconds, or stays until dismissed if seconds is 0.
-        public HHToast Show(string text, HHToastTone tone = HHToastTone.Info, float seconds = DefaultSeconds)
+        /// With an action label it carries a button that runs onAction and dismisses it, and stays at least
+        /// ActionSeconds; onAction without a label shows no button.
+        public HHToast Show(string text, HHToastTone tone = HHToastTone.Info, float seconds = DefaultSeconds, string actionLabel = null, Action onAction = null)
         {
             var toast = new HHToast { Text = text, Tone = tone };
+            if (!string.IsNullOrEmpty(actionLabel))
+            {
+                toast.SetAction(actionLabel, onAction);
+                seconds = seconds > 0f && seconds < ActionSeconds ? ActionSeconds : seconds;
+            }
             Add(toast);
             Trim();
             if (seconds > 0f)

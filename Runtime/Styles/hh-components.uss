@@ -453,6 +453,8 @@
 }
 
 .hh-toast {
+    flex-direction: row;
+    align-items: center;
     margin-top: var(--hh-space-2);
     padding: var(--hh-space-3) var(--hh-space-4);
     border-left-width: 4px;
@@ -462,8 +464,18 @@
 }
 
 .hh-toast .hh-toast__text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-md);
+}
+
+/* An action sits at the toast's right, a compact ghost button */
+.hh-toast .hh-toast__action {
+    flex-shrink: 0;
+    margin: 0 0 0 var(--hh-space-3);
+    padding: var(--hh-space-1) var(--hh-space-3);
 }
 
 .hh-toast.hh-toast--success {

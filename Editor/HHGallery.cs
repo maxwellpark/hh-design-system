@@ -135,6 +135,7 @@ namespace HootonHeroics.DesignSystem.Editor
             var toasts = new HHToastStack();
             overlays.Add(new HHButton(dialog.Open) { text = "Open dialog" });
             overlays.Add(new HHButton(() => toasts.Show("Saved", HHToastTone.Success)) { text = "Show toast" });
+            overlays.Add(new HHButton(() => toasts.Show("Item sold", HHToastTone.Info, 6f, "Undo", () => toasts.Show("Sale undone"))) { text = "Toast with action" });
             overlays.Add(new HHToast { Text = "A resting toast", Tone = HHToastTone.Warning });
             page.Add(dialog);
             page.Add(toasts);

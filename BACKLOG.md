@@ -9,10 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
-   toast, and `HHToastStack.Show` takes its label and callback as parameters after `seconds`, so
-   existing calls compile; the gallery shows one. Check: EditMode tests written, "on a toast card"
-   contrast pairs for the button, the reference, and the compile gate.
 
 ## Blocked on owner
 
@@ -52,6 +48,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
+- 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).
 - 2026-11-26: placeholder text: `HHTextField`'s placeholder (`.unity-base-text-field__input--placeholder`, which the gate's class reader confirms) is `--hh-color-text-dim`, with a pair held in every theme; the gallery shows one (branch `max/placeholder`).
 - 2026-11-26: scroller focus: Unity 6000.0's IL shows a scroller is a plain `Slider`, so it takes focus (recorded in `decisions.md`); a focused scroller's handle in a scroll view or list turns the focus colour, with a 3:1 pair, and the focus check holds `ScrollView`. The IL was read once by hand rather than by the gate, since the lasting check is the focus rule (branch `max/scroller-focus`).
 - 2026-11-26: Settings sample shows the newer controls: a Resolution `HHStepper` on the Video tab and a Difficulty `HHRadioGroup` on the Player tab, in the saved settings; the sample check requires both (branch `max/settings-newer`).
