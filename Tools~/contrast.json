@@ -30,6 +30,7 @@
     { "use": "Badge text, peach", "text": "bg", "on": "peach" },
     { "use": "Badge dot against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Text in a text field or dropdown", "text": "text", "on": "bg" },
+    { "use": "Placeholder text in a text field", "text": "text-dim", "on": "bg" },
     { "use": "Focus ring around a text field or dropdown", "text": "focus", "on": "bg", "min": 3 },
     { "use": "Toggle box border against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Text field and dropdown border against a card", "text": "violet-light", "on": "surface", "min": 3 },

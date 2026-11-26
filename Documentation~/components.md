@@ -139,15 +139,16 @@ A labelled choice list. Its open menu is drawn at the panel root, so its rules l
 
 ## HHTextField
 
-A single-line text input with a label. Extends `TextField`.
+A single-line text input with a label, and an optional placeholder hint drawn dim while it's empty. Extends `TextField`.
 
 ```xml
 <hh:HHTextField label="Name" value="Northwind" />
+<hh:HHTextField label="Callsign" placeholder-text="Pick a callsign" />
 ```
 
 - **Classes:** `.hh-text-field`
-- **States:** `:hover`, `:focus` (focus ring), `:disabled`.
-- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
+- **States:** `:hover`, `:focus` (focus ring), `:disabled`; an empty field with `placeholder-text` shows it in `--hh-color-text-dim`.
+- **Tokens:** `--hh-color-bg`, `--hh-color-focus`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-violet-light`, `--hh-duration-fast`, `--hh-easing-standard`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
 
 ## HHRadioGroup
 
@@ -200,7 +201,7 @@ A scroll view with thin, token-coloured scrollers. Extends `ScrollView`.
 ```
 
 - **Classes:** `.hh-scroll-view`
-- **States:** No interactive states of its own.
+- **States:** Its scrollers are sliders Unity puts in the tab order; a focused one's handle turns the focus colour.
 - **Tokens:** `--hh-color-track`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`
 
 ## HHListView
@@ -212,7 +213,7 @@ A virtualised list with hoverable rows and slim scrollers. Extends `ListView`.
 ```
 
 - **Classes:** `.hh-list-view`
-- **States:** `:focus` rings the list, which takes focus and moves its selection with the arrows; `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge.
+- **States:** `:focus` rings the list, which takes focus and moves its selection with the arrows, and a focused scroller's handle turns the focus colour; `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge.
 - **Tokens:** `--hh-color-focus`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-track`, `--hh-color-violet-ghost-hover`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-3`
 
 ## HHDialog
