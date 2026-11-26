@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- EditMode tests in `Tests/Editor`. Run them by adding the package to a project's `testables`.
 - `Tools~/check.mjs` checks WCAG AA contrast for every text and focus pair listed in
   `Tools~/contrast.json`, blending translucent colours onto what they sit over.
 - The ghost button's hover tint drops from 28% to 22%, lifting its text from 4.4:1 to 4.8:1.
