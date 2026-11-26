@@ -55,5 +55,19 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,
   then a paid "Pro" pack (open-core). Siblings planned: `com.hootonheroics.ai`, `...procgen`.
 
+## Brand kit and other engines
+
+`Runtime/Styles/hh-tokens.uss` is the source of the look; `Brand~/tokens.json` carries it to every other engine with the studio splash values, and `Brand~/README.md` has the studio splash, logo and credits rules. Unity ignores folders ending in `~`, so these ride along without touching a Unity project.
+
+- **Godot 4:** copy `Godot~/addons/hh_studio` into the game's `addons/` from a release tag, and record the tag in the game's `shared.json` as `"hh-design-system": "<tag>"`. Show the splash first:
+  ```gdscript
+  const HHSplash := preload("res://addons/hh_studio/hh_splash.gd")
+  var splash := HHSplash.create(null)  # or a sized Russell studio-host texture
+  add_child(splash)  # any root: it draws on its own canvas layer
+  await splash.finished
+  ```
+- **Unity:** the tokens are `Runtime/Styles/hh-tokens.uss` and `HHTheme`. The splash component is planned and needs a Unity compile and play check before it ships.
+- **Check:** `bash Tools~/verify.sh` runs `Tools~/check.mjs`, both check test files, `Tools~/check-tokens.mjs` and the Godot tests (Node and a Godot 4.7 binary as `godot` or `GODOT`).
+
 ## Licence
 MIT. Built by [Hooton Heroics](https://hootonheroics.com).
