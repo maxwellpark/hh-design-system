@@ -282,6 +282,53 @@
     border-radius: 4px;
 }
 
+/* The dialog is its own scrim, covering its parent; it shows only while open */
+.hh-dialog {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--hh-color-scrim);
+}
+
+.hh-dialog.hh-dialog--open {
+    display: flex;
+}
+
+.hh-dialog .hh-dialog__panel {
+    min-width: 320px;
+    max-width: 560px;
+    padding: var(--hh-space-6);
+    border-radius: var(--hh-radius-lg);
+    background-color: var(--hh-color-surface);
+}
+
+.hh-dialog .hh-dialog__title {
+    margin-bottom: var(--hh-space-3);
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-lg);
+    -unity-font-style: bold;
+}
+
+.hh-dialog .hh-dialog__body {
+    color: var(--hh-color-text);
+    font-size: var(--hh-font-size-md);
+}
+
+.hh-dialog .hh-dialog__actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: var(--hh-space-6);
+}
+
+.hh-dialog .hh-dialog__actions .hh-button {
+    margin-left: var(--hh-space-2);
+}
+
 /* Segments share the progress bar's track and tones; violet fills use violet-light, as decisions.md records */
 .hh-segmented-bar {
     flex-direction: row;

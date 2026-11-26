@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+- `HHDialog`: a modal that covers its parent with a `--hh-color-scrim` scrim and shows a card with
+  a title, its UXML children as the body, and actions from `AddAction`. Escape, gamepad cancel and
+  clicks on the scrim close it unless `require-choice` is set; opening focuses the first action and
+  closing returns focus. `Closed` fires once per close.
 - `Tools~/check.mjs` fails on a stylesheet with a missing or stray brace, a declaration without a
   colon or final semicolon, or a property not in `Tools~/uss-properties.txt`, Unity 6000.0's list.
 - `HHProgressBar.Tone` (`tone` in UXML): violet, pink or peach fills; teal stays the default.

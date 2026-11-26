@@ -14,6 +14,7 @@ const PEACH := Color("#FFB25C")
 const TEXT := Color("#F3F3FB")
 const TEXT_DIM := Color(243 / 255.0, 243 / 255.0, 251 / 255.0, 0.62)
 const FOCUS := Color("#45D6C4")
+const SCRIM := Color(14 / 255.0, 15 / 255.0, 32 / 255.0, 0.72)
 
 const DURATION_FAST := 0.12
 const DURATION_NORMAL := 0.2
