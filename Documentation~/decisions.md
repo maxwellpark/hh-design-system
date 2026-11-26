@@ -149,3 +149,7 @@
   `hh-tokens.uss`'s sizes in fixed pixels, so a theme with its own sizes is overridden, and a
   dropdown's open menu, drawn outside the document, keeps the theme's sizes. To change: the two
   rules at the end of `hh-components.uss`, which `check.mjs` holds to the tokens.
+- Default 2026-11-26 [needs-review]: `HHSlider`'s value text defaults to Percent, drawn from a
+  101-entry table so dragging allocates nothing; Number formats a new string each time the value
+  changes, which a drag does every frame. Why: most settings sliders run 0 to 1, where a
+  percentage reads best. To change: `HHSlider.ValueFormat`'s default, or cache Number text.

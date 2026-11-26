@@ -29,4 +29,5 @@
         <hh:HHToggle name="card-toggle" label="Music" />
     </hh:HHCard>
     <hh:HHRadioGroup name="radio" label="Difficulty" choices="Easy,Normal,Hard" value="1" />
+    <hh:HHSlider name="valued-slider" low-value="0" high-value="10" value="3" show-value="true" value-format="Number" />
 </ui:UXML>

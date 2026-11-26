@@ -9,11 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Slider value: Unity's `show-input-field` shows a float field but can't format, so `HHSlider`
-   gains a value label beside the track, with `show-value` and a `value-format` (percent or
-   number) attribute. Check: EditMode tests written, its reference section, and a contrast pair for
-   the value text.
-2. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
+1. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
 
 ## Blocked on owner
@@ -52,6 +48,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: doc snippet gate: `unity-compile.mjs` compiles each fenced `csharp` block in `Documentation~/*.md` as a sample-like assembly, errors at the guide's line; `check.mjs` fails on guide UXML naming an `hh:` element or attribute the reference doesn't have (branch `max/doc-snippets`).
+- 2026-11-26: slider value: `HHSlider` writes its value beside the track with `show-value`, as a percentage (from a table, so dragging allocates nothing) or a number with `value-format`; tests, reference section and a contrast pair (branch `max/slider-value`).
 - 2026-11-26: pause menu sample: `Samples~/PauseMenu/PauseMenu.cs`, an `HHCard` of Resume, Settings and Quit, Quit asking through a `require-choice` dialog, opened by its own Pause button so it needs neither input system; `check.mjs` holds its controls (branch `max/pause-menu`).
 - 2026-11-26: accessibility modifiers: `.hh-reduced-motion` (every duration 0s) and `.hh-large-text` (every font size 1.25 times, as pixels) override tokens under any theme; `HHAccessibility` toggles them, the Settings sample has an Access tab and the gallery a toggle for each; `check.mjs` holds both to the tokens (branch `max/a11y-modifiers`).
 - 2026-11-26: `HHCard`: the card as a control with a `title` attribute and a body; the gallery and the Basic UI and Settings samples use it instead of hand-built cards (branch `max/card`).
