@@ -385,6 +385,39 @@ if (!existsSync(referencePath)) {
   }
 }
 
+// UXML in the guides may only use documented hh: elements, with attributes from their reference section (its Attributes
+// list, or one its own example already uses on that element) or VisualElement's own
+if (existsSync(referencePath)) {
+  const common = new Set(["name", "class", "style", "tooltip", "picking-mode", "focusable", "tabindex", "view-data-key", "usage-hints", "enabled", "data-source", "data-source-path", "data-source-type"]);
+  const xmlBlocks = (text) => [...text.matchAll(/^```xml\r?\n([\s\S]*?)^```/gm)].map((m) => ({ code: m[1], line: text.slice(0, m.index).split("\n").length + 1 }));
+  const elements = (code) => [...code.matchAll(/<hh:(\w+)\b([^>]*)>/g)].map((m) => ({ type: m[1], attributes: [...m[2].matchAll(/([\w-]+)\s*=/g)].map((a) => a[1]), at: code.slice(0, m.index).split("\n").length - 1 }));
+  const allowed = new Map();
+  for (const section of readFileSync(referencePath, "utf8").split(/^## /m).slice(1)) {
+    const type = section.split(/\s/)[0];
+    const names = new Set([...(section.match(/^- \*\*Attributes:\*\*\n((?: {2}- .*\n?)*)/m)?.[1] ?? "").matchAll(/^ {2}- `([^`]+)`/gm)].map((m) => m[1]));
+    for (const { code } of xmlBlocks(section)) {
+      for (const element of elements(code).filter((e) => e.type === type)) {
+        element.attributes.forEach((a) => names.add(a));
+      }
+    }
+    allowed.set(type, names);
+  }
+  for (const doc of readdirSync("Documentation~").filter((n) => n.endsWith(".md") && n !== "components.md")) {
+    for (const { code, line } of xmlBlocks(readFileSync(join("Documentation~", doc), "utf8"))) {
+      for (const { type, attributes, at } of elements(code)) {
+        const where = `Documentation~/${doc}:${line + at}`;
+        if (!allowed.has(type)) {
+          problems.push(`${where}: hh:${type} isn't in the component reference`);
+          continue;
+        }
+        for (const attribute of attributes.filter((a) => !common.has(a) && !allowed.get(type).has(a))) {
+          problems.push(`${where}: hh:${type} has no ${attribute} attribute in the component reference`);
+        }
+      }
+    }
+  }
+}
+
 // Each stylesheet parses as flat rules: selectors, then one brace block of known `property: value;` lines
 const knownProperties = new Set(readFileSync("Tools~/uss-properties.txt", "utf8").split(/\r?\n/).filter((l) => l && !l.startsWith("#")));
 
