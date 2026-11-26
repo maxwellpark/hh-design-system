@@ -15,17 +15,19 @@ which fails on a control with no EditMode test.
    focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
    output names the answer, with a planted case, and the focus check still passes.
 
-2. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`) is left to
-   Unity's default colour, unchecked against the field's `bg`. Style it in `--hh-color-text-dim`
-   with a contrast pair, and show one in the gallery. Check: the pair in `Tools~/contrast.json`,
-   the gate's Unity class check for the placeholder class, and the reference.
-3. Toast action: `HHToastStack.Show` takes an optional action label and callback (Undo, View),
-   drawn as a ghost button on the toast that runs the callback and dismisses it. Check: EditMode
-   tests written, contrast pairs for the button on the toast card, the reference, and the compile
-   gate.
-4. Disabled states in the gallery: every focusable control appears once disabled, so a reviewer
-   sees each control's `:disabled` look. Check: `check.mjs` fails on a focusable control the
-   gallery never builds disabled (`SetEnabled(false)` on it), with a planted case.
+2. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
+   `.unity-base-text-field__input--placeholder`) is left to Unity's default colour. Style it in
+   `--hh-color-text-dim`, add a "Placeholder text in a text field" pair (held in every theme), and
+   show one in the gallery. Check: the pair, the gate's Unity class check, and the reference.
+3. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
+   toast, and `HHToastStack.Show` takes its label and callback as parameters after `seconds`, so
+   existing calls compile; the gallery shows one. Check: EditMode tests written, "on a toast card"
+   contrast pairs for the button, the reference, and the compile gate.
+4. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
+   button, toggle, slider, dropdown, text field, radio group, stepper, tabs, list) in a variable
+   and calls `SetEnabled(false)` on it, and tabs and list gain the `:disabled` rule they lack.
+   Check: `check.mjs` fails on a focusable control the gallery never disables (matched by the
+   variable's type, not its name) or with no `:disabled` rule, with planted cases.
 
 ## Blocked on owner
 
