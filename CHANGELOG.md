@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Adding a control: `Documentation~/adding-a-control.md` lists what `check.mjs` and the gate hold
+  a new control to, with a compiled minimal example.
 - An EditMode test holds the gallery page itself to a disabled instance of every focusable control,
   alongside `check.mjs`'s check of its source.
 - `Tools~/check.mjs` holds the component reference's own UXML examples to its attribute lists and

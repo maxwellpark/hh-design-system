@@ -10,3 +10,5 @@ states and tokens.
 [getting-started.md](getting-started.md) builds a small themed screen step by step.
 
 [theming.md](theming.md) makes a theme of your own and lets players switch to it.
+
+[adding-a-control.md](adding-a-control.md) lists what a new control needs to pass every check.
