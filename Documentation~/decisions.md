@@ -111,3 +111,7 @@
   imported only by `hh-theme.tss`, and style every dropdown list on the panel. Why: Unity opens the
   list at the panel root, outside any document, and `DropdownField` offers no public way to tag the
   list it opens. To change: a custom dropdown that builds its own `GenericDropdownMenu`.
+- Default 2026-11-26 [needs-review]: Unity's class names are read from the static constructors of
+  `UnityEngine.UIElementsModule.dll` with Mono.Cecil, folding `ldstr`, `ldsfld` and `String.Concat`,
+  rather than kept as a hand list. Why: they follow the editor version the gate runs, and a
+  misspelt Unity part name otherwise styles nothing, silently. To change: `Tools~/unity-classes.cs`.

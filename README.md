@@ -58,7 +58,8 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
   source generators, warnings as errors; runtime code is built for the editor and for a player.
   Unity's test runner is compiled from the editor's copy, so tests see their real references. No
   licence is needed. `Tools~/verify.sh` runs it. It finds Unity 6000.0 under Unity Hub, or takes
-  `HH_UNITY_EDITOR`. It doesn't import USS or UXML.
+  `HH_UNITY_EDITOR`. It doesn't import USS or UXML, but it does fail on a `.unity-*` class the
+  stylesheets style that Unity doesn't define.
 - EditMode tests live in `Tests/Editor`. To run them in a project, add
   `"testables": ["com.hootonheroics.designsystem"]` to its `Packages/manifest.json`.
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,
