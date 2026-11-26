@@ -305,6 +305,20 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// Every control built on a focusable Unity base shows focus: some :focus rule names one of its classes, on it or a part
+// (HHDialog takes focus outside the tab order on purpose, and isn't on a focusable base)
+const focusableBases = new Set(["Button", "Toggle", "Slider", "DropdownField", "TextField", "RadioButtonGroup", "ListView", "TabView"]);
+const focusSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).filter((sel) => sel.includes(":focus"));
+for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+  const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
+  const classes = [...classConstants(source).values()].filter((value) => value !== undefined);
+  for (const [, control, base] of source.matchAll(/\[\s*UxmlElement\b[^\]]*\][\s\S]*?\bclass\s+(\w+)\s*:\s*(\w+)/g)) {
+    if (focusableBases.has(base) && !focusSelectors.some((sel) => classes.some((c) => new RegExp(`\\.${c}(?![\\w-])`).test(sel)))) {
+      problems.push(`${name}: ${control} can take focus (a ${base}) but no :focus rule in hh-components.uss shows it`);
+    }
+  }
+}
+
 // Accessibility modifiers override every token of their kind, and only tokens: motion to 0s, type to 1.25x rounded
 const modifiers = { "hh-reduced-motion": ["duration-", () => "0s"], "hh-large-text": ["font-size-", (raw) => `${Math.round(parseFloat(raw) * 1.25)}px`] };
 for (const [className, [kind, expect]] of Object.entries(modifiers)) {

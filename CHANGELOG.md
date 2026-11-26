@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHListView` shows focus with a ring in the focus colour, and `check.mjs` now fails on any control
+  built on a focusable Unity base without a `:focus` rule.
 - `HHSlider` can show its value beside the track: `show-value` turns it on, and `value-format`
   picks Percent (the default) or Number. The gallery and the Settings sample's volume show it.
 - Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only

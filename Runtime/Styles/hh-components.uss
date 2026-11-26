@@ -467,6 +467,17 @@
 }
 
 /* Selection adds a violet-light edge: the tint alone is 1.3:1 against the card */
+/* The list takes focus itself and moves its selection with the arrows, so its edge shows focus */
+.hh-list-view {
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-sm);
+}
+
+.hh-list-view:focus {
+    border-color: var(--hh-color-focus);
+}
+
 .hh-list-view .unity-collection-view__item {
     padding: 0 var(--hh-space-3);
     border-left-width: 3px;

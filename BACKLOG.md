@@ -15,20 +15,13 @@ which fails on a control with no EditMode test.
    Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
 2. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
-3. Focus rule check: every control whose Unity base is focusable has a `:focus` rule on its own
-   class or a part of it in `hh-components.uss`, so a player can always see where focus is.
-   `check.mjs` keeps a table of focusable bases (Button, Toggle, Slider, DropdownField, TextField,
-   RadioButtonGroup, ListView, the tab headers) and exempts `HHDialog`, which is focusable outside
-   the tab order on purpose. `HHListView` has no focus rule today, so the item adds one. Check:
-   `check.mjs` fails on a focusable control without one, with a planted case in
-   `Tools~/check.test.mjs`.
-4. Switch toggle: `HHToggle` gains a `switch` attribute (`[UxmlAttribute("switch")]`, since
+3. Switch toggle: `HHToggle` gains a `switch` attribute (`[UxmlAttribute("switch")]`, since
    `switch` is a C# keyword) adding `.hh-toggle--switch`: the checkmark becomes the track, with a
    knob added in C# that slides on the duration tokens, so reduced motion holds, and a focus rule.
    The gallery shows it on and off. Check: EditMode tests written, its reference attribute, 3:1
    pairs in `Tools~/contrast.json` for track and knob in both states and both themes, and the
    compile gate. The slide itself stays unverified until a licence.
-5. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
+4. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
    (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
    at the ends with the button there disabled. Check: its test, gallery and reference sections,
    contrast pairs and the compile gate.
@@ -68,6 +61,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: focus rule check: `check.mjs` fails on a control built on a focusable Unity base (from a table) with no `:focus` rule on it or a part; `HHListView`, the one without, gains a focus ring (branch `max/focus-rules`).
 - 2026-11-26: slider value: `HHSlider` writes its value beside the track with `show-value`, as a percentage (from a table, so dragging allocates nothing) or a number with `value-format`; tests, reference section and a contrast pair (branch `max/slider-value`).
 - 2026-11-26: pause menu sample: `Samples~/PauseMenu/PauseMenu.cs`, an `HHCard` of Resume, Settings and Quit, Quit asking through a `require-choice` dialog, opened by its own Pause button so it needs neither input system; `check.mjs` holds its controls (branch `max/pause-menu`).
 - 2026-11-26: accessibility modifiers: `.hh-reduced-motion` (every duration 0s) and `.hh-large-text` (every font size 1.25 times, as pixels) override tokens under any theme; `HHAccessibility` toggles them, the Settings sample has an Access tab and the gallery a toggle for each; `check.mjs` holds both to the tokens (branch `max/a11y-modifiers`).

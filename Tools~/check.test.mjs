@@ -161,6 +161,8 @@ const cases = [
   ["a modifier setting a token outside its kind fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-duration-normal: 0s;\n", "    --hh-duration-normal: 0s;\n    --hh-space-1: 0px;\n"), 1, /\.hh-reduced-motion sets --hh-space-1, outside its kind/],
   ["a modifier setting something that isn't a token fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-font-size-xl: 35px;\n", "    --hh-font-size-xl: 35px;\n    --hh-font-size-huge: 50px;\n"), 1, /\.hh-large-text sets --hh-font-size-huge, which isn't a token/],
   ["a second modifier rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\n.hh-reduced-motion {\n    --hh-duration-fast: 1s;\n}\n"); }, 1, /2 standalone \.hh-reduced-motion rules, needs exactly 1/],
+  ["a focusable control with no focus rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view:focus {", ".hh-list-view:hover {"), 1, /HHListView\.cs: HHListView can take focus \(a ListView\) but no :focus rule/],
+  ["a focus rule on a part of the control passes", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button .unity-text-element:focus {"), 0, /controls referenced/],
 ];
 
 let failed = 0;
