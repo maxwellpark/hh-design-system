@@ -35,9 +35,6 @@ test("the committed files pass", () => {
 
 const failing = {
   "a USS space token tokens.json lacks": (e) => e(USS, (t) => t.replace("--hh-space-6: 24px;", "--hh-space-6: 24px;\n    --hh-space-8: 32px;")),
-  "a motion token tokens.json lacks": (e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "duration-normal": undefined } }))),
-  "a Godot duration that drifted": (e) => e(GD, (t) => t.replace("const DURATION_FAST := 0.12", "const DURATION_FAST := 0.15")),
-  "an easing that drifted in tokens.json": (e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "easing-standard": "linear" } }))),
   "a USS token in a group nobody mirrors": (e) => e(USS, (t) => t.replace("--hh-space-1: 4px;", "--hh-space-1: 4px;\n    --hh-border-width: 2px;")),
   "a drift hidden behind a commented-out old value": (e) => e(USS, (t) => t.replace("--hh-space-1: 4px;", "/* was --hh-space-1: 4px; */ --hh-space-1: 6px;")),
   "a translucent alpha changed in its third decimal": (e) => e(USS, (t) => t.replace("rgba(130, 87, 255, 0.14)", "rgba(130, 87, 255, 0.141)")),
@@ -63,3 +60,33 @@ test("accepts an eight-digit hex colour and a decimal px value when both sides a
   });
   assert.equal(result.code, 0, result.text);
 });
+
+const motionFailures = {
+  "a motion token tokens.json lacks": [(e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "duration-normal": undefined } }))), /tokens\.json has no motion\.duration-normal/],
+  "a Godot duration that drifted": [(e) => e(GD, (t) => t.replace("const DURATION_FAST := 0.12", "const DURATION_FAST := 0.15")), /hh_tokens\.gd DURATION_FAST is 0\.15, tokens\.json motion\.duration-fast is 0\.12/],
+  "an easing that drifted in tokens.json": [(e) => e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "easing-standard": "linear" } }))), /tokens\.json motion\.easing-standard is linear, hh-tokens\.uss says ease-out/],
+  "an easing that drifted in Godot": [(e) => e(GD, (t) => t.replace('const EASING_STANDARD := "ease-out"', 'const EASING_STANDARD := "linear"')), /hh_tokens\.gd EASING_STANDARD is "linear"/],
+  "a duration that isn't a time": [(e) => e(USS, (t) => t.replace("--hh-duration-fast: 0.12s;", "--hh-duration-fast: fast;")), /--hh-duration-fast is fast, not a duration or easing keyword/],
+};
+for (const [name, [change, message]] of Object.entries(motionFailures)) {
+  test(`fails on ${name}`, () => {
+    const result = run(change);
+    assert.equal(result.code, 1, result.text);
+    assert.match(result.text, message);
+  });
+}
+
+const motionPasses = {
+  "a duration in ms": (e) => e(USS, (t) => t.replace("--hh-duration-normal: 0.2s;", "--hh-duration-normal: 200ms;")),
+  "a whole-second duration written 1.0 in Godot": (e) => {
+    e(USS, (t) => t.replace("--hh-duration-normal: 0.2s;", "--hh-duration-normal: 1s;"));
+    e(JSON_FILE, json((t) => ({ ...t, motion: { ...t.motion, "duration-normal": 1 } })));
+    e(GD, (t) => t.replace("const DURATION_NORMAL := 0.2", "const DURATION_NORMAL := 1.0"));
+  },
+};
+for (const [name, change] of Object.entries(motionPasses)) {
+  test(`passes ${name}`, () => {
+    const result = run(change);
+    assert.equal(result.code, 0, result.text);
+  });
+}

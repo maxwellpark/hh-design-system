@@ -109,7 +109,9 @@ for (const [constant, value] of Object.entries(gd)) {
 
 for (const [key, value] of Object.entries(tokens.motion ?? {})) {
   const constant = constantFor(key);
-  if (gd[constant] !== (typeof value === "string" ? JSON.stringify(value) : String(value))) {
+  // GDScript writes 1s as 1.0, so durations compare as numbers
+  const matches = typeof value === "string" ? gd[constant] === JSON.stringify(value) : Number(gd[constant]) === value;
+  if (!matches) {
     errors.push(`hh_tokens.gd ${constant} is ${gd[constant] ?? "missing"}, tokens.json motion.${key} is ${JSON.stringify(value)}`);
   }
 }

@@ -10,7 +10,7 @@ Node 22 from the package root, running `Tools~/verify.sh`'s Node steps; its Godo
 | Three motion tokens exist and `HHTheme` mirrors them (seconds as floats, easing as a string) | `node Tools~/check.mjs` | 28 tokens match | verified |
 | A drifted duration or easing fails the check, and `200ms` equals `0.2s` | `check.test.mjs` "duration drifts", "easing drifts", "duration in ms matches seconds" | pass | verified |
 | Every `var(--hh-*)` the transitions use is a token | the reference check in `node Tools~/check.mjs` | exit 0 | verified |
-| `Brand~/tokens.json` and the Godot constants carry the motion group, and drift in either fails | `node Tools~/check-tokens.mjs`; `check-tokens.test.mjs` "a motion token tokens.json lacks", "a Godot duration that drifted", "an easing that drifted in tokens.json" | exit 0, 17/17 | verified |
+| `Brand~/tokens.json` and the Godot constants carry the motion group, drift in either fails with its message, `200ms` and Godot's `1.0` compare as numbers, and a non-time duration is refused | `node Tools~/check-tokens.mjs`; `node --test Tools~/check-tokens.test.mjs`, the seven motion cases | exit 0, 21/21 | verified |
 | Buttons fade between rest, hover and pressed; inputs fade their border; the progress fill slides to a new value | `transition-*` rules in `hh-components.uss` | | unverified |
 
 ## Paths
@@ -43,5 +43,5 @@ accepted: Button text, hovered: text on violet-light is 2.47:1, needs 4.5 (palet
 - The Godot add-on's tests, which `Tools~/verify.sh` runs with a Godot 4.7 binary; the new
   constants are plain values its tests don't read.
 
-How the transitions look; whether Unity applies `var()` inside `transition-duration` and
-`transition-timing-function` (the compile gate will flag an import warning if it doesn't parse).
+- How the transitions look, and whether Unity applies `var()` inside `transition-duration` and
+  `transition-timing-function`; the compile gate flags an import warning if it doesn't parse.
