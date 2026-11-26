@@ -15,6 +15,16 @@ which fails on a control with no EditMode test.
    Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
 2. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
+3. Focus rule check: every control that can take keyboard or gamepad focus (the button, icon
+   button, toggle, slider, dropdown, text field, tab headers, radio choices, list) has a `:focus`
+   rule in `hh-components.uss`, so a player can always see where focus is. Check: `check.mjs`
+   fails on a focusable control with none, with a planted case.
+4. Switch toggle: `HHToggle` gains `switch="true"`, drawn as a sliding switch rather than a box,
+   for on/off settings. Check: EditMode tests written, its reference attribute, and contrast pairs
+   for the track and knob in both states.
+5. `HHStepper`: a value picked from a short list with previous and next buttons (difficulty,
+   resolution), for gamepads where a dropdown is awkward. Check: its test, gallery and reference
+   sections, contrast pairs, and the compile gate.
 
 ## Blocked on owner
 
