@@ -264,7 +264,7 @@ for (const sample of JSON.parse(readFileSync("package.json", "utf8")).samples ??
   }
 }
 const sampleControls = {
-  "Samples~/Settings/SettingsMenu.cs": ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack"],
+  "Samples~/Settings/SettingsMenu.cs": ["HHTabs", "HHToggle", "HHSlider", "HHDropdown", "HHTextField", "HHDialog", "HHToastStack", "HHAccessibility"],
   "Samples~/HUD/HudOverlay.cs": ["HHProgressBar", "HHSegmentedBar", "HHBadge", "HHButton", "HHToastStack"],
 };
 for (const [path, needed] of Object.entries(sampleControls)) {
@@ -300,6 +300,31 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
     }
     if (gallery !== null && !new RegExp(`\\b${control}\\b`).test(gallery)) {
       problems.push(`${name}: ${control} isn't in the gallery, Editor/HHGallery.cs`);
+    }
+  }
+}
+
+// Accessibility modifiers override every token of their kind, and only tokens: motion to 0s, type to 1.25x rounded
+const modifiers = { "hh-reduced-motion": ["duration-", () => "0s"], "hh-large-text": ["font-size-", (raw) => `${Math.round(parseFloat(raw) * 1.25)}px`] };
+for (const [className, [kind, expect]] of Object.entries(modifiers)) {
+  const body = componentRules.match(new RegExp(`(?:^|\\})\\s*\\.${className}\\s*\\{([^}]*)\\}`))?.[1];
+  if (body === undefined) {
+    problems.push(`hh-components.uss: no .${className} rule`);
+    continue;
+  }
+  const set = new Map([...body.matchAll(/--hh-([\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]));
+  for (const [name, raw] of tokens.filter(([n]) => n.startsWith(kind))) {
+    if (!set.has(name)) {
+      problems.push(`hh-components.uss: .${className} doesn't set --hh-${name}`);
+    } else if (set.get(name) !== expect(raw)) {
+      problems.push(`hh-components.uss: .${className} sets --hh-${name} to ${set.get(name)}, expected ${expect(raw)}`);
+    }
+  }
+  for (const name of set.keys()) {
+    if (!defined.has(name)) {
+      problems.push(`hh-components.uss: .${className} sets --hh-${name}, which isn't a token`);
+    } else if (!name.startsWith(kind)) {
+      problems.push(`hh-components.uss: .${className} sets --hh-${name}, outside its kind (${kind}*)`);
     }
   }
 }

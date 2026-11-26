@@ -247,3 +247,11 @@ A manipulator, not an element: `element.AddManipulator(new HHTooltip("Save"))`. 
 - **Classes:** `.hh-tooltip`
 - **States:** Shown while hovered or focused; `IsShowing` reports it.
 - **Tokens:** `--hh-color-bg`, `--hh-color-text`, `--hh-color-track`, `--hh-font-size-sm`, `--hh-radius-sm`, `--hh-space-1`, `--hh-space-2`
+
+## HHAccessibility
+
+Player accessibility settings as classes. `HHAccessibility.SetReducedMotion(root, on)` and `SetLargeText(root, on)` add or remove them; put them on the document root to cover a screen. They override tokens for everything under the element, under any theme. A dropdown's open menu is drawn at the panel root, outside the document, so it keeps the theme's sizes.
+
+- **Classes:** `.hh-reduced-motion`, `.hh-large-text`
+- **States:** `.hh-reduced-motion` sets every `--hh-duration-*` to 0s; `.hh-large-text` sets every `--hh-font-size-*` to 1.25 times its default, rounded to a whole pixel (15, 18, 23 and 35px).
+- **Tokens:** none read; it overrides tokens instead

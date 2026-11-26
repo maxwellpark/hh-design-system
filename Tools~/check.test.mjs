@@ -152,6 +152,10 @@ const cases = [
   }, 1, /HHToastStack's Attributes list is missing limit\n.*names max-visible, which it doesn't have/],
   ["a token a control's rules use, missing from its section, fails", (d) => edit(d, "Documentation~/components.md", "`--hh-color-scrim`, ", ""), 1, /HHDialog's Tokens list is missing --hh-color-scrim/],
   ["a token a control's rules don't use fails", (d) => edit(d, "Documentation~/components.md", "`--hh-space-4`", "`--hh-space-4`, `--hh-space-9`"), 1, /HHTabs's Tokens list names --hh-space-9, which it doesn't have/],
+  ["a modifier missing a token of its kind fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-duration-normal: 0s;\n", ""), 1, /\.hh-reduced-motion doesn't set --hh-duration-normal/],
+  ["a large-text size off the 1.25 scale fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "--hh-font-size-md: 18px;", "--hh-font-size-md: 16px;"), 1, /\.hh-large-text sets --hh-font-size-md to 16px, expected 18px/],
+  ["a modifier setting a token outside its kind fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-duration-normal: 0s;\n", "    --hh-duration-normal: 0s;\n    --hh-space-1: 0px;\n"), 1, /\.hh-reduced-motion sets --hh-space-1, outside its kind/],
+  ["a modifier setting something that isn't a token fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", "    --hh-font-size-xl: 35px;\n", "    --hh-font-size-xl: 35px;\n    --hh-font-size-huge: 50px;\n"), 1, /\.hh-large-text sets --hh-font-size-huge, which isn't a token/],
 ];
 
 let failed = 0;
