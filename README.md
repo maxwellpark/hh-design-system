@@ -49,6 +49,8 @@ Tokens (colour, spacing, radius, type) · `hh-theme.tss` · `.hh-card` / `.hh-ti
   `hh-tokens.uss`. Run it before every commit; change a token in both places.
   It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
   control puts text on a new colour. `node Tools~/check.test.mjs` tests the check itself.
+- EditMode tests live in `Tests/Editor`. To run them in a project, add
+  `"testables": ["com.hootonheroics.designsystem"]` to its `Packages/manifest.json`.
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,
   then a paid "Pro" pack (open-core). Siblings planned: `com.hootonheroics.ai`, `...procgen`.
 
