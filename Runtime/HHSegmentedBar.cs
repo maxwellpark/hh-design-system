@@ -16,6 +16,8 @@ namespace HootonHeroics.DesignSystem
 
         private int segments;
         private int filled;
+        // Kept unclamped, since UXML may set filled before segments
+        private int requested;
         private HHTone tone = HHTone.Teal;
 
         public HHSegmentedBar()
@@ -42,22 +44,28 @@ namespace HootonHeroics.DesignSystem
                 {
                     RemoveAt(childCount - 1);
                 }
-                Filled = filled;
+                ApplyFilled();
             }
         }
 
-        /// Clamped to 0 to Segments.
+        /// Clamped to 0 to Segments; a value set before Segments grows is kept and applied once it fits.
         [UxmlAttribute]
         public int Filled
         {
             get => filled;
             set
             {
-                filled = value < 0 ? 0 : value > segments ? segments : value;
-                for (var i = 0; i < childCount; i++)
-                {
-                    this[i].EnableInClassList(FilledUssClassName, i < filled);
-                }
+                requested = value;
+                ApplyFilled();
+            }
+        }
+
+        private void ApplyFilled()
+        {
+            filled = requested < 0 ? 0 : requested > segments ? segments : requested;
+            for (var i = 0; i < childCount; i++)
+            {
+                this[i].EnableInClassList(FilledUssClassName, i < filled);
             }
         }
 

@@ -11,4 +11,5 @@
     <hh:HHBadge name="dot" dot="true" count="4" />
     <hh:HHProgressBar name="pink-progress" value="10" tone="Pink" />
     <hh:HHSegmentedBar name="health" segments="4" filled="3" tone="Pink" />
+    <hh:HHSegmentedBar name="ammo" filled="8" segments="10" />
 </ui:UXML>

@@ -52,6 +52,13 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void FilledSetBeforeSegmentsSurvivesTheGrowth()
+        {
+            var bar = new HHSegmentedBar { Filled = 8, Segments = 10 };
+            Assert.That(bar.Filled, Is.EqualTo(8));
+        }
+
+        [Test]
         public void UxmlAttributesReachTheVariants()
         {
             var root = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Fixture).Instantiate();
@@ -61,6 +68,7 @@ namespace HootonHeroics.DesignSystem.Tests
             Assert.That(health.Segments, Is.EqualTo(4));
             Assert.That(health.Filled, Is.EqualTo(3));
             Assert.That(health.ClassListContains(HHSegmentedBar.PinkUssClassName), Is.True);
+            Assert.That(root.Q<HHSegmentedBar>("ammo").Filled, Is.EqualTo(8));
         }
     }
 }

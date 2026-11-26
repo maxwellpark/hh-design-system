@@ -20,7 +20,7 @@ and badge PR, which adds `HHTone`.
 |---|---|---|
 | `HHToneClasses.Apply` | each tone / the default tone | the tone tests (not run) |
 | `HHSegmentedBar.Segments` | grow / shrink / below 1 / above 50 | the segment test (not run) |
-| `HHSegmentedBar.Filled` | normal / above segments / negative | the fill test (not run) |
+| `HHSegmentedBar.Filled` | normal / above segments / negative / set before segments | the fill tests (not run) |
 
 ## Coverage and complexity
 
