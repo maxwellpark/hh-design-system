@@ -14,15 +14,7 @@ which fails on a control with no EditMode test.
    lives in a pure `Advance(elapsedSeconds)` that tests drive with explicit times, with the
    scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
    timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
-
-2. Reference examples check: the UXML examples in `Documentation~/components.md` widen what guides
-   may use, so a typo there would pass everywhere. Drop the example-derived names from the allowed
-   set, keeping each section's Attributes list, its Unity base's table and the shared VisualElement
-   list, and hold the examples themselves to that set; fix any example it rejects. Check: planted
-   cases in `Tools~/check.test.mjs` (a misspelt example attribute fails, an unknown example element
-   fails), and `node Tools~/check.test.mjs` passing.
-
-3. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
+2. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
    instance of each focusable control (button, icon button, hold button once merged, toggle, slider,
    dropdown, text field, radio group, stepper, tabs, list, scroll view), found with
    `page.Query<T>().Where(e => !e.enabledSelf)`, so the built page is held, not only its source.
@@ -65,6 +57,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: reference examples check: `check.mjs` builds the allowed attributes from each section's list, Unity base table and VisualElement's only, and holds `components.md`'s own examples to them; every example passes (branch `max/reference-examples`).
 - 2026-11-26: tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, on the tab's one header, which Unity only reparents, found by class each call, and 0 removes it; two tests, two pairs, the reference and a gallery Items tab (branch `max/tab-badges`).
 - 2026-11-26: theming guide: `Documentation~/theming.md` makes a theme in a game's project, from copied tokens to a theme sheet importing the package's component sheets, a contrast check by hand against `Tools~/contrast.json`, and switching with `HHThemes`; the gate compiles its C# (branch `max/theming-guide`).
 - 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
