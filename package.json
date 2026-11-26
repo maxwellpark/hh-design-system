@@ -15,6 +15,11 @@
       "displayName": "Basic UI",
       "description": "A demo panel showing the tokens + components.",
       "path": "Samples~/BasicUI"
+    },
+    {
+      "displayName": "Settings",
+      "description": "A settings screen built from tabs, form controls, a dialog and toasts.",
+      "path": "Samples~/Settings"
     }
   ]
 }
