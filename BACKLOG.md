@@ -9,10 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const in the
-   sample), showing the card over gameplay. Check: the sample table requires `HHCard` for the HUD,
-   with a planted case that drops it, and the compile gate builds the sample.
-
 ## Blocked on owner
 
 - A transparent studio mark. `Brand~/hh-logo.png` (and the website's copy) is opaque on a ground darker than `color.bg`, so a faint square shows around it on the splash. Needs the owner's art: a cut-out of the mark, or a decision to match the field to it.
@@ -50,6 +46,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: HUD sample card: the HUD's health and lives sit in an `HHCard` titled `Player` (a const); the sample table requires `HHCard` for the HUD (branch `max/hud-card`).
 - 2026-11-26: goal numbers check: `check.mjs` fails when GOAL.md's Controls, Tokens or contrast row disagrees with what it counts, naming the value expected; the other rows stay hand-kept (branch `max/goal-numbers`).
 - 2026-11-26: adding a control guide: `Documentation~/adding-a-control.md` lists what the checks hold a new control to, naming `check.mjs` as the authority, with a doc-only example the gate compiles (branch `max/control-guide`).
 - 2026-11-26: pause menu hold to quit: the Pause Menu sample's Quit is a Hold to quit `HHHoldButton` whose `Confirmed` shows the warning toast, in place of the dialog; the sample table requires it; `HHHoldButton.Begin` and `Release` became public so a game can drive a pad hold (branch `max/pause-hold`).

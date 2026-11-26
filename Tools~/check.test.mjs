@@ -148,6 +148,10 @@ const cases = [
     const p = join(d, "Samples~/PauseMenu/PauseMenu.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/HHHoldButton/g, "Button"));
   }, 1, /PauseMenu\.cs: doesn't use HHHoldButton/],
+  ["the HUD sample dropping its card fails", (d) => {
+    const p = join(d, "Samples~/HUD/HudOverlay.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace("new HHCard { Title = PlayerName }", "new VisualElement()"));
+  }, 1, /HudOverlay\.cs: doesn't use HHCard/],
   ["a listed sample that's been deleted fails", (d) => rmSync(join(d, "Samples~/Settings"), { recursive: true }), 1, /sample "Settings" path Samples~\/Settings is missing/],
   ["removing one of several uses from the gallery passes", (d) => edit(d, "Editor/HHGallery.cs", "            badges.Add(new HHBadge { Dot = true });\n", "            badges.Add(new Label());\n"), 0, /controls referenced/],
   ["a control never in the gallery fails", (d) => {
