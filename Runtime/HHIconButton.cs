@@ -20,8 +20,11 @@ namespace HootonHeroics.DesignSystem
             AddToClassList(UssClassName);
             Icon = icon;
             tooltip = label;
-            this.AddManipulator(new HHTooltip());
+            Tooltip = new HHTooltip();
+            this.AddManipulator(Tooltip);
         }
+
+        internal HHTooltip Tooltip { get; }
 
         [UxmlAttribute]
         public Texture2D Icon

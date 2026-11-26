@@ -57,11 +57,11 @@ namespace HootonHeroics.DesignSystem.Tests
             var button = new HHIconButton(null, "Settings", null);
             var layer = new VisualElement();
             layer.Add(button);
-            var tooltip = new HHTooltip { Layer = layer };
-            button.AddManipulator(tooltip);
+            button.Tooltip.Layer = layer;
 
-            tooltip.Show();
-            Assert.That(tooltip.Label.text, Is.EqualTo("Settings"));
+            button.Tooltip.Show();
+            Assert.That(button.Tooltip.Label.text, Is.EqualTo("Settings"));
+            Assert.That(button.Tooltip.Label.parent, Is.SameAs(layer));
         }
     }
 }
