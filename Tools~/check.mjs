@@ -115,36 +115,52 @@ for (const field of fields.keys()) {
 }
 
 // WCAG contrast for each pair in contrast.json, translucent colours blended onto what they sit over
-const colours = new Map(tokens.filter(([name]) => name.startsWith("color-")).map(([name, raw]) => [name.slice(6), parseColour(raw)]));
+const colours = new Map(
+  tokens.filter(([name]) => name.startsWith("color-")).map(([name, raw]) => [name.slice(6), parseColour(raw)]),
+);
 const linear = (c) => (c / 255 <= 0.03928 ? c / 255 / 12.92 : ((c / 255 + 0.055) / 1.055) ** 2.4);
 const luminance = ([r, g, b]) => 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
 const blend = (top, under) => top.slice(0, 3).map((c, i) => Math.round((c * top[3] + under[i] * (255 - top[3])) / 255));
 
+function contrast(pair) {
+  if (!pair.text || !pair.on) {
+    return { problem: "needs both text and on" };
+  }
+  const [text, on, over] = [pair.text, pair.on, pair.over].map((name) => (name ? colours.get(name) : undefined));
+  const missing = [pair.text, pair.on, pair.over].find((name, i) => name && ![text, on, over][i]);
+  if (missing) {
+    return { problem: `no token --hh-color-${missing}` };
+  }
+  if (over && over[3] < 255) {
+    return { problem: `${pair.over} is translucent, so it can't be what ${pair.on} sits over` };
+  }
+  if (on[3] < 255 && !over) {
+    return { problem: `${pair.on} is translucent, say what it sits over` };
+  }
+  const background = on[3] < 255 ? blend(on, over) : on;
+  const [hi, lo] = [luminance(blend(text, background)), luminance(background)].sort((x, y) => y - x);
+  return { ratio: (hi + 0.05) / (lo + 0.05) };
+}
+
 const accepted = [];
 let pairs = 0;
 for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pairs) {
-  const [text, on, over] = [pair.text, pair.on, pair.over].map((name) => (name === undefined ? undefined : colours.get(name)));
-  const missing = [pair.text, pair.on, pair.over].find((name, i) => name !== undefined && ![text, on, over][i]);
-  if (missing !== undefined) {
-    problems.push(`${pair.use}: no token --hh-color-${missing}`);
+  const { problem, ratio } = contrast(pair);
+  if (problem) {
+    problems.push(`${pair.use}: ${problem}`);
     continue;
   }
-  if (on[3] < 255 && !over) {
-    problems.push(`${pair.use}: ${pair.on} is translucent, say what it sits over`);
-    continue;
-  }
-  const background = on[3] < 255 ? blend(on, over) : on;
-  const [hi, lo] = [luminance(blend(text, background)), luminance(background)].sort((a, b) => b - a);
-  const ratio = (hi + 0.05) / (lo + 0.05);
-  const min = pair.min ?? 4.5;
   pairs += 1;
-  if (ratio >= min) {
-    continue;
-  }
+  const min = pair.min ?? 4.5;
   const line = `${pair.use}: ${pair.text} on ${pair.on} is ${ratio.toFixed(2)}:1, needs ${min}`;
-  if (pair.accepted) {
-    accepted.push(`accepted: ${line} (${pair.accepted})`);
-  } else {
+  // An accepted pair holds its recorded ratio, so it can't quietly get worse or outlive its reason
+  if (pair.accepted && ratio >= min) {
+    problems.push(`${line}: passes now, drop its accepted entry`);
+  } else if (pair.accepted && ratio < pair.accepted.ratio - 0.005) {
+    problems.push(`${line}, and fell below its accepted ${pair.accepted.ratio}`);
+  } else if (pair.accepted) {
+    accepted.push(`accepted: ${line} (${pair.accepted.why})`);
+  } else if (ratio < min) {
     problems.push(line);
   }
 }
@@ -153,4 +169,5 @@ if (problems.length > 0) {
   console.error(problems.join("\n"));
   process.exit(1);
 }
-console.log([...accepted, `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked`].join("\n"));
+const summary = `${guids.size} .meta files ok, ${tokens.length} tokens match HHTheme, ${pairs} contrast pairs checked`;
+console.log([...accepted, summary].join("\n"));
