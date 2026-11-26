@@ -9,11 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
-   `.unity-base-text-field__input--placeholder`) is left to Unity's default colour. Style it in
-   `--hh-color-text-dim`, add a "Placeholder text in a text field" pair (held in every theme), and
-   show one in the gallery. Check: the pair, the gate's Unity class check, and the reference.
-2. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
+1. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
    button, toggle, slider, dropdown, text field, radio group, stepper, tabs, list) in a variable
    and calls `SetEnabled(false)` on it, and tabs and list gain the `:disabled` rule they lack.
    Check: `check.mjs` fails on a focusable control the gallery never disables (matched by the
@@ -57,6 +53,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).
+- 2026-11-26: placeholder text: `HHTextField`'s placeholder (`.unity-base-text-field__input--placeholder`, which the gate's class reader confirms) is `--hh-color-text-dim`, with a pair held in every theme; the gallery shows one (branch `max/placeholder`).
 - 2026-11-26: scroller focus: Unity 6000.0's IL shows a scroller is a plain `Slider`, so it takes focus (recorded in `decisions.md`); a focused scroller's handle in a scroll view or list turns the focus colour, with a 3:1 pair, and the focus check holds `ScrollView`. The IL was read once by hand rather than by the gate, since the lasting check is the focus rule (branch `max/scroller-focus`).
 - 2026-11-26: Settings sample shows the newer controls: a Resolution `HHStepper` on the Video tab and a Difficulty `HHRadioGroup` on the Player tab, in the saved settings; the sample check requires both (branch `max/settings-newer`).
 - 2026-11-26: `HHStepper`: an ordered list stepped with arrows or left and right when focused, clamped with the end arrow disabled; tests, gallery, reference, four contrast pairs, and `BaseField` added to the focus check's focusable bases (branch `max/stepper`).

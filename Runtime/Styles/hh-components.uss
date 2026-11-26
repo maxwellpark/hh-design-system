@@ -256,6 +256,11 @@
     transition-timing-function: var(--hh-easing-standard);
 }
 
+/* Placeholder text is dim, so it reads as a hint rather than a value; the extra class outranks the input rule */
+.hh-text-field.unity-base-field .unity-base-text-field__input--placeholder {
+    color: var(--hh-color-text-dim);
+}
+
 .hh-dropdown.unity-base-field .unity-base-popup-field__text {
     color: var(--hh-color-text);
 }

@@ -8,10 +8,12 @@ needs a licence (Blocked on owner).
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | `HHToast`, `HHToastStack`, the tests and the gallery compile, editor and player, and every existing `Show` call still compiles | the compile gate (Settings, HUD and Pause Menu samples call `Show`) | 16 of 16 | verified |
-| A toast has no action until `SetAction`, which adds one ghost button and relabels it on a second call | `ToastTests.AToastHasNoActionUntilOneIsSet` | | written, not run |
-| The action runs its callback, then dismisses the toast | `ToastTests.AnActionRunsItsCallbackThenDismisses` | | written, not run |
+| A toast has no action until `SetAction`, which adds one ghost button, relabels it on a second call, and removes it for an empty label | `ToastTests.AToastHasNoActionUntilOneIsSet`, `AnEmptyLabelRemovesTheAction` | | written, not run |
+| The action runs its callback once, then dismisses the toast once, even if the callback throws | `ToastTests.AnActionRunsItsCallbackOnceThenDismissesOnce`; `try`/`finally` in `RunAction` | | written, not run |
+| A toast trimmed away by a newer one doesn't run its action | `ToastTests.AnActionToastTrimmedAwayDoesNotRunItsAction` | | written, not run |
+| A toast with an action stays at least 8 seconds, so a keyboard or pad user can reach it | `HHToastStack.ActionSeconds` | | verified by reading |
 | `Show` without an action label adds none | `ToastTests.ShowWithoutAnActionLeavesNone` | | written, not run |
-| The button's text meets AA on the toast card, at rest and hovered, in both themes | two "Toast action text on a toast card" pairs | pass | verified |
+| The button's text meets AA on the toast card, at rest and hovered, in both themes | the toast card is `surface`, so the existing "Ghost button text" pairs (over `surface`) hold it | pass | verified |
 | The reference names `.hh-toast__action` and the new parameters | `check.mjs` | pass | verified |
 | The toast lays out as a row with its text wrapping beside the button | `.hh-toast`, `.hh-toast__text` | | unverified |
 
@@ -45,4 +47,4 @@ ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity
 
 ## Unverified
 
-Rendering and the three tests.
+Rendering and the five tests.

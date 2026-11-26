@@ -4,6 +4,8 @@
 - Toast actions: `HHToast.SetAction(label, onAction)` adds a ghost button (Undo, View) that runs the
   callback and dismisses the toast, and `HHToastStack.Show` takes the label and callback after
   `seconds`, so existing calls compile; a toast with an action stays at least 8 seconds. A toast now lays out as a row, its text wrapping beside the button.
+- `HHTextField`'s placeholder (`placeholder-text`) is drawn in `--hh-color-text-dim`, with a contrast
+  pair against the field; the gallery shows one.
 - A focused scroller in an `HHScrollView` or `HHListView` shows it: its handle turns the focus colour.
   Unity puts scrollers in the tab order, and `check.mjs` now holds scroll views to a focus rule.
 - Settings sample: a Resolution `HHStepper` on the Video tab and a Difficulty `HHRadioGroup` on the
