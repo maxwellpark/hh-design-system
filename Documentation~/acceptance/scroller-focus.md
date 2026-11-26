@@ -32,8 +32,10 @@ ok   HEAD compiles: 16 assembly builds with the compiler and generators of Unity
 ```
 68 .meta files ok, 32 tokens match HHTheme, 122 contrast pairs checked across 2 theme(s), 18 controls referenced, 20 types in the component reference
 ok   a focusable control with no focus rule fails
+ok   a list whose own ring is gone fails, though its scroller shows focus
+ok   another control's focus nested in a scroll view doesn't count for it
 ok   a scroll view without a focused scroller rule fails
-100/100 passed
+102/102 passed
 ```
 
 ## Hands-on checklist (Unity 6, two minutes)

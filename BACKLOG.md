@@ -9,16 +9,15 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-
-2. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
+1. Placeholder text: `HHTextField`'s placeholder (Unity 6's `placeholder-text`, drawn with
    `.unity-base-text-field__input--placeholder`) is left to Unity's default colour. Style it in
    `--hh-color-text-dim`, add a "Placeholder text in a text field" pair (held in every theme), and
    show one in the gallery. Check: the pair, the gate's Unity class check, and the reference.
-3. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
+2. Toast action: `HHToast` gains an optional ghost button that runs a callback and dismisses the
    toast, and `HHToastStack.Show` takes its label and callback as parameters after `seconds`, so
    existing calls compile; the gallery shows one. Check: EditMode tests written, "on a toast card"
    contrast pairs for the button, the reference, and the compile gate.
-4. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
+3. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
    button, toggle, slider, dropdown, text field, radio group, stepper, tabs, list) in a variable
    and calls `SetEnabled(false)` on it, and tabs and list gain the `:disabled` rule they lack.
    Check: `check.mjs` fails on a focusable control the gallery never disables (matched by the
