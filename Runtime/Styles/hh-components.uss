@@ -64,13 +64,16 @@
     background-color: var(--hh-color-violet-ghost);
 }
 
-/* The title sits on top of the bar */
+/* The title sits above the bar, on the card, since no text colour reads on both the fill and the track */
+.hh-progress-bar {
+    padding-top: var(--hh-space-6);
+}
+
 .hh-progress-bar .unity-progress-bar__background {
     background-color: var(--hh-color-surface);
     border-width: 0;
     border-radius: var(--hh-radius-sm);
-    min-height: var(--hh-space-6);
-    overflow: hidden;
+    min-height: var(--hh-space-3);
 }
 
 .hh-progress-bar .unity-progress-bar__progress {
@@ -79,8 +82,16 @@
     border-radius: var(--hh-radius-sm);
 }
 
+.hh-progress-bar .unity-progress-bar__title-container {
+    top: auto;
+    bottom: 100%;
+    justify-content: flex-start;
+    padding-bottom: var(--hh-space-1);
+}
+
 .hh-progress-bar .unity-progress-bar__title {
     color: var(--hh-color-text);
     font-size: var(--hh-font-size-sm);
     -unity-font-style: bold;
+    -unity-text-align: lower-left;
 }
