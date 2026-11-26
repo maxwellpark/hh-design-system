@@ -4,6 +4,11 @@
 - `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
   duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
   sample's Music uses it.
+- `HHListView` shows focus with a ring in the focus colour, and `check.mjs` now fails on any control
+  built on a focusable Unity base without a `:focus` rule.
+- Doc snippets: the compile gate compiles each fenced `csharp` block in `Documentation~/*.md`, with
+  errors reported at the guide's line, and `check.mjs` fails on guide UXML using an `hh:` element
+  or attribute the component reference doesn't have.
 - `HHSlider` can show its value beside the track: `show-value` turns it on, and `value-format`
   picks Percent (the default) or Number. The gallery and the Settings sample's volume show it.
 - Pause menu sample: a card of Resume, Settings and Quit, with Quit confirmed through a dialog only

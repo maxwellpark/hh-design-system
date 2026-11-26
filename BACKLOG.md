@@ -9,20 +9,9 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Doc snippet gate: a gate step extracts each fenced `csharp` block from `Documentation~/*.md`,
-   compiles it as a sample-like assembly, and fails on one that doesn't; `check.mjs` fails on a
-   fenced `xml` block naming an `hh:` element or attribute the component reference doesn't have.
-   Check: planted cases in `unity-compile.test.sh` and `check.test.mjs`.
-2. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
+1. Getting started: `Documentation~/getting-started.md` builds a small screen step by step, from
    install to a themed card with a toggle and a button. Check: the doc snippet gate.
-3. Focus rule check: every control whose Unity base is focusable has a `:focus` rule on its own
-   class or a part of it in `hh-components.uss`, so a player can always see where focus is.
-   `check.mjs` keeps a table of focusable bases (Button, Toggle, Slider, DropdownField, TextField,
-   RadioButtonGroup, ListView, the tab headers) and exempts `HHDialog`, which is focusable outside
-   the tab order on purpose. `HHListView` has no focus rule today, so the item adds one. Check:
-   `check.mjs` fails on a focusable control without one, with a planted case in
-   `Tools~/check.test.mjs`.
-4. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
+2. `HHStepper`: previous and next buttons through an ordered list longer than a radio row suits
    (resolution, text size), with `choices` and `index` from UXML as `HHDropdown` has them, clamped
    at the ends with the button there disabled. Check: its test, gallery and reference sections,
    contrast pairs and the compile gate.
@@ -63,6 +52,8 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
+- 2026-11-26: focus rule check: `check.mjs` fails on a control built on a focusable Unity base (from a table) with no `:focus` rule on it or a part; `HHListView`, the one without, gains a focus ring (branch `max/focus-rules`).
+- 2026-11-26: doc snippet gate: `unity-compile.mjs` compiles each fenced `csharp` block in `Documentation~/*.md` as a sample-like assembly, errors at the guide's line; `check.mjs` fails on guide UXML naming an `hh:` element or attribute the reference doesn't have (branch `max/doc-snippets`).
 - 2026-11-26: slider value: `HHSlider` writes its value beside the track with `show-value`, as a percentage (from a table, so dragging allocates nothing) or a number with `value-format`; tests, reference section and a contrast pair (branch `max/slider-value`).
 - 2026-11-26: pause menu sample: `Samples~/PauseMenu/PauseMenu.cs`, an `HHCard` of Resume, Settings and Quit, Quit asking through a `require-choice` dialog, opened by its own Pause button so it needs neither input system; `check.mjs` holds its controls (branch `max/pause-menu`).
 - 2026-11-26: accessibility modifiers: `.hh-reduced-motion` (every duration 0s) and `.hh-large-text` (every font size 1.25 times, as pixels) override tokens under any theme; `HHAccessibility` toggles them, the Settings sample has an Access tab and the gallery a toggle for each; `check.mjs` holds both to the tokens (branch `max/a11y-modifiers`).
