@@ -9,31 +9,28 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. `HHToast`: timed notifications stacked in a corner, with info, success, warning and danger
-   tones; a newer one pushes older ones up and each removes itself. Check: tone contrast pairs,
-   tests written, gate.
-2. Tooltip: an `HHTooltip` manipulator that shows a label after a hover or focus delay and hides on
+1. Tooltip: an `HHTooltip` manipulator that shows a label after a hover or focus delay and hides on
    leave, blur or Escape. Check: tests written, gate.
-3. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
+2. Tabs: style Unity 6's `TabView` and `Tab` (header, selected, hover, focus) as `.hh-tabs`.
    Check: contrast pairs for selected and unselected tab text, gate.
-4. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
+3. Scroll view and list view styling: scrollers, rows, hover and selection. Check: contrast pairs
    for selected-row text, gate.
-5. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
+4. The dropdown's open list (`.unity-base-dropdown`), styled from the panel root by the theme
    sheet. Check: contrast pairs, gate.
-6. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
+5. `HHTheme` reads tokens from a resolved element at runtime, so the hand-kept mirror and its
    check can go. Check: tests written, gate.
-7. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
+6. Light and high-contrast themes: `hh-tokens-light.uss`, `hh-tokens-high-contrast.uss` and a
    theme sheet for each; the contrast check runs every pair against every theme. Check:
    `check.mjs` over all three, gate.
-8. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
+7. Runtime theme switching: `HHThemes.Apply(PanelSettings, ThemeStyleSheet)` and a sample button
    that cycles the three themes. Check: tests written, gate.
-9. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
+8. Component gallery: an editor window (Hooton Heroics > Design System > Gallery) showing every
    control in each state under the chosen theme. Check: gate compiles it; extend `check.mjs`'s
    reference check to fail on a control missing from it.
-10. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
-    dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
-    compiles it; extend the reference check to fail on a form control it doesn't use.
-11. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
+9. Settings screen sample: a second sample building a real settings menu from the toggle, slider,
+   dropdown, tabs and dialog, serving the "menus, settings and HUD" Done-when line. Check: gate
+   compiles it; extend the reference check to fail on a form control it doesn't use.
+10. Component reference: `Documentation~/components.md` with each control's UXML, classes, states
     and tokens. Check: extend the reference check to fail on a control missing from it.
 
 ## Blocked on owner
@@ -64,6 +61,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: `HHToast` and `HHToastStack`: cards with info, success, warning and danger edges, stacked in a corner, newest last, capped by `max-visible`, each dismissing itself after its time (branch `max/toast`).
 - 2026-11-26: `HHDialog`: modal card on a `--hh-color-scrim` scrim, title, UXML body, `AddAction`; Escape, gamepad cancel and scrim clicks close it unless `require-choice`; focus moves to the first action and back on close (branch `max/dialog`).
 - 2026-11-26: stylesheet check: `Tools~/check.mjs` fails on a stylesheet that doesn't parse as flat rules (a missing or stray brace, a declaration without a colon or semicolon) or uses a property Unity 6000.0 doesn't know (branch `max/stylesheet-check`).
 - 2026-11-26: progress bar tones (violet, pink, peach; teal stays the default) and `HHSegmentedBar` (1 to 50 segments, filled count, tones) (branch `max/progress-variants`).

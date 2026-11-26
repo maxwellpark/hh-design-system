@@ -67,6 +67,13 @@
 - Default 2026-11-26 [needs-review]: a badge sits beside or over a control by the game's own
   layout; nothing positions it inside a button. Why: a Label inside a Button overlaps the button's
   text, which isn't a layout child. To change: add a corner-anchored `.hh-badge--corner` rule.
+- Default 2026-11-26 [needs-review]: toast tones show as a 4px left edge on a `surface` card, not
+  a filled background. Why: text stays white on `surface` (15:1) for every tone, and each edge is
+  5.7:1 or more against the card. To change: the `.hh-toast--*` rules.
+- Default 2026-11-26 [needs-review]: four toasts show at most, each for 4 seconds. Why: enough to
+  read a short line without covering the game. To change: `MaxVisible` and `DefaultSeconds`.
+- Default 2026-11-26 [needs-review]: the toast stack is at most 80% of its parent's height and clips
+  beyond that. Why: a high `max-visible` shouldn't push cards off-screen. To change: `.hh-toast-stack`.
 - Default 2026-11-26 [needs-review]: `HHDialog` doesn't trap Tab focus inside the card. Why: UI
   Toolkit has no focus scope, and the scrim already blocks pointer input behind it. To change: a
   `FocusOutEvent` handler that returns focus to the first action when it leaves the card.
