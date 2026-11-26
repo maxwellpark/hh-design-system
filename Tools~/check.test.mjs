@@ -102,6 +102,7 @@ const cases = [
   ["duration drifts", (d) => edit(d, "Runtime/HHTheme.cs", "durationFast = 0.12f", "durationFast = 0.15f"), 1, /--hh-duration-fast is 0\.12s but HHTheme\.durationFast is 0\.15/],
   ["duration in ms matches seconds", (d) => edit(d, "Runtime/Styles/hh-tokens.uss", "--hh-duration-normal: 0.2s;", "--hh-duration-normal: 200ms;"), 0, /tokens match HHTheme/],
   ["easing drifts", (d) => edit(d, "Runtime/HHTheme.cs", '"ease-out"', '"linear"'), 1, /--hh-easing-standard is ease-out but HHTheme\.easingStandard is linear/],
+  ["// inside a stylesheet url() doesn't hide a bad token", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {\n", '.hh-card {\n    background-image: url("project://database/x.png"); color: var(--hh-color-nope);\n'), 1, /var\(--hh-color-nope\) is not a token/],
 ];
 
 let failed = 0;

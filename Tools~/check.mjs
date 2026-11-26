@@ -187,7 +187,11 @@ for (const pair of JSON.parse(readFileSync("Tools~/contrast.json", "utf8")).pair
 }
 
 // Every token a stylesheet uses is defined, every control's class has rules, and every control has a test
-const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+// USS has only block comments, where `//` can sit inside a url(); C# also has line comments
+const stripComments = (text, lineComments = false) => {
+  const blockless = text.replace(/\/\*[\s\S]*?\*\//g, "");
+  return lineComments ? blockless.replace(/^\s*\/\/.*$/gm, "").replace(/\s\/\/[^"\n]*$/gm, "") : blockless;
+};
 const styles = readdirSync("Runtime/Styles").filter((name) => /\.(uss|tss)$/.test(name));
 const defined = new Set(tokens.map(([name]) => name));
 for (const name of styles) {
@@ -202,7 +206,7 @@ for (const name of styles) {
 const componentRules = stripComments(readFileSync("Runtime/Styles/hh-components.uss", "utf8"));
 const testSource = readdirSync("Tests/Editor")
   .filter((name) => name.endsWith(".cs"))
-  .map((name) => stripComments(readFileSync(join("Tests/Editor", name), "utf8")))
+  .map((name) => stripComments(readFileSync(join("Tests/Editor", name), "utf8"), true))
   .join("\n");
 
 // Resolves `A = "x"` and `B = A + "--y"` within one file, the forms the controls use
@@ -218,7 +222,7 @@ function classConstants(source) {
 
 let controls = 0;
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
-  const source = stripComments(readFileSync(join("Runtime", name), "utf8"));
+  const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
   for (const [constant, className] of classConstants(source)) {
     if (className === undefined) {
       problems.push(`${name}: can't resolve ${constant}`);
