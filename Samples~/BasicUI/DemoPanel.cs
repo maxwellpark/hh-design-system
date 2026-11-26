@@ -2,13 +2,16 @@ using HootonHeroics.DesignSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-/// Drop this on a GameObject with a UIDocument, assign the two USS assets from the package,
-/// and press Play to see the tokens + components. Builds the panel in code (no scene needed).
+/// Drop this on a GameObject with a UIDocument and press Play to see the tokens + components.
+/// Builds the panel in code (no scene needed). Either select hh-theme.tss as the
+/// PanelSettings' Theme Style Sheet, or assign the two USS assets below.
 [RequireComponent(typeof(UIDocument))]
 public class DemoPanel : MonoBehaviour
 {
-    public StyleSheet tokens;      // Runtime/Styles/hh-tokens.uss
-    public StyleSheet components;  // Runtime/Styles/hh-components.uss
+    public StyleSheet tokens;      // Runtime/Styles/hh-tokens.uss (not needed with hh-theme.tss)
+    public StyleSheet components;  // Runtime/Styles/hh-components.uss (not needed with hh-theme.tss)
+
+    private HHProgressBar progress;
 
     private void OnEnable()
     {
@@ -27,12 +30,20 @@ public class DemoPanel : MonoBehaviour
         var sub = new Label("Design system demo");
         sub.AddToClassList("hh-text-dim");
 
-        var play = new HHButton { text = "Play" };
+        progress = new HHProgressBar { title = "Loading", value = 40 };
+        progress.style.marginTop = 16;
+
+        var play = new HHButton(() => progress.value = Mathf.Min(progress.value + 10, progress.highValue)) { text = "Play" };
         play.style.marginTop = 16;
+
+        var back = new HHButton(() => progress.value = progress.lowValue) { text = "Reset", Ghost = true };
+        back.style.marginTop = 8;
 
         card.Add(title);
         card.Add(sub);
+        card.Add(progress);
         card.Add(play);
+        card.Add(back);
         root.Add(card);
     }
 }
