@@ -134,27 +134,30 @@ namespace HootonHeroics.DesignSystem
             return true;
         }
 
-        // Focus is mid-switch during FocusOut, so it comes back on the next tick
+        // Focus is mid-switch during FocusOut, so the trap looks again on the next tick, at where focus landed
         private void OnFocusOut(FocusOutEvent e)
         {
-            var back = RefocusTarget(e.target as VisualElement, e.relatedTarget as VisualElement);
-            if (back != null)
+            if (!IsOpen || (e.relatedTarget is VisualElement arriving && Contains(arriving)))
             {
-                schedule.Execute(() =>
-                {
-                    if (IsOpen)
-                    {
-                        back.Focus();
-                    }
-                });
+                return;
             }
+            var leaving = e.target as VisualElement;
+            schedule.Execute(() =>
+            {
+                var back = RefocusTarget(leaving, focusController?.focusedElement as VisualElement);
+                if (back != null && back.panel != null && back.canGrabFocus)
+                {
+                    back.Focus();
+                }
+            });
         }
 
-        /// While open, focus that leaves for an element outside comes back: to the last stop when it left
-        /// the first (Shift+Tab), otherwise to the first. Null when focus may go where it's going.
-        internal VisualElement RefocusTarget(VisualElement leaving, VisualElement arriving)
+        /// Where focus goes back to once it has left an open dialog for `focused` (null when nothing has focus):
+        /// the last stop when it left the first (Shift+Tab), otherwise the first. Null when it may stay: the dialog
+        /// is closed, focus is inside it, or focus is in another open dialog, which then traps it instead.
+        internal VisualElement RefocusTarget(VisualElement leaving, VisualElement focused)
         {
-            if (!IsOpen || arriving == null || Contains(arriving))
+            if (!IsOpen || (focused != null && (Contains(focused) || InOtherOpenDialog(focused))))
             {
                 return null;
             }
@@ -167,8 +170,20 @@ namespace HootonHeroics.DesignSystem
             return leaving != null && (first == leaving || first.Contains(leaving)) ? stops[stops.Count - 1] : first;
         }
 
-        /// The dialog's tab stops in order: enabled, displayed, focusable elements with a tab index of
-        /// zero or more, not counting the parts of a field that is itself a stop.
+        private bool InOtherOpenDialog(VisualElement element)
+        {
+            for (var ancestor = element.hierarchy.parent; ancestor != null; ancestor = ancestor.hierarchy.parent)
+            {
+                if (ancestor is HHDialog dialog && dialog != this && dialog.IsOpen)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// The dialog's tab stops in order: elements that can take focus with a tab index of zero or more,
+        /// as Unity's focus ring has them; a field that delegates its focus is one stop, not its parts.
         internal List<VisualElement> FocusStops()
         {
             var stops = new List<VisualElement>();
@@ -181,14 +196,13 @@ namespace HootonHeroics.DesignSystem
             for (var i = 0; i < element.hierarchy.childCount; i++)
             {
                 var child = element.hierarchy[i];
-                if (!child.enabledInHierarchy || child.resolvedStyle.display == DisplayStyle.None)
-                {
-                    continue;
-                }
-                if (child.focusable && child.tabIndex >= 0)
+                if (child.canGrabFocus && child.tabIndex >= 0)
                 {
                     stops.Add(child);
-                    continue;
+                    if (child.delegatesFocus)
+                    {
+                        continue;
+                    }
                 }
                 CollectStops(child, stops);
             }

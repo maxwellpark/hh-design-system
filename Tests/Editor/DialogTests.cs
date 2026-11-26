@@ -86,20 +86,24 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
-        public void FocusStopsAreEnabledFocusablesInOrderWithoutTheirParts()
+        public void FocusStopsFollowTheRingAndCountADelegatingFieldOnce()
         {
             var dialog = new HHDialog();
-            var field = new VisualElement { focusable = true };
+            var field = new VisualElement { focusable = true, delegatesFocus = true };
             field.Add(new VisualElement { focusable = true });
+            var container = new VisualElement { focusable = true };
+            var inner = new VisualElement { focusable = true };
+            container.Add(inner);
             var skipped = new VisualElement { focusable = true, tabIndex = -1 };
             dialog.Add(field);
+            dialog.Add(container);
             dialog.Add(skipped);
             var stay = dialog.AddAction("Stay");
             var locked = dialog.AddAction("Locked");
             locked.SetEnabled(false);
             var quit = dialog.AddAction("Quit");
 
-            Assert.That(dialog.FocusStops(), Is.EqualTo(new VisualElement[] { field, stay, quit }));
+            Assert.That(dialog.FocusStops(), Is.EqualTo(new VisualElement[] { field, container, inner, stay, quit }));
         }
 
         [Test]
@@ -117,8 +121,39 @@ namespace HootonHeroics.DesignSystem.Tests
             dialog.Open();
             Assert.That(dialog.RefocusTarget(last, outside), Is.SameAs(first), "Tab past the last stop");
             Assert.That(dialog.RefocusTarget(first, outside), Is.SameAs(last), "Shift+Tab before the first stop");
+            Assert.That(dialog.RefocusTarget(last, null), Is.SameAs(first), "focus cleared, as by a click on the scrim");
             Assert.That(dialog.RefocusTarget(first, last), Is.Null, "moving inside");
-            Assert.That(dialog.RefocusTarget(first, null), Is.Null, "the panel losing focus");
+        }
+
+        [Test]
+        public void TwoOpenDialogsDoNotFightOverFocus()
+        {
+            var root = new VisualElement();
+            var under = new HHDialog();
+            under.AddAction("Stay");
+            var over = new HHDialog();
+            var overAction = over.AddAction("Quit");
+            root.Add(under);
+            root.Add(over);
+            under.Open();
+            over.Open();
+
+            Assert.That(under.RefocusTarget(under.Actions[0], overAction), Is.Null);
+            over.Close();
+            Assert.That(under.RefocusTarget(under.Actions[0], overAction), Is.SameAs(under.Actions[0]));
+        }
+
+        [Test]
+        public void ADialogWithNoStopsLeavesFocusAlone()
+        {
+            var root = new VisualElement();
+            var outside = new HHButton { text = "Behind" };
+            var dialog = new HHDialog();
+            root.Add(outside);
+            root.Add(dialog);
+            dialog.Open();
+
+            Assert.That(dialog.RefocusTarget(null, outside), Is.Null);
         }
     }
 }

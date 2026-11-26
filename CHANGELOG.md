@@ -1,8 +1,9 @@
 # Changelog
 
 ## [Unreleased]
-- `HHDialog` keeps focus inside while open: Tab past the last action wraps to the first, and
-  Shift+Tab before the first wraps to the last. Focus that leaves by any route comes back.
+- `HHDialog` keeps focus inside while open: Tab past the last stop wraps to the first, and
+  Shift+Tab before the first wraps to the last. Focus moved outside by a pointer or code, or
+  cleared, comes back on the next tick. A dialog with no focusable stops doesn't trap.
 - Component reference: `Documentation~/components.md` lists each control's UXML, classes,
   attributes, states and tokens. `Tools~/check.mjs` fails when it falls out of step with the code
   or `hh-components.uss`.

@@ -32,7 +32,7 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 | Tokens | `node Tools~/check.mjs` | 32 |
 | Check cases | `node Tools~/check.test.mjs` | 73/73 |
 | Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 2 of 82, both owner decisions |
-| EditMode tests | unity-packages' `unity-verify` | 47 written, 0 run |
+| EditMode tests | unity-packages' `unity-verify` | 49 written, 0 run |
 
 ## Out of scope
 

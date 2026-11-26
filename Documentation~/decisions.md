@@ -74,9 +74,6 @@
   read a short line without covering the game. To change: `MaxVisible` and `DefaultSeconds`.
 - Default 2026-11-26 [needs-review]: the toast stack is at most 80% of its parent's height and clips
   beyond that. Why: a high `max-visible` shouldn't push cards off-screen. To change: `.hh-toast-stack`.
-- Default 2026-11-26 [needs-review]: `HHDialog` doesn't trap Tab focus inside the card. Why: UI
-  Toolkit has no focus scope, and the scrim already blocks pointer input behind it. To change: a
-  `FocusOutEvent` handler that returns focus to the first action when it leaves the card.
 - Default 2026-11-26 [needs-review]: the scrim is `bg` at 72%. Why: dark enough to set the card
   apart from a busy game scene behind it. To change: `--hh-color-scrim` and its mirrors.
 - Default 2026-11-26 [needs-review]: Escape closes a dialog on its `KeyDownEvent`, and the
@@ -140,5 +137,7 @@
   tokens are the only thing that differs between themes. To change: `HHGallery.Style`.
 - Default 2026-11-26 [needs-review]: an open `HHDialog` pulls stray focus back on the next scheduler
   tick, rather than cancelling the move. Why: `FocusOutEvent` fires mid-switch, and cancelling
-  navigation (`FocusController.IgnoreEvent`) wouldn't catch a pointer or code moving focus out.
-  For that one tick, focus sits on the element behind. To change: `HHDialog.OnFocusOut`.
+  navigation wouldn't catch a pointer, code or a cleared focus. For that one tick, focus sits on the
+  element behind, so a key pressed in that tick reaches it. Of two open dialogs, the one holding
+  focus traps it; the other waits. A dialog with no focusable stops doesn't trap. To change:
+  `HHDialog.OnFocusOut` and `RefocusTarget`.
