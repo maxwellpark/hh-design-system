@@ -56,7 +56,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
-- 2026-11-26: tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, found by class each call so it holds through header rebuilds, and 0 removes it; two tests, two pairs, the reference and a gallery Items tab (branch `max/tab-badges`).
+- 2026-11-26: tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, on the tab's one header, which Unity only reparents, found by class each call, and 0 removes it; two tests, two pairs, the reference and a gallery Items tab (branch `max/tab-badges`).
 - 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
 - 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).
 - 2026-11-26: placeholder text: `HHTextField`'s placeholder (`.unity-base-text-field__input--placeholder`, which the gate's class reader confirms) is `--hh-color-text-dim`, with a pair held in every theme; the gallery shows one (branch `max/placeholder`).

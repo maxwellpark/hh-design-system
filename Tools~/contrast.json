@@ -29,8 +29,6 @@
     { "use": "Badge text, teal", "text": "bg", "on": "teal" },
     { "use": "Badge text, pink", "text": "bg", "on": "pink" },
     { "use": "Badge text, peach", "text": "bg", "on": "peach" },
-    { "use": "Tab badge count, on a selected or unselected header", "text": "bg", "on": "violet-light" },
-    { "use": "Tab badge against a card, behind a selected or unselected header", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Badge dot against a card", "text": "violet-light", "on": "surface", "min": 3 },
     { "use": "Text in a text field or dropdown", "text": "text", "on": "bg" },
     { "use": "Placeholder text in a text field", "text": "text-dim", "on": "bg" },

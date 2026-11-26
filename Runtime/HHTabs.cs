@@ -31,7 +31,7 @@ namespace HootonHeroics.DesignSystem
         }
 
         /// Shows count on the tab's header (new items in an inventory tab), or removes the badge when count is 0 or less.
-        /// The badge is found again by class each call, so it holds however Unity rebuilds the header.
+        /// The badge lives on the tab's one header, which Unity only moves between parents, and is found again by class.
         public HHBadge SetBadge(Tab tab, int count)
         {
             var header = tab?.tabHeader;
@@ -49,7 +49,9 @@ namespace HootonHeroics.DesignSystem
             {
                 badge = new HHBadge { pickingMode = PickingMode.Ignore };
                 badge.AddToClassList(BadgeUssClassName);
-                header.Add(badge);
+                // Right after the label, so a close button added later stays last
+                var label = tab.headerLabel;
+                header.Insert(label != null && label.parent == header ? header.IndexOf(label) + 1 : header.childCount, badge);
             }
             badge.Count = count;
             return badge;
