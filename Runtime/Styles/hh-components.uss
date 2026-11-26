@@ -748,6 +748,11 @@
     background-color: var(--hh-color-text);
 }
 
+/* It keeps the button's own fill when hovered, so its bar always sits on button, where it meets 3:1 */
+.hh-button.hh-hold-button:hover {
+    background-color: var(--hh-color-button);
+}
+
 .hh-hold-button:focus {
     border-color: var(--hh-color-focus);
 }

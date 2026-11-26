@@ -11,12 +11,15 @@ needs a licence (Blocked on owner).
 | It carries `.hh-button`, so it looks like one, and holds for at least 0.1s | `HoldButtonTests.ItLooksLikeAButtonAndHoldsForAtLeastATenthOfASecond` | | written, not run |
 | A hold fills, then confirms once at `hold-seconds` and resets; a finished hold doesn't confirm again | `HoldButtonTests.HoldingFillsThenConfirmsOnceAndResets`, driving `Advance` with explicit times | | written, not run |
 | Letting go early cancels, and the next hold starts from nothing | `HoldButtonTests.LettingGoEarlyCancels` | | written, not run |
-| A disabled button doesn't start a hold | `HoldButtonTests.ADisabledButtonDoesNotStartAHold` | | written, not run |
+| A disabled button doesn't start a hold, and disabling mid-hold stops it | `HoldButtonTests.ADisabledButtonDoesNotStartAHold`, `DisablingMidHoldStopsIt` | | written, not run |
+| A confirmed hold waits for the key or pointer to be released before another, so a held key can't confirm twice | `HoldButtonTests.AConfirmedHoldWaitsForReleaseBeforeAnother` | | written, not run |
+| It has no Clickable, so `clicked` never fires and Space, Enter or a pad's submit can't confirm at once | `HoldButtonTests.ItHasNoClickableSoNothingButAHoldConfirms`; Button's submit handler does nothing without one (IL, read by review) | | written, not run |
+| Only the left pointer that started a hold, and only the key that started it, can end it | `OnPointerDown`, `ReleasePointer`, the `KeyUp` handler | | verified by reading |
 | `hold-seconds` applies from UXML | `HoldButtonTests.UxmlHoldSecondsApplies` with the fixture | | written, not run |
 | Holding allocates nothing per frame: one scheduled item, paused between holds, and a struct width | `Begin`, `SetFill` | | verified by reading |
 | Reduced motion never shortens the hold, which is an attribute, not a duration token | `HoldSeconds` | | verified by reading |
-| The fill meets 3:1 on the pressed button in both themes; focus and disabled rules exist, and the gallery builds one disabled | "Hold button fill against the pressed button"; `check.mjs` focus and disabled checks | pass | verified |
-| A pad's submit can't hold it, since Unity sends no release | `decisions.md` | | recorded |
+| The fill meets 3:1 on the button in both themes, hovered or not, since a hold button keeps the button fill on hover; focus and disabled rules exist, and the gallery builds one disabled | "Hold button fill against the button, hovered or not"; `check.mjs` focus and disabled checks | pass | verified |
+| A pad's submit does nothing, since Unity sends it with no release | `decisions.md` | | recorded |
 | Pointer, Space and Enter hold it in a running panel | | | unverified |
 
 ## Coverage and complexity
@@ -46,11 +49,11 @@ ok   HEAD compiles: 18 assembly builds with the compiler and generators of Unity
 
 ## Hands-on checklist (Unity 6, two minutes)
 
-1. Open the gallery's Buttons: "Hold to quit". Press and hold: a white bar grows along its foot and
+1. Open the gallery's Buttons: "Hold to quit". Press and hold: a text-coloured bar grows along its foot and
    reaches the end in a second and a half. Let go early: the bar empties.
 2. Tab to it and hold Space: the same. Release early: it empties.
 3. The Disabled section's "Hold to skip" is faded and does nothing.
 
 ## Unverified
 
-Input in a running panel, and the five tests.
+Input in a running panel, and the eight tests.

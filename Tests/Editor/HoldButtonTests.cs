@@ -61,6 +61,39 @@ namespace HootonHeroics.DesignSystem.Tests
         }
 
         [Test]
+        public void AConfirmedHoldWaitsForReleaseBeforeAnother()
+        {
+            var button = new HHHoldButton { HoldSeconds = 1f };
+            var confirmed = 0;
+            button.Confirmed += () => confirmed++;
+
+            button.Begin();
+            button.Advance(1f);
+            button.Begin();
+            Assert.That(button.IsHolding, Is.False, "the key or pointer is still down");
+            button.Release();
+            button.Begin();
+            Assert.That(button.IsHolding, Is.True);
+            Assert.That(confirmed, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void ItHasNoClickableSoNothingButAHoldConfirms()
+        {
+            Assert.That(new HHHoldButton().clickable, Is.Null);
+        }
+
+        [Test]
+        public void DisablingMidHoldStopsIt()
+        {
+            var button = new HHHoldButton { HoldSeconds = 1f };
+            button.Begin();
+            button.SetEnabled(false);
+            Assert.That(button.Advance(2f), Is.False);
+            Assert.That(button.IsHolding, Is.False);
+        }
+
+        [Test]
         public void UxmlHoldSecondsApplies()
         {
             var root = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Fixture).Instantiate();

@@ -169,7 +169,8 @@
   twice, to about 0.16, since Unity marks every descendant disabled and each fades itself. Why: a
   disabled screen reads as clearly off, and undoing it would need a rule per control per container.
   To change: add `opacity: 1` rules for controls under a disabled container, as the stepper's arrows have.
-- Default 2026-11-26 [needs-review]: `HHHoldButton` holds for one second by default, and a gamepad's
-  submit can't hold it, since Unity sends submit as a single event with no release. Why: a second is
+- Default 2026-11-26 [needs-review]: `HHHoldButton` holds for one second by default, has no Clickable so
+  `clicked` never fires (listen to `Confirmed`), and a gamepad's submit does nothing, since Unity sends
+  submit as a single event with no release. Why: a second is
   long enough to be deliberate and short enough not to annoy; a pad hold would need the game's own
   input binding. To change: `HoldSeconds`, or call `Begin` and `Cancel` from the game's input.

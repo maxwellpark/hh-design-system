@@ -23,7 +23,7 @@
     { "use": "Success toast edge against its card", "text": "teal", "on": "surface", "min": 3 },
     { "use": "Warning toast edge against its card", "text": "peach", "on": "surface", "min": 3 },
     { "use": "Danger toast edge against its card", "text": "pink", "on": "surface", "min": 3 },
-    { "use": "Hold button fill against the pressed button", "text": "text", "on": "button", "min": 3 },
+    { "use": "Hold button fill against the button, hovered or not", "text": "text", "on": "button", "min": 3 },
     { "use": "Icon button icon", "text": "violet-light", "on": "violet-ghost", "over": "surface", "min": 3 },
     { "use": "Icon button icon, hovered", "text": "violet-light", "on": "violet-ghost-hover", "over": "surface", "min": 3 },
     { "use": "Badge text, violet", "text": "bg", "on": "violet-light" },
