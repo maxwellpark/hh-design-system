@@ -2,11 +2,10 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-const roots = ["Runtime", "Editor", "package.json", "README.md", "CHANGELOG.md", "LICENSE.md"];
-const problems = [];
-
 // Unity ignores hidden names and names ending in ~, and never imports a .meta itself
 const imported = (name) => !name.startsWith(".") && !name.endsWith("~") && !name.endsWith(".meta");
+const roots = readdirSync(".").filter(imported);
+const problems = [];
 
 function walk(path) {
   if (!existsSync(`${path}.meta`)) {
@@ -21,6 +20,9 @@ function walk(path) {
 
 const guids = new Map();
 function collectGuids(path) {
+  if (!existsSync(path)) {
+    return;
+  }
   if (statSync(path).isDirectory()) {
     for (const name of readdirSync(path)) {
       if (!name.startsWith(".") && !name.endsWith("~")) {
