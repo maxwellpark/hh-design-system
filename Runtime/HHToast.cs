@@ -58,25 +58,43 @@ namespace HootonHeroics.DesignSystem
         }
 
         /// The action button, or null until SetAction adds one.
-        public HHButton Action { get; private set; }
+        public HHButton ActionButton { get; private set; }
 
-        /// Adds a ghost button (Undo, View) that runs onAction and dismisses the toast; a second call relabels it.
+        /// Adds a ghost button (Undo, View) that runs onAction and dismisses the toast; a second call relabels it,
+        /// and a null or empty label removes it.
         public void SetAction(string actionLabel, Action onAction)
         {
             this.onAction = onAction;
-            if (Action == null)
+            if (string.IsNullOrEmpty(actionLabel))
             {
-                Action = new HHButton(RunAction) { Ghost = true };
-                Action.AddToClassList(ActionUssClassName);
-                Add(Action);
+                ActionButton?.RemoveFromHierarchy();
+                ActionButton = null;
+                return;
             }
-            Action.text = actionLabel;
+            if (ActionButton == null)
+            {
+                ActionButton = new HHButton(RunAction) { Ghost = true };
+                ActionButton.AddToClassList(ActionUssClassName);
+                Add(ActionButton);
+            }
+            ActionButton.text = actionLabel;
         }
 
+        // Dismissed even if the callback throws, so a retry can't run it twice
         internal void RunAction()
         {
-            onAction?.Invoke();
-            Dismiss();
+            if (parent == null)
+            {
+                return;
+            }
+            try
+            {
+                onAction?.Invoke();
+            }
+            finally
+            {
+                Dismiss();
+            }
         }
 
         public void Dismiss()

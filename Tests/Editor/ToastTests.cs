@@ -89,36 +89,64 @@ namespace HootonHeroics.DesignSystem.Tests
         public void AToastHasNoActionUntilOneIsSet()
         {
             var toast = new HHToast { Text = "Saved" };
-            Assert.That(toast.Action, Is.Null);
+            Assert.That(toast.ActionButton, Is.Null);
 
             toast.SetAction("Undo", null);
-            Assert.That(toast.Action.text, Is.EqualTo("Undo"));
-            Assert.That(toast.Action.Ghost, Is.True);
-            Assert.That(toast.Action.ClassListContains(HHToast.ActionUssClassName), Is.True);
+            Assert.That(toast.ActionButton.text, Is.EqualTo("Undo"));
+            Assert.That(toast.ActionButton.Ghost, Is.True);
+            Assert.That(toast.ActionButton.ClassListContains(HHToast.ActionUssClassName), Is.True);
 
             toast.SetAction("View", null);
             Assert.That(toast.Query<HHButton>().ToList().Count, Is.EqualTo(1));
-            Assert.That(toast.Action.text, Is.EqualTo("View"));
+            Assert.That(toast.ActionButton.text, Is.EqualTo("View"));
         }
 
         [Test]
-        public void AnActionRunsItsCallbackThenDismisses()
+        public void AnActionRunsItsCallbackOnceThenDismissesOnce()
         {
             var stack = new HHToastStack();
             var ran = 0;
+            var dismissed = 0;
             var toast = stack.Show("Item sold", HHToastTone.Info, 0f, "Undo", () => ran++);
+            toast.Dismissed += () => dismissed++;
 
-            Assert.That(toast.Action, Is.Not.Null);
+            toast.RunAction();
             toast.RunAction();
             Assert.That(ran, Is.EqualTo(1));
+            Assert.That(dismissed, Is.EqualTo(1));
             Assert.That(toast.parent, Is.Null);
+        }
+
+        [Test]
+        public void AnActionToastTrimmedAwayDoesNotRunItsAction()
+        {
+            var stack = new HHToastStack { MaxVisible = 1 };
+            var ran = 0;
+            var dismissed = 0;
+            var first = stack.Show("Item sold", HHToastTone.Info, 0f, "Undo", () => ran++);
+            first.Dismissed += () => dismissed++;
+
+            stack.Show("Next");
+            first.RunAction();
+            Assert.That(ran, Is.EqualTo(0));
+            Assert.That(dismissed, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AnEmptyLabelRemovesTheAction()
+        {
+            var toast = new HHToast();
+            toast.SetAction("Undo", null);
+            toast.SetAction(null, null);
+            Assert.That(toast.ActionButton, Is.Null);
+            Assert.That(toast.Query<HHButton>().ToList(), Is.Empty);
         }
 
         [Test]
         public void ShowWithoutAnActionLeavesNone()
         {
             var stack = new HHToastStack();
-            Assert.That(stack.Show("Saved").Action, Is.Null);
+            Assert.That(stack.Show("Saved").ActionButton, Is.Null);
         }
     }
 }
