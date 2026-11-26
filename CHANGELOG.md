@@ -3,6 +3,9 @@
 ## [Unreleased]
 - `--hh-color-button` and `--hh-color-button-hover` (mirrored in `HHTheme`, `Brand~/tokens.json` and
   Godot) now colour the button; they take today's violet values, so nothing changes on screen.
+- `HHTokens` reads the tokens an element resolves at runtime: `TryGetColor(element, "color-teal",
+  out c)`, `TryGetFloat` for sizes, and `WhenResolved` to run code each time styles resolve, so
+  code can follow the live theme.
 - Dropdown lists: `hh-dropdown-menu.uss` styles the list a dropdown opens (a card with a track
   hover, white labels and a teal checkmark). `hh-theme.tss` imports it; documents styled with the
   two stylesheets alone keep Unity's list, since it opens at the panel root.
