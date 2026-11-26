@@ -99,6 +99,7 @@ const cases = [
     edit(d, "Runtime/HHSwitch.cs.meta", /guid: \w+/.exec(readFileSync(join(d, "Runtime/HHSwitch.cs.meta"), "utf8"))[0], "guid: fedcba9876543210fedcba9876543210");
     edit(d, "Runtime/HHSwitch.cs", "[UxmlElement]\n    public partial class HHToggle", "[UxmlElement(\"switch\")]\n    [System.Serializable]\n    public sealed partial class HHSwitch");
   }, 1, /HHSwitch\.cs: HHSwitch has no EditMode test/],
+  ["// inside a stylesheet url() doesn't hide a bad token", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {\n", '.hh-card {\n    background-image: url("project://database/x.png"); color: var(--hh-color-nope);\n'), 1, /var\(--hh-color-nope\) is not a token/],
 ];
 
 let failed = 0;
