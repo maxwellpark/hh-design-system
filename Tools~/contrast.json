@@ -12,13 +12,13 @@
       "use": "Button text",
       "text": "text",
       "on": "violet",
-      "accepted": "Palette from 0.1 (4.0:1); waits on the owner's choice in BACKLOG.md"
+      "accepted": { "ratio": 4.0, "why": "palette from 0.1, waits on the owner's choice in BACKLOG.md" }
     },
     {
       "use": "Button text, hovered",
       "text": "text",
       "on": "violet-light",
-      "accepted": "Palette from 0.1 (2.5:1); waits on the owner's choice in BACKLOG.md"
+      "accepted": { "ratio": 2.47, "why": "palette from 0.1, waits on the owner's choice in BACKLOG.md" }
     }
   ]
 }
