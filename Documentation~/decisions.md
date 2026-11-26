@@ -165,3 +165,7 @@
   and nothing in `Scroller`, `ScrollerSlider`, `ScrollView` or the slider classes turns that off (read
   in `UnityEngine.UIElementsModule.dll`'s IL). So `.hh-scroll-view` and `.hh-list-view` colour a
   focused scroller's handle, and the focus check treats `ScrollView` as focusable.
+- Default 2026-11-26 [needs-review]: a control inside a disabled tab view, list or scroll view fades
+  twice, to about 0.16, since Unity marks every descendant disabled and each fades itself. Why: a
+  disabled screen reads as clearly off, and undoing it would need a rule per control per container.
+  To change: add `opacity: 1` rules for controls under a disabled container, as the stepper's arrows have.

@@ -196,11 +196,19 @@ const cases = [
   ["a sample script its README doesn't name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/PauseExtras.cs"), "public class PauseExtras { }\n"), 1, /Samples~\/PauseMenu\/README\.md: doesn't name PauseExtras\.cs/],
   ["a script named only inside a longer name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/Menu.cs"), "public class Menu { }\n"), 1, /PauseMenu\/README\.md: doesn't name Menu\.cs/],
   ["a focusable control with no disabled rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-tabs.unity-tab-view:disabled,\n", ""), 1, /HHTabs\.cs: HHTabs can take focus but no :disabled rule/],
-  ["a focusable control the gallery never disables fails", (d) => edit(d, "Editor/HHGallery.cs", "            list.SetEnabled(false);\n", ""), 1, /HHListView\.cs: HHListView is never built disabled in the gallery/],
+  ["a focusable control the gallery never disables fails", (d) => edit(d, "Editor/HHGallery.cs", "            lockedList.SetEnabled(false);\n", ""), 1, /HHListView\.cs: HHListView is never built disabled in the gallery/],
   ["a disabled control is matched by type, not variable name", (d) => {
     const p = join(d, "Editor/HHGallery.cs");
     writeFileSync(p, readFileSync(p, "utf8").replace(/\bstepper\b/g, "lockedPicker"));
   }, 0, /controls referenced/],
+  ["a disable on a same-named variable elsewhere doesn't count", (d) => {
+    edit(d, "Editor/HHGallery.cs", "            disabled.SetEnabled(false);\n", "");
+    edit(d, "Editor/HHGallery.cs", "            iconButton.SetEnabled(false);\n", "            iconButton.SetEnabled(false);\n            var disabled = new Label();\n            disabled.SetEnabled(false);\n");
+  }, 1, /HHButton\.cs: HHButton is never built disabled/],
+  ["a disable written in a string doesn't count", (d) => edit(d, "Editor/HHGallery.cs", "            lockedList.SetEnabled(false);\n", "            var note = \"lockedList.SetEnabled(false);\";\n"), 1, /HHListView\.cs: HHListView is never built disabled/],
+  ["a disabled control never added to the page doesn't count", (d) => edit(d, "Editor/HHGallery.cs", ", lockedTabs, lockedList, scroller }", ", lockedTabs, scroller }"), 1, /HHListView\.cs: HHListView is never built disabled/],
+  ["a control declared with its type rather than var counts", (d) => edit(d, "Editor/HHGallery.cs", "var stepper = new HHStepper(", "HHStepper stepper = new HHStepper("), 0, /controls referenced/],
+  ["a disabled rule on a child only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-list-view.unity-list-view:disabled,\n", ".hh-list-view:disabled .unity-label,\n"), 1, /HHListView\.cs: HHListView can take focus but no :disabled rule/],
 ];
 
 let failed = 0;

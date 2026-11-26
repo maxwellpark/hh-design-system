@@ -151,14 +151,14 @@ namespace HootonHeroics.DesignSystem.Editor
             var textField = new HHTextField { label = "Name", value = "Northwind" };
             var radio = new HHRadioGroup("Difficulty", new List<string> { "Easy", "Hard" }) { value = 0 };
             var stepper = new HHStepper("Resolution", new List<string> { "720p", "1080p" }) { Index = 0 };
-            var tabs = new HHTabs();
-            tabs.Add(new Tab("Locked"));
-            var list = new HHListView { fixedItemHeight = 32, itemsSource = new List<string> { "Locked" }, makeItem = () => new Label(), bindItem = (e, i) => ((Label)e).text = "Locked" };
-            list.style.height = 40;
+            var lockedTabs = new HHTabs();
+            lockedTabs.Add(new Tab("Locked"));
+            var lockedList = new HHListView { fixedItemHeight = 32, itemsSource = new List<string> { "Locked" }, makeItem = () => new Label(), bindItem = (e, i) => ((Label)e).text = "Locked" };
+            lockedList.style.height = 40;
             var scroller = new HHScrollView();
             scroller.style.height = 40;
             scroller.Add(new Label("Locked"));
-            foreach (var control in new VisualElement[] { iconButton, slider, dropdown, textField, radio, stepper, tabs, list, scroller })
+            foreach (var control in new VisualElement[] { iconButton, slider, dropdown, textField, radio, stepper, lockedTabs, lockedList, scroller })
             {
                 row.Add(control);
             }
@@ -168,8 +168,8 @@ namespace HootonHeroics.DesignSystem.Editor
             textField.SetEnabled(false);
             radio.SetEnabled(false);
             stepper.SetEnabled(false);
-            tabs.SetEnabled(false);
-            list.SetEnabled(false);
+            lockedTabs.SetEnabled(false);
+            lockedList.SetEnabled(false);
             scroller.SetEnabled(false);
         }
 
