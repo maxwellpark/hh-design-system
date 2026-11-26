@@ -121,6 +121,43 @@ for (const sample of samples) {
   assemblies.set(`Sample.${sample}`, { def: { name: `Sample.${sample}`, references: runtime.map((a) => a.name) }, name: `Sample.${sample}`, dir, origin: "package", sources: sourcesOf(dir) });
 }
 
+// Each fenced C# block in Documentation~ compiles like a sample, so a guide's code can't rot. Every block is its own assembly,
+// so steps may redefine a type, and #line points errors at the guide's own line
+function fencedBlocks(text, languages) {
+  const blocks = [];
+  let open = null;
+  text.split("\n").forEach((raw, i) => {
+    const line = raw.replace(/\r$/, "");
+    const fence = line.match(/^[ \t]*(`{3,})[ \t]*([^`\s]*)[ \t]*$/);
+    if (open === null && fence) {
+      open = { ticks: fence[1].length, language: fence[2].toLowerCase(), start: i + 2, code: [] };
+    } else if (open !== null && fence && fence[1].length >= open.ticks && fence[2] === "") {
+      if (languages.includes(open.language)) {
+        blocks.push({ code: open.code.join("\n") + "\n", line: open.start });
+      }
+      open = null;
+    } else if (open !== null) {
+      open.code.push(line);
+    }
+  });
+  return blocks;
+}
+const docsDir = join(src, "Documentation~");
+const docs = existsSync(docsDir) ? readdirSync(docsDir).filter((n) => n.endsWith(".md")).sort() : [];
+const docRuntime = [...assemblies.values()].filter((a) => a.origin === "package" && a.def.autoReferenced !== false && !(a.def.includePlatforms ?? []).includes("Editor") && !a.name.startsWith("Sample."));
+for (const doc of docs) {
+  fencedBlocks(readFileSync(join(docsDir, doc), "utf8"), ["csharp", "cs", "c#"]).forEach(({ code, line }, i) => {
+    const name = `Docs.${doc.slice(0, -3).replace(/[^\w]/g, "_")}.${i + 1}`;
+    if (assemblies.has(name)) {
+      setupFail(`${doc}: its snippet assembly ${name} clashes with another guide's; rename one`);
+    }
+    const dir = join(work, "docs", name);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "Snippet.cs"), `#line ${line} "${join(docsDir, doc)}"\n${code}`);
+    assemblies.set(name, { def: { name, references: docRuntime.map((a) => a.name) }, name, dir, origin: "package", sources: sourcesOf(dir) });
+  });
+}
+
 const versionDefined = new Set(["Unity", "com.unity.test-framework", "com.unity.modules.uielements"]);
 // Unity defines every UNITY_<year>_<n>_OR_NEWER up to the editor's own version
 const baseDefines = ["UNITY_5_3_OR_NEWER", "UNITY_5_4_OR_NEWER", "UNITY_5_5_OR_NEWER", "UNITY_5_6_OR_NEWER", "UNITY_6000_0_OR_NEWER"];

@@ -21,6 +21,10 @@ function run(breakIt) {
   }
 }
 
+const append = (dir, file, text) => {
+  const path = join(dir, file);
+  writeFileSync(path, readFileSync(path, "utf8") + text);
+};
 const edit = (dir, file, from, to) => {
   const path = join(dir, file);
   const text = readFileSync(path, "utf8");
@@ -167,6 +171,14 @@ const cases = [
   ["a focus rule on a variant only doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button--ghost:focus {"), 1, /HHButton can take focus/],
   ["a :not(:focus) rule doesn't count", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-button:focus {", ".hh-button:not(:focus) {"), 1, /HHButton can take focus/],
   ["a control on an unlisted base fails", (d) => edit(d, "Runtime/HHBadge.cs", "public partial class HHBadge : Label", "public partial class HHBadge : Image"), 1, /HHBadge's base Image isn't listed/],
+  ["a guide's UXML using documented attributes passes", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"Play\" ghost=\"true\" name=\"play\" />\n```\n"), 0, /controls referenced/],
+  ["a guide's UXML naming an unknown hh element fails", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHSwitch />\n```\n"), 1, /Documentation~\/index\.md:\d+: hh:HHSwitch isn't in the component reference/],
+  ["a guide's UXML with a misspelt attribute fails", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"Back\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
+  ["a guide's UXML in a loosely written fence is still checked", (d) => append(d, "Documentation~/index.md", "\n  ```XML  \n  <hh:HHSwitch />\n  ```\n"), 1, /hh:HHSwitch isn't in the component reference/],
+  ["a guide's UXML may use its Unity base's attributes", (d) => append(d, "Documentation~/index.md", "\n```uxml\n<hh:HHSlider label=\"Volume\" show-input-field=\"true\" binding-path=\"volume\" />\n```\n"), 0, /controls referenced/],
+  ["an = or > inside a value isn't read as an attribute", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton text=\"a=b > c\" ghots=\"true\" />\n```\n"), 1, /hh:HHButton has no ghots attribute/],
+  ["a fence shown inside a longer fence isn't checked", (d) => append(d, "Documentation~/index.md", "\n````markdown\n```xml\n<hh:HHSwitch />\n```\n````\n"), 0, /controls referenced/],
+  ["a misspelt attribute is reported at its own line", (d) => append(d, "Documentation~/index.md", "\n```xml\n<hh:HHButton\n    text=\"Back\"\n    ghots=\"true\" />\n```\n"), 1, /index\.md:13: hh:HHButton has no ghots/],
 ];
 
 let failed = 0;

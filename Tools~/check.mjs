@@ -408,6 +408,87 @@ if (!existsSync(referencePath)) {
   }
 }
 
+// UXML in the guides may only use documented hh: elements, with attributes from their reference section (its Attributes
+// list, or one its own example uses on that element), their Unity base's own, or VisualElement's
+function fencedBlocks(text, languages) {
+  const blocks = [];
+  let open = null;
+  text.split("\n").forEach((raw, i) => {
+    const line = raw.replace(/\r$/, "");
+    const fence = line.match(/^[ \t]*(`{3,})[ \t]*([^`\s]*)[ \t]*$/);
+    if (open === null && fence) {
+      open = { ticks: fence[1].length, language: fence[2].toLowerCase(), start: i + 2, code: [] };
+    } else if (open !== null && fence && fence[1].length >= open.ticks && fence[2] === "") {
+      if (languages.includes(open.language)) {
+        blocks.push({ code: open.code.join("\n"), line: open.start });
+      }
+      open = null;
+    } else if (open !== null) {
+      open.code.push(line);
+    }
+  });
+  return blocks;
+}
+if (existsSync(referencePath)) {
+  const common = ["name", "class", "style", "tooltip", "picking-mode", "focusable", "tabindex", "view-data-key", "usage-hints", "enabled", "language-direction", "data-source", "data-source-path", "data-source-type", "binding-path"];
+  const field = ["label", "value"];
+  const range = [...field, "low-value", "high-value"];
+  const inherited = {
+    Button: ["text", "icon-image", "enable-rich-text", "parse-escape-sequences", "display-tooltip-when-elided"],
+    Label: ["text", "enable-rich-text", "parse-escape-sequences", "display-tooltip-when-elided"],
+    Toggle: [...field, "text", "toggle-on-label-click"],
+    Slider: [...range, "page-size", "show-input-field", "direction", "inverted", "fill"],
+    DropdownField: [...field, "choices", "index"],
+    TextField: [...field, "max-length", "multiline", "password", "mask-character", "readonly", "is-delayed", "hide-mobile-input", "keyboard-type", "auto-correction", "placeholder-text", "hide-placeholder-on-focus", "select-all-on-focus", "select-all-on-mouse-up", "select-word-by-double-click", "select-line-by-triple-click", "vertical-scroller-visibility"],
+    ProgressBar: ["title", "value", "low-value", "high-value"],
+    RadioButtonGroup: [...field, "choices"],
+    ScrollView: ["mode", "nested-interaction-kind", "horizontal-scroller-visibility", "vertical-scroller-visibility", "horizontal-page-size", "vertical-page-size", "mouse-wheel-scroll-size", "scroll-deceleration-rate", "elasticity", "elastic-animation-interval-ms", "touch-scroll-type"],
+    ListView: ["fixed-item-height", "virtualization-method", "show-border", "selection-type", "show-alternating-row-backgrounds", "reorderable", "reorder-mode", "horizontal-scrolling", "show-foldout-header", "header-title", "show-add-remove-footer", "allow-add", "allow-remove", "show-bound-collection-size"],
+    TabView: ["reorderable"],
+    VisualElement: [],
+  };
+  const bases = new Map();
+  for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+    const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
+    for (const [, type, base] of source.matchAll(/\bclass\s+(\w+)\s*:\s*(\w+)/g)) {
+      bases.set(type, base);
+    }
+  }
+  // A tag's attributes are read as name="value" pairs, so = or > inside a value is just text
+  const elements = (code) =>
+    [...code.matchAll(/<hh:(\w+)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g)].map((m) => ({
+      type: m[1],
+      attributes: [...m[2].matchAll(/([\w:-]+)\s*=\s*("[^"]*"|'[^']*')/g)].map((a) => ({ name: a[1], at: code.slice(0, m.index + m[0].indexOf(a[0], m[1].length)).split("\n").length - 1 })),
+    }));
+  const allowed = new Map();
+  for (const section of readFileSync(referencePath, "utf8").split(/^## /m).slice(1)) {
+    const type = section.split(/\s/)[0];
+    const names = new Set([...common, ...(inherited[bases.get(type)] ?? [])]);
+    for (const [, listed] of (section.match(/^- \*\*Attributes:\*\*\n((?: {2}- .*\n?)*)/m)?.[1] ?? "").matchAll(/^ {2}- `([^`]+)`/gm)) {
+      names.add(listed);
+    }
+    for (const { code } of fencedBlocks(section, ["xml", "uxml"])) {
+      for (const element of elements(code).filter((e) => e.type === type)) {
+        element.attributes.forEach((a) => names.add(a.name));
+      }
+    }
+    allowed.set(type, names);
+  }
+  for (const doc of readdirSync("Documentation~").filter((n) => n.endsWith(".md") && n !== "components.md")) {
+    for (const { code, line } of fencedBlocks(readFileSync(join("Documentation~", doc), "utf8"), ["xml", "uxml"])) {
+      for (const { type, attributes } of elements(code)) {
+        if (!allowed.has(type)) {
+          problems.push(`Documentation~/${doc}:${line + (attributes[0]?.at ?? 0)}: hh:${type} isn't in the component reference`);
+          continue;
+        }
+        for (const { name, at } of attributes.filter((a) => !allowed.get(type).has(a.name))) {
+          problems.push(`Documentation~/${doc}:${line + at}: hh:${type} has no ${name} attribute in the component reference`);
+        }
+      }
+    }
+  }
+}
+
 // Each stylesheet parses as flat rules: selectors, then one brace block of known `property: value;` lines
 const knownProperties = new Set(readFileSync("Tools~/uss-properties.txt", "utf8").split(/\r?\n/).filter((l) => l && !l.startsWith("#")));
 

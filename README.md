@@ -51,16 +51,20 @@ controls · `HHButton`, `HHProgressBar`, `HHToggle`, `HHSlider`, `HHDropdown` an
 - `node Tools~/check.mjs` checks the `.meta` files and that `HHTheme`'s defaults still match
   `hh-tokens.uss`. Run it before every commit; change a token in both places.
   It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
-  control puts text on a new colour. It also fails on undefined tokens, classes without rules,
-  controls without a test, and stylesheets that don't parse or use an unknown property, and a
-  component reference (`Documentation~/components.md`) out of step with the code, and a focusable
-  control with no `:focus` rule.
+  control puts text on a new colour. It also fails on:
+  - undefined tokens, classes without rules and controls without a test;
+  - stylesheets that don't parse or use an unknown property;
+  - a component reference (`Documentation~/components.md`) out of step with the code;
+  - guide UXML using an `hh:` element or attribute the reference doesn't have;
+  - a focusable control with no `:focus` rule.
   `node Tools~/check.test.mjs` tests the check itself.
 - `bash Tools~/unity-compile.sh` compiles every committed asmdef, following its references,
   platforms and define constraints, plus each sample, with Unity's own compiler and UI Toolkit
   source generators, warnings as errors; runtime code is built for the editor and for a player.
   Unity's test runner is compiled from the editor's copy, so tests see their real references. No
-  licence is needed. `Tools~/verify.sh` runs it. It finds Unity 6000.0 under Unity Hub, or takes
+  licence is needed. Each fenced C# block in `Documentation~/*.md` (`csharp`, `cs` or `c#`) is
+  compiled the same way, as its own runtime assembly with warnings as errors, so a guide's code
+  can't rot. `Tools~/verify.sh` runs it. It finds Unity 6000.0 under Unity Hub, or takes
   `HH_UNITY_EDITOR`. It doesn't import USS or UXML, but it does fail on a `.unity-*` class the
   stylesheets style that Unity doesn't define.
 - EditMode tests live in `Tests/Editor`. To run them in a project, add
