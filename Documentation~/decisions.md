@@ -121,3 +121,10 @@
 - Default 2026-11-26 [needs-review]: runtime token reading is a new `HHTokens`; whether to drop
   `HHTheme`'s mirror, as the item first asked, is under Blocked on owner. Why: `HHTheme` serves code
   with no styled element to read from (sprites, materials). To change: the owner's answer there.
+- Default 2026-11-26 [needs-review]: the high-contrast palette is black (`bg`) and near-black (`surface`)
+  with white text, a light violet accent, a yellow focus ring (`#FFE14D`) and darker buttons
+  (`#5225C8`, hover `#3E1A9E`). Why: every pair then passes AA without exceptions, and yellow focus
+  stands out from every accent. To change: `hh-tokens-high-contrast.uss`, which the check holds to AA.
+- Default 2026-11-26 [needs-review]: a theme other than the default may hold no accepted contrast
+  exceptions. Why: accepted exceptions are owner decisions about the brand palette; a new theme has
+  no such history. To change: let `accepted` entries name the themes they cover.
