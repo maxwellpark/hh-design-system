@@ -22,9 +22,6 @@ which fails on a control with no EditMode test.
    the gate print it, with a `decisions.md` line either way. If they do, `.hh-scroll-view` gains a
    focus rule on the scroller's dragger and a 3:1 pair; if not, nothing changes. Check: the gate's
    output names the answer, with a planted case, and the focus check still passes.
-4. Sample README check: `check.mjs` fails when a `package.json` sample has no `README.md`, or when
-   a `*.cs` file in a sample folder isn't named in its README. Check: a planted case for each in
-   `Tools~/check.test.mjs`.
 
 ## Blocked on owner
 
@@ -63,6 +60,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: sample README check: `check.mjs` fails on a listed sample with no `README.md`, or with a `*.cs` its README doesn't name; all four samples pass (branch `max/sample-readmes`).
 - 2026-11-26: switch toggle: `HHToggle`'s `switch` attribute draws a sliding switch, its knob a child added in C# sliding on the duration tokens; tests, reference attribute, four 3:1 pairs, gallery on and off, and the Settings sample's Music (branch `max/switch-toggle`).
 - 2026-11-26: getting started guide: `Documentation~/getting-started.md` goes from install to a themed card with a toggle and a button, then themes and accessibility; the gate compiles its two C# blocks and `check.mjs` checks its UXML (branch `max/getting-started`).
 - 2026-11-26: focus rule check: `check.mjs` fails on a control built on a focusable Unity base (from a table) with no `:focus` rule on it or a part; `HHListView`, the one without, gains a focus ring (branch `max/focus-rules`).

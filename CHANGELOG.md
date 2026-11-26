@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `Tools~/check.mjs` fails on a listed sample without a README, or with a script its README doesn't
+  name, so a sample's setup steps can't miss one.
 - `HHToggle` gains `switch="true"`: a sliding switch for on/off settings, its knob sliding on the
   duration tokens so reduced motion holds. The gallery shows it on and off, and the Settings
   sample's Music uses it.
