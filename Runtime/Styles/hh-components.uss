@@ -410,3 +410,98 @@
 .hh-toast.hh-toast--danger {
     border-left-color: var(--hh-color-pink);
 }
+
+/* Slim scrollers without arrow buttons; a list's own scroll view gets the same through .hh-list-view */
+.hh-scroll-view .unity-scroller--vertical,
+.hh-list-view .unity-scroller--vertical {
+    width: var(--hh-space-2);
+}
+
+.hh-scroll-view .unity-scroller--horizontal,
+.hh-list-view .unity-scroller--horizontal {
+    height: var(--hh-space-2);
+}
+
+.hh-scroll-view .unity-scroller__low-button,
+.hh-scroll-view .unity-scroller__high-button,
+.hh-list-view .unity-scroller__low-button,
+.hh-list-view .unity-scroller__high-button {
+    display: none;
+}
+
+.hh-scroll-view .unity-scroller .unity-base-slider__tracker,
+.hh-list-view .unity-scroller .unity-base-slider__tracker {
+    border-width: 0;
+    border-radius: var(--hh-radius-sm);
+    background-color: var(--hh-color-track);
+}
+
+.hh-scroll-view .unity-scroller .unity-base-slider__dragger,
+.hh-list-view .unity-scroller .unity-base-slider__dragger {
+    border-width: 0;
+    border-radius: var(--hh-radius-sm);
+    background-color: var(--hh-color-violet-light);
+}
+
+/* Selection adds a violet-light edge: the tint alone is 1.3:1 against the card */
+.hh-list-view .unity-collection-view__item {
+    padding: 0 var(--hh-space-3);
+    border-left-width: 3px;
+    border-left-color: rgba(0, 0, 0, 0);
+    color: var(--hh-color-text);
+    -unity-text-align: middle-left;
+}
+
+.hh-list-view .unity-collection-view__item .unity-label {
+    color: var(--hh-color-text);
+}
+
+.hh-list-view .unity-collection-view__item:hover {
+    background-color: var(--hh-color-track);
+}
+
+.hh-list-view .unity-collection-view__item.unity-collection-view__item--selected {
+    border-left-color: var(--hh-color-violet-light);
+    background-color: var(--hh-color-violet-ghost-hover);
+}
+
+.hh-list-view .unity-list-view__empty-label {
+    color: var(--hh-color-text-dim);
+}
+
+/* Unity marks the active tab and its header :checked; HHTabs makes headers focusable; .unity-tab-view adds weight */
+.hh-tabs.unity-tab-view .unity-tab__header {
+    padding: var(--hh-space-2) var(--hh-space-4);
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: var(--hh-radius-sm);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header-label {
+    color: var(--hh-color-text-dim);
+    font-size: var(--hh-font-size-md);
+    -unity-font-style: bold;
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:hover .unity-tab__header-label,
+.hh-tabs.unity-tab-view .unity-tab__header:checked .unity-tab__header-label {
+    color: var(--hh-color-text);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header-underline {
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:checked .unity-tab__header-underline {
+    background-color: var(--hh-color-teal);
+}
+
+.hh-tabs.unity-tab-view .unity-tab__header:focus {
+    border-color: var(--hh-color-focus);
+}
+
+.hh-tabs.unity-tab-view .unity-tab-view__content-container {
+    padding-top: var(--hh-space-4);
+}
