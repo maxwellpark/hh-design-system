@@ -8,3 +8,5 @@ one-file change. `HHTheme` mirrors the palette for C#/non-UI-Toolkit use.
 states and tokens.
 
 [getting-started.md](getting-started.md) builds a small themed screen step by step.
+
+[theming.md](theming.md) makes a theme of your own and lets players switch to it.
