@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Disabled states: the gallery's Disabled section builds every focusable control disabled; tabs,
+  lists and scroll views fade when disabled, and `check.mjs` holds both.
 - Toast actions: `HHToast.SetAction(label, onAction)` adds a ghost button (Undo, View) that runs the
   callback and dismisses the toast, and `HHToastStack.Show` takes the label and callback after
   `seconds`, so existing calls compile; a toast with an action stays at least 8 seconds. A toast now lays out as a row, its text wrapping beside the button.

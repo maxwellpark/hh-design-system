@@ -347,6 +347,40 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// Every focusable control has a :disabled rule on its own class, and the gallery builds one disabled, so the look is seen.
+// A disable counts when a variable declared once in the gallery (`var x = new HHType` or `HHType x = new`) is added to the
+// page and has x.SetEnabled(false) called on it, outside string literals; a rule counts when it is a single compound
+const disabledSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).map((sel) => sel.trim().split(/\s*>\s*|\s+/));
+const galleryDisabled = new Set();
+if (gallery !== null) {
+  const code = gallery.replace(/"(?:[^"\\\n]|\\.)*"/g, '""');
+  const declarations = [...code.matchAll(/\b(?:var|(HH\w+))\s+(\w+)\s*=\s*new\s*(HH\w+)?/g)].map(([, declared, variable, built]) => ({ variable, type: built ?? declared }));
+  for (const { variable, type } of declarations) {
+    const once = declarations.filter((d) => d.variable === variable).length === 1;
+    const disabled = new RegExp(`\\b${variable}\\.SetEnabled\\(\\s*false\\s*\\)`).test(code);
+    const added = new RegExp(`\\.Add\\(\\s*${variable}\\s*\\)|new\\s+VisualElement\\[\\]\\s*\\{[^}]*\\b${variable}\\b`).test(code);
+    if (type && once && disabled && added) {
+      galleryDisabled.add(type);
+    }
+  }
+}
+for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+  const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
+  const own = classConstants(source).get("UssClassName");
+  for (const [, control, base] of source.matchAll(/\[\s*UxmlElement\b[^\]]*\][\s\S]*?\bclass\s+(\w+)\s*:\s*(\w+)/g)) {
+    if (!focusableBases.has(base) || !own) {
+      continue;
+    }
+    const hasRule = disabledSelectors.some((compounds) => compounds.length === 1 && !compounds[0].includes(":not(") && new RegExp(`\\.${own}(?![\\w-])`).test(compounds[0]) && /:disabled(?![\w-])/.test(compounds[0]));
+    if (!hasRule) {
+      problems.push(`${name}: ${control} can take focus but no :disabled rule on its own class in hh-components.uss`);
+    }
+    if (gallery !== null && !galleryDisabled.has(control)) {
+      problems.push(`${name}: ${control} is never built disabled in the gallery, Editor/HHGallery.cs (a uniquely named variable, added to the page, with SetEnabled(false))`);
+    }
+  }
+}
+
 // Accessibility modifiers override every token of their kind, and only tokens: motion to 0s, type to 1.25x rounded
 const modifiers = { "hh-reduced-motion": ["duration-", () => "0s"], "hh-large-text": ["font-size-", (raw) => `${Math.round(parseFloat(raw) * 1.25)}px`] };
 for (const [className, [kind, expect]] of Object.entries(modifiers)) {

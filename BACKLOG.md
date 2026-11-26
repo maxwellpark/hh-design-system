@@ -9,11 +9,6 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Disabled states in the gallery: a Disabled row builds every focusable control (button, icon
-   button, toggle, slider, dropdown, text field, radio group, stepper, tabs, list) in a variable
-   and calls `SetEnabled(false)` on it, and tabs and list gain the `:disabled` rule they lack.
-   Check: `check.mjs` fails on a focusable control the gallery never disables (matched by the
-   variable's type, not its name) or with no `:disabled` rule, with planted cases.
 
 ## Blocked on owner
 
@@ -52,6 +47,7 @@ which fails on a control with no EditMode test.
 
 ## Done
 
+- 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
 - 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).
 - 2026-11-26: placeholder text: `HHTextField`'s placeholder (`.unity-base-text-field__input--placeholder`, which the gate's class reader confirms) is `--hh-color-text-dim`, with a pair held in every theme; the gallery shows one (branch `max/placeholder`).
 - 2026-11-26: scroller focus: Unity 6000.0's IL shows a scroller is a plain `Slider`, so it takes focus (recorded in `decisions.md`); a focused scroller's handle in a scroll view or list turns the focus colour, with a 3:1 pair, and the focus check holds `ScrollView`. The IL was read once by hand rather than by the gate, since the lasting check is the focus rule (branch `max/scroller-focus`).

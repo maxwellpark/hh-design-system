@@ -715,3 +715,11 @@
 .hh-stepper.unity-base-field:disabled .hh-stepper__button {
     opacity: 1;
 }
+
+/* Tabs, lists and scroll views fade when disabled, as the fields do; the Unity class outranks the default theme's rule.
+   A control inside one fades again, to about 0.16, as decisions.md records */
+.hh-tabs.unity-tab-view:disabled,
+.hh-list-view.unity-list-view:disabled,
+.hh-scroll-view.unity-scroll-view:disabled {
+    opacity: 0.4;
+}

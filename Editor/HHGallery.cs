@@ -125,6 +125,8 @@ namespace HootonHeroics.DesignSystem.Editor
             list.style.height = 110;
             Section(scroll, "List").Add(list);
 
+            BuildDisabled(Section(scroll, "Disabled"));
+
             var overlays = Section(scroll, "Overlays");
             var dialog = new HHDialog { Title = "Quit?" };
             dialog.Add(new Label("Unsaved progress will be lost.") { name = "dialog-body" });
@@ -137,6 +139,39 @@ namespace HootonHeroics.DesignSystem.Editor
             overlays.Add(new HHToast { Text = "A resting toast", Tone = HHToastTone.Warning });
             page.Add(dialog);
             page.Add(toasts);
+        }
+
+        // Every focusable control once more, disabled, so each :disabled look can be seen; check.mjs holds this row
+        private static void BuildDisabled(VisualElement row)
+        {
+            row.style.flexDirection = FlexDirection.Column;
+            row.style.alignItems = Align.Stretch;
+            var iconButton = new HHIconButton(null, "Locked settings", null);
+            var slider = new HHSlider { label = "Volume", lowValue = 0, highValue = 1, value = 0.3f };
+            var dropdown = new HHDropdown { label = "Quality", choices = new List<string> { "Low", "High" }, index = 0 };
+            var textField = new HHTextField { label = "Name", value = "Northwind" };
+            var radio = new HHRadioGroup("Difficulty", new List<string> { "Easy", "Hard" }) { value = 0 };
+            var stepper = new HHStepper("Resolution", new List<string> { "720p", "1080p" }) { Index = 0 };
+            var lockedTabs = new HHTabs();
+            lockedTabs.Add(new Tab("Locked"));
+            var lockedList = new HHListView { fixedItemHeight = 32, itemsSource = new List<string> { "Locked" }, makeItem = () => new Label(), bindItem = (e, i) => ((Label)e).text = "Locked" };
+            lockedList.style.height = 40;
+            var scroller = new HHScrollView();
+            scroller.style.height = 40;
+            scroller.Add(new Label("Locked"));
+            foreach (var control in new VisualElement[] { iconButton, slider, dropdown, textField, radio, stepper, lockedTabs, lockedList, scroller })
+            {
+                row.Add(control);
+            }
+            iconButton.SetEnabled(false);
+            slider.SetEnabled(false);
+            dropdown.SetEnabled(false);
+            textField.SetEnabled(false);
+            radio.SetEnabled(false);
+            stepper.SetEnabled(false);
+            lockedTabs.SetEnabled(false);
+            lockedList.SetEnabled(false);
+            scroller.SetEnabled(false);
         }
 
         private static VisualElement Section(VisualElement parent, string title)
