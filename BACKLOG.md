@@ -16,12 +16,17 @@ which fails on a control with no EditMode test.
    timing; the reference, gallery, focus and disabled checks; contrast pairs for the fill; the gate.
 
 2. Reference examples check: the UXML examples in `Documentation~/components.md` widen what guides
-   may use, so a typo there would pass everywhere. `check.mjs` fails on an example attribute that is
-   neither the type's own `[UxmlAttribute]` nor in its Unity base's table. Check: planted cases in
-   `Tools~/check.test.mjs`.
-3. Gallery disabled test: an EditMode test that the gallery's Disabled section holds one disabled
-   instance of each focusable control, so the page itself is held, not only its source text. Check:
-   the test written, not run, and the compile gate.
+   may use, so a typo there would pass everywhere. Drop the example-derived names from the allowed
+   set, keeping each section's Attributes list, its Unity base's table and the shared VisualElement
+   list, and hold the examples themselves to that set; fix any example it rejects. Check: planted
+   cases in `Tools~/check.test.mjs` (a misspelt example attribute fails, an unknown example element
+   fails), and `node Tools~/check.test.mjs` passing.
+
+3. Gallery disabled test: an EditMode test that the page `HHGallery.Build` makes holds a disabled
+   instance of each focusable control (button, icon button, hold button once merged, toggle, slider,
+   dropdown, text field, radio group, stepper, tabs, list, scroll view), found with
+   `page.Query<T>().Where(e => !e.enabledSelf)`, so the built page is held, not only its source.
+   Check: the test written, not run; `bash Tools~/unity-compile.sh`.
 
 ## Blocked on owner
 
