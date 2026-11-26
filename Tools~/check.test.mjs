@@ -116,6 +116,8 @@ const cases = [
   ["text after the last rule fails", (d) => { const p = join(d, "Runtime/Styles/hh-components.uss"); writeFileSync(p, readFileSync(p, "utf8") + "\nstray"); }, 1, /"stray" after the last rule isn't an @import/],
   ["a stray semicolon between rules fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", "foo;\n.hh-card {"), 1, /"foo" before a rule isn't an @import/],
   ["custom properties and an empty rule pass", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", ".hh-empty {\n}\n\n.hh-local {\n    --hh-local-gap: 4px;\n}\n\n.hh-card {"), 0, /controls referenced/],
+  ["an @import missing its semicolon before a rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '@import url("x.uss")\n.hh-card {'), 1, /an @import runs into a rule; it needs a semicolon/],
+  ["an unterminated quote fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-card {", '.hh-quote {\n    background-image: url("x.png);\n}\n\n.hh-card {'), 1, /never closed|after the last rule/],
 ];
 
 let failed = 0;

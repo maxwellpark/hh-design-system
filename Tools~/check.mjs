@@ -313,11 +313,16 @@ function checkStylesheet(name, source) {
         const parts = splitTop(chunk, chunkLine, ";");
         const selector = parts.at(-1).text.trim();
         for (const part of parts.slice(0, -1)) {
-          if (!/^@import\s+url\([^)]*\)$/.test(part.text.trim())) {
-            problems.push(`${name}:${part.line}: "${part.text.trim().replace(/\s+/g, " ")}" before a rule isn't an @import`);
+          const piece = part.text.trim();
+          if (!piece) {
+            problems.push(`${name}:${part.line}: a stray ; before a rule`);
+          } else if (!/^@import\s+url\([^)]*\)$/.test(piece)) {
+            problems.push(`${name}:${part.line}: "${piece.replace(/\s+/g, " ")}" before a rule isn't an @import`);
           }
         }
-        if (!selector) {
+        if (selector.startsWith("@import")) {
+          problems.push(`${name}:${line}: an @import runs into a rule; it needs a semicolon`);
+        } else if (!selector) {
           problems.push(`${name}:${line}: a rule has no selector`);
         }
       }

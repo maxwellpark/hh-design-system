@@ -18,7 +18,7 @@ Node 22, from the package root. Pure tooling.
 | Code | Path | Evidence |
 |---|---|---|
 | braces | balanced / nested open / stray close / never closed / inside quotes | clean run / the brace cases / `72eef7d` / the url case |
-| before a selector | nothing / `@import` / other text / empty selector | clean run / theme sheet / stray `;` case / no-selector case |
+| before a selector | nothing / `@import` / `@import` without `;` / a stray `;` / other text / empty selector | clean run / theme sheet / the cases |
 | declarations | known / unknown / custom `--` / no colon / no final semicolon / `;` in a url / empty rule | clean run and the cases |
 | after the last rule | nothing / `@import` lines / other text | clean run / theme sheet / the text case |
 
@@ -89,11 +89,14 @@ ok   a rule never closed fails
 ok   text after the last rule fails
 ok   a stray semicolon between rules fails
 ok   custom properties and an empty rule pass
-49/49 passed
+ok   an @import missing its semicolon before a rule fails
+ok   an unterminated quote fails
+51/51 passed
 ```
 
 ## Unverified
 
 - Value syntax: a known property with a bad value (say `color: 12px`) passes; only Unity's importer
   judges values.
-- Selectors beyond "not empty".
+- Selectors beyond "not empty". An unterminated quote swallows the rest of the file, so it fails
+  as a rule never closed rather than at the quote.
