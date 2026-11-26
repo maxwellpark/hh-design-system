@@ -25,6 +25,11 @@
       "displayName": "HUD",
       "description": "A game HUD: health and lives bars, a badge and toasts.",
       "path": "Samples~/HUD"
+    },
+    {
+      "displayName": "Pause Menu",
+      "description": "A pause menu: a card of buttons and a quit confirmation.",
+      "path": "Samples~/PauseMenu"
     }
   ]
 }
