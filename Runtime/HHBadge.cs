@@ -2,14 +2,6 @@ using UnityEngine.UIElements;
 
 namespace HootonHeroics.DesignSystem
 {
-    public enum HHTone
-    {
-        Violet,
-        Teal,
-        Pink,
-        Peach,
-    }
-
     /// UXML: <hh:HHBadge count="3" tone="Pink" /> or <hh:HHBadge dot="true" />
     [UxmlElement]
     public partial class HHBadge : Label
