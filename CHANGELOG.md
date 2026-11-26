@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+- `Tools~/check.mjs` checks WCAG AA contrast for every text and focus pair listed in
+  `Tools~/contrast.json`, blending translucent colours onto what they sit over.
+- The ghost button's hover tint drops from 28% to 22%, lifting its text from 4.4:1 to 4.8:1.
+- The progress bar's title sits above the bar instead of on it: no colour reads on both the teal
+  fill and the track (white on teal is 1.6:1).
+
 ## [0.2.0] - 2026-11-26
 - Requires Unity 6 (6000.0). `HHButton` uses `[UxmlElement]` in place of the deprecated
   `UxmlFactory`, and gains a `Ghost` property (`ghost="true"` in UXML).

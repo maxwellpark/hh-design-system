@@ -47,7 +47,8 @@ Tokens (colour, spacing, radius, type) · `hh-theme.tss` · `.hh-card` / `.hh-ti
   `Packages/` and commit the `.meta` Unity generates.
 - `node Tools~/check.mjs` checks the `.meta` files and that `HHTheme`'s defaults still match
   `hh-tokens.uss`. Run it before every commit; change a token in both places.
-  `node Tools~/check.test.mjs` tests the check itself.
+  It also checks WCAG AA contrast for the pairs in `Tools~/contrast.json`; add a pair when a
+  control puts text on a new colour. `node Tools~/check.test.mjs` tests the check itself.
 - Roadmap: full component set, a theme-switcher, an editor preview window, OpenUPM + Asset Store,
   then a paid "Pro" pack (open-core). Siblings planned: `com.hootonheroics.ai`, `...procgen`.
 
