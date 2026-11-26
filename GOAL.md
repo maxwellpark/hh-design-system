@@ -28,7 +28,7 @@ from one tokens file, with the controls a game's menus, settings screens and HUD
 | What | Command | Latest |
 |---|---|---|
 | Controls with a UXML element | `grep -l "\[UxmlElement\]" Runtime/*.cs \| wc -l` | 18 |
-| Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 16 of 16 |
+| Assembly builds with Unity's compiler (editor and player) | `bash Tools~/unity-compile.sh` | 18 of 18 |
 | Tokens | `node Tools~/check.mjs` | 32 |
 | Check cases | `node Tools~/check.test.mjs` | 110/110 |
 | Contrast pairs below AA | `node Tools~/check.mjs` (accepted lines) | 3 of 128, all owner decisions |

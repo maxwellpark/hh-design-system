@@ -32,7 +32,8 @@ Pin a version with a tag: `...hh-design-system.git#v0.2.0`.
 Import the **Basic UI**, **Settings**, **HUD** or **Pause Menu** sample from the Package Manager for a working demo, or open **Hooton Heroics >
 Design System > Gallery** to see every control in its states.
 
-For a first screen step by step, see `Documentation~/getting-started.md`.
+For a first screen step by step, see `Documentation~/getting-started.md`. To make a theme of your own,
+see `Documentation~/theming.md`.
 
 ## Theming
 All components are styled through `var(--hh-*)` tokens in `hh-tokens.uss`, so restyling is a

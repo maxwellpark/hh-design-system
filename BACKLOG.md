@@ -9,11 +9,7 @@ asmdef with Unity 6000.0.85f2's own compiler and source generators; it doesn't i
 since the editor won't open a project without a licence. "Tests written" items are also held by `check.mjs`'s reference check,
 which fails on a control with no EditMode test.
 
-1. Theming guide: `Documentation~/theming.md` shows a game making its own theme in its project:
-   copy the tokens, write a theme sheet that imports them and the package's component sheets, check
-   its colours against `Tools~/contrast.json`'s pairs by hand (the package's check covers only themes
-   in the package), and switch with `HHThemes`. Check: the doc snippet gate compiles its C#.
-2. Hold to confirm: `HHHoldButton` fires only after it is held for `hold-seconds` (an attribute,
+1. Hold to confirm: `HHHoldButton` fires only after it is held for `hold-seconds` (an attribute,
    not a duration token, so reduced motion never shortens it). Its fill grows linearly; the timing
    lives in a pure `Advance(elapsedSeconds)` that tests drive with explicit times, with the
    scheduler a thin caller using one cached item. Check: EditMode tests written, not run, for the
@@ -57,6 +53,7 @@ which fails on a control with no EditMode test.
 ## Done
 
 - 2026-11-26: tab badges: `HHTabs.SetBadge(tab, count)` puts an `HHBadge` on a tab's header, on the tab's one header, which Unity only reparents, found by class each call, and 0 removes it; two tests, two pairs, the reference and a gallery Items tab (branch `max/tab-badges`).
+- 2026-11-26: theming guide: `Documentation~/theming.md` makes a theme in a game's project, from copied tokens to a theme sheet importing the package's component sheets, a contrast check by hand against `Tools~/contrast.json`, and switching with `HHThemes`; the gate compiles its C# (branch `max/theming-guide`).
 - 2026-11-26: disabled states: the gallery's Disabled section builds every focusable control disabled, tabs, lists and scroll views gain a `:disabled` fade, and `check.mjs` fails on a focusable control with no `:disabled` rule or never disabled in the gallery, matched by type (branch `max/disabled-states`).
 - 2026-11-26: toast action: `HHToast.SetAction` adds a ghost button that runs a callback and dismisses the toast, and `HHToastStack.Show` takes it after `seconds`; three tests, two pairs on the toast card, the reference and a gallery toast with Undo (branch `max/toast-action`).
 - 2026-11-26: placeholder text: `HHTextField`'s placeholder (`.unity-base-text-field__input--placeholder`, which the gate's class reader confirms) is `--hh-color-text-dim`, with a pair held in every theme; the gallery shows one (branch `max/placeholder`).
