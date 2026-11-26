@@ -8,10 +8,10 @@ in the editor and for a player.
 | Claim | Evidence | Result | Status |
 |---|---|---|---|
 | The Pause Menu sample compiles against the package, editor and player | the compile gate: `Sample.PauseMenu [editor]` and `[player]` | ok | verified |
-| It uses `HHCard`, `HHButton`, `HHDialog` and `HHToastStack`, and the check fails if it stops | the sample check; "the pause menu sample dropping a control fails" | pass | verified |
+| It uses `HHCard`, `HHButton`, `HHHoldButton` and `HHToastStack`, and the check fails if it stops | the sample check; "the pause menu sample dropping a control fails" (now on `HHHoldButton`) | pass | verified |
 | The Package Manager lists it | `package.json` `samples` entry; the check fails on a listed path that's missing | 4 samples | verified |
 | It reads no input device | `PauseMenu.cs` uses only UI Toolkit buttons | | verified by reading |
-| Pause shows the card with focus on Resume; Resume hides it and focuses Pause; Settings shows a toast; Quit opens a dialog that Escape and the scrim can't close | `PauseMenu.Pause`, `Resume`, `BuildQuitDialog` (`RequireChoice`) | | unverified |
+| Pause shows the card with focus on Resume; Resume hides it and focuses Pause; Settings shows a toast; Hold to quit shows the quit toast only after a 1.5-second hold | `PauseMenu.Pause`, `Resume`, the `HHHoldButton`'s `Confirmed` | | unverified |
 
 ## Coverage and complexity
 
@@ -26,18 +26,15 @@ until then; it's skipped if the element was hidden again first. Resume focuses P
 ```
 ok   Sample.PauseMenu [editor] (1 files)
 ok   Sample.PauseMenu [player] (1 files)
-ok   HEAD compiles: 12 assembly builds with the compiler and generators of Unity 6000.0.85f2
+ok   HEAD compiles: 18 assembly builds with the compiler and generators of Unity 6000.0.85f2
 ```
 
 `node Tools~/check.mjs` (last line), `node Tools~/check.test.mjs` (sample cases and total):
 
 ```
-64 .meta files ok, 32 tokens match HHTheme, 100 contrast pairs checked across 2 theme(s), 17 controls referenced, 19 types in the component reference
-ok   the settings sample dropping a control fails
-ok   the HUD sample dropping a control fails
+70 .meta files ok, 32 tokens match HHTheme, 126 contrast pairs checked across 2 theme(s), 19 controls referenced, 21 types in the component reference
 ok   the pause menu sample dropping a control fails
-ok   a listed sample that's been deleted fails
-80/80 passed
+112/112 passed
 ```
 
 ## Hands-on checklist (Unity 6, five minutes)
@@ -47,9 +44,8 @@ ok   a listed sample that's been deleted fails
 2. Press Pause: a "Paused" card in the middle with Resume focused. Press Enter: the card goes and
    Pause has focus.
 3. Pause, then Settings: a toast pointing to the Settings sample.
-4. Pause, then Quit: a dialog with Stay focused. Escape and clicks outside do nothing; Stay closes
-   it and focus is back on Quit.
-5. Quit, then Quit: the dialog closes and a warning toast shows.
+4. Pause, then press and hold Hold to quit: a bar fills along its foot, and after a second and a
+   half a warning toast shows. Let go early: the bar empties and nothing happens.
 
 ## Unverified
 
