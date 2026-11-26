@@ -256,6 +256,8 @@ function classConstants(source) {
   return values;
 }
 
+// The gallery must show every control; it's optional until it exists
+const gallery = existsSync("Editor/HHGallery.cs") ? stripComments(readFileSync("Editor/HHGallery.cs", "utf8"), true) : null;
 let controls = 0;
 for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
   const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
@@ -275,6 +277,9 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
     controls += 1;
     if (!new RegExp(`\\b${control}\\b`).test(testSource)) {
       problems.push(`${name}: ${control} has no EditMode test in Tests/Editor`);
+    }
+    if (gallery !== null && !new RegExp(`\\b${control}\\b`).test(gallery)) {
+      problems.push(`${name}: ${control} isn't in the gallery, Editor/HHGallery.cs`);
     }
   }
 }

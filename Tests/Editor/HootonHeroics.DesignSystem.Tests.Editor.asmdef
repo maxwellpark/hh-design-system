@@ -3,6 +3,7 @@
   "rootNamespace": "HootonHeroics.DesignSystem.Tests",
   "references": [
     "HootonHeroics.DesignSystem",
+    "HootonHeroics.DesignSystem.Editor",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],

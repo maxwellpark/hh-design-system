@@ -92,6 +92,7 @@ const cases = [
   ["control named only in a test comment fails", (d) => {
     edit(d, "Tests/Editor/ControlTests.cs", "new HHTextField().ClassListContains(HHTextField.UssClassName)", 'new TextField().ClassListContains("hh-text-field")');
     edit(d, "Tests/Editor/ControlTests.cs", 'root.Q<HHTextField>("text-field")', '/* HHTextField */ root.Q<TextField>("text-field")');
+    edit(d, "Tests/Editor/GalleryTests.cs", "page.Q<HHTextField>()", "page.Q<TextField>()");
   }, 1, /HHTextField\.cs: HHTextField has no EditMode test/],
   ["control declared with extra attributes is still found", (d) => {
     cpSync(join(d, "Runtime/HHToggle.cs"), join(d, "Runtime/HHSwitch.cs"));
@@ -124,6 +125,11 @@ const cases = [
   ["a theme without its theme sheet fails", (d) => unlinkSync(join(d, "Runtime/Styles/hh-theme-high-contrast.tss")), 1, /hh-tokens-high-contrast\.uss: no hh-theme-high-contrast\.tss importing it/],
   ["a theme defining a token twice fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "    --hh-space-1: 4px;", "    --hh-space-1: 4px;\n    --hh-space-1: 5px;"), 1, /a token is defined twice/],
   ["a theme value that doesn't parse fails", (d) => edit(d, "Runtime/Styles/hh-tokens-high-contrast.uss", "--hh-color-teal: #5EEAD4;", "--hh-color-teal: teal;"), 1, /hh-tokens-high-contrast\.uss: --hh-color-teal: can't parse teal/],
+  ["removing one of several uses from the gallery passes", (d) => edit(d, "Editor/HHGallery.cs", "            badges.Add(new HHBadge { Dot = true });\n", "            badges.Add(new Label());\n"), 0, /controls referenced/],
+  ["a control never in the gallery fails", (d) => {
+    const p = join(d, "Editor/HHGallery.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/HHSegmentedBar/g, "VisualElement").replace("Segments = 5, Filled = 3, Tone = HHTone.Peach", ""));
+  }, 1, /HHSegmentedBar\.cs: HHSegmentedBar isn't in the gallery/],
 ];
 
 let failed = 0;
