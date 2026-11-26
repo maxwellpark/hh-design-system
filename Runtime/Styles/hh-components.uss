@@ -703,3 +703,10 @@
 .hh-stepper.unity-base-field:disabled .hh-stepper__button {
     opacity: 1;
 }
+
+/* Tabs, lists and scroll views fade when disabled, as the fields do */
+.hh-tabs.unity-tab-view:disabled,
+.hh-list-view:disabled,
+.hh-scroll-view:disabled {
+    opacity: 0.4;
+}

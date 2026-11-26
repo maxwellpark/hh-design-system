@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Disabled states: the gallery's Disabled section builds every focusable control disabled; tabs,
+  lists and scroll views fade when disabled, and `check.mjs` holds both.
 - `HHTextField`'s placeholder (`placeholder-text`) is drawn in `--hh-color-text-dim`, with a contrast
   pair against the field; the gallery shows one.
 - A focused scroller in an `HHScrollView` or `HHListView` shows it: its handle turns the focus colour.

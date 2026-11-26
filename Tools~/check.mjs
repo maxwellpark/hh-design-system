@@ -347,6 +347,34 @@ for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))
   }
 }
 
+// Every focusable control has a :disabled rule on its own class, and the gallery builds one disabled, so the look is seen:
+// a `var x = new HHType` the gallery later calls x.SetEnabled(false) on, matched by the variable's type, not its name
+const disabledSelectors = [...componentRules.matchAll(/([^{}]+)\{/g)].flatMap((m) => m[1].split(",")).map((sel) => sel.trim().split(/\s*>\s*|\s+/));
+const galleryDisabled = new Set();
+if (gallery !== null) {
+  for (const [, variable, type] of gallery.matchAll(/\bvar\s+(\w+)\s*=\s*new\s+(HH\w+)\b/g)) {
+    if (new RegExp(`\\b${variable}\\.SetEnabled\\(\\s*false\\s*\\)`).test(gallery)) {
+      galleryDisabled.add(type);
+    }
+  }
+}
+for (const name of readdirSync("Runtime").filter((file) => file.endsWith(".cs"))) {
+  const source = stripComments(readFileSync(join("Runtime", name), "utf8"), true);
+  const own = classConstants(source).get("UssClassName");
+  for (const [, control, base] of source.matchAll(/\[\s*UxmlElement\b[^\]]*\][\s\S]*?\bclass\s+(\w+)\s*:\s*(\w+)/g)) {
+    if (!focusableBases.has(base) || !own) {
+      continue;
+    }
+    const hasRule = disabledSelectors.some((compounds) => !compounds.some((c) => c.includes(":not(")) && new RegExp(`\\.${own}(?![\\w-])`).test(compounds[0]) && /:disabled(?![\w-])/.test(compounds[0]));
+    if (!hasRule) {
+      problems.push(`${name}: ${control} can take focus but no :disabled rule on its own class in hh-components.uss`);
+    }
+    if (gallery !== null && !galleryDisabled.has(control)) {
+      problems.push(`${name}: ${control} is never built disabled in the gallery, Editor/HHGallery.cs`);
+    }
+  }
+}
+
 // Accessibility modifiers override every token of their kind, and only tokens: motion to 0s, type to 1.25x rounded
 const modifiers = { "hh-reduced-motion": ["duration-", () => "0s"], "hh-large-text": ["font-size-", (raw) => `${Math.round(parseFloat(raw) * 1.25)}px`] };
 for (const [className, [kind, expect]] of Object.entries(modifiers)) {

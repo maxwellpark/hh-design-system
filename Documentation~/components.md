@@ -189,7 +189,7 @@ Tabs whose headers take keyboard focus. Extends `TabView`.
 ```
 
 - **Classes:** `.hh-tabs`
-- **States:** The selected header is `:checked`, with `:hover` and `:focus` on headers.
+- **States:** The selected header is `:checked`, with `:hover` and `:focus` on headers; `:disabled` fades the whole view.
 - **Tokens:** `--hh-color-focus`, `--hh-color-teal`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-font-size-md`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-4`
 
 ## HHScrollView
@@ -201,7 +201,7 @@ A scroll view with thin, token-coloured scrollers. Extends `ScrollView`.
 ```
 
 - **Classes:** `.hh-scroll-view`
-- **States:** Its scrollers are sliders Unity puts in the tab order; a focused one's handle turns the focus colour.
+- **States:** Its scrollers are sliders Unity puts in the tab order; a focused one's handle turns the focus colour; `:disabled` fades it.
 - **Tokens:** `--hh-color-focus`, `--hh-color-track`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`
 
 ## HHListView
@@ -213,7 +213,7 @@ A virtualised list with hoverable rows and slim scrollers. Extends `ListView`.
 ```
 
 - **Classes:** `.hh-list-view`
-- **States:** `:focus` rings the list, which takes focus and moves its selection with the arrows, and a focused scroller's handle turns the focus colour; `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge.
+- **States:** `:focus` rings the list, which takes focus and moves its selection with the arrows, and a focused scroller's handle turns the focus colour; `:hover` on rows; the selected row (Unity's `--selected` item class) gets a violet edge; `:disabled` fades it.
 - **Tokens:** `--hh-color-focus`, `--hh-color-text`, `--hh-color-text-dim`, `--hh-color-track`, `--hh-color-violet-ghost-hover`, `--hh-color-violet-light`, `--hh-radius-sm`, `--hh-space-2`, `--hh-space-3`
 
 ## HHDialog

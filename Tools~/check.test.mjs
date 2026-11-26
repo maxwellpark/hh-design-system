@@ -195,6 +195,12 @@ const cases = [
   ["a listed sample without a README fails", (d) => unlinkSync(join(d, "Samples~/HUD/README.md")), 1, /Samples~\/HUD: no README\.md/],
   ["a sample script its README doesn't name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/PauseExtras.cs"), "public class PauseExtras { }\n"), 1, /Samples~\/PauseMenu\/README\.md: doesn't name PauseExtras\.cs/],
   ["a script named only inside a longer name fails", (d) => writeFileSync(join(d, "Samples~/PauseMenu/Menu.cs"), "public class Menu { }\n"), 1, /PauseMenu\/README\.md: doesn't name Menu\.cs/],
+  ["a focusable control with no disabled rule fails", (d) => edit(d, "Runtime/Styles/hh-components.uss", ".hh-tabs.unity-tab-view:disabled,\n", ""), 1, /HHTabs\.cs: HHTabs can take focus but no :disabled rule/],
+  ["a focusable control the gallery never disables fails", (d) => edit(d, "Editor/HHGallery.cs", "            list.SetEnabled(false);\n", ""), 1, /HHListView\.cs: HHListView is never built disabled in the gallery/],
+  ["a disabled control is matched by type, not variable name", (d) => {
+    const p = join(d, "Editor/HHGallery.cs");
+    writeFileSync(p, readFileSync(p, "utf8").replace(/\bstepper\b/g, "lockedPicker"));
+  }, 0, /controls referenced/],
 ];
 
 let failed = 0;
