@@ -115,3 +115,6 @@
   `UnityEngine.UIElementsModule.dll` with Mono.Cecil, folding `ldstr`, `ldsfld` and `String.Concat`,
   rather than kept as a hand list. Why: they follow the editor version the gate runs, and a
   misspelt Unity part name otherwise styles nothing, silently. To change: `Tools~/unity-classes.cs`.
+- Default 2026-11-26 [needs-review]: runtime token reading is a new `HHTokens`; whether to drop
+  `HHTheme`'s mirror, as the item first asked, is under Blocked on owner. Why: `HHTheme` serves code
+  with no styled element to read from (sprites, materials). To change: the owner's answer there.
