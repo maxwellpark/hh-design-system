@@ -13,12 +13,14 @@ Commands run from the package root with Node 22. No Unity editor was available.
 | Ghost button text stays at AA when hovered (was 4.42:1 at a 28% tint) | `--hh-color-violet-ghost-hover` at 22%: 4.78:1 by the check | pass | verified (ratio); unverified (render) |
 | The progress title reads clearly (white on teal fill was 1.63:1) | Title moved above the bar onto the card: text on `surface`, 15.16:1 | pass | verified (ratio); unverified (render) |
 | The 0.1 button colours still fail AA and are reported, not hidden | "accepted pair is reported, not failed"; BACKLOG.md Blocked on owner | 4.00:1 and 2.47:1 | verified |
+| An accepted pair can't quietly get worse, or stay accepted once it passes | "accepted pair getting worse fails", "accepted pair that now passes fails" | pass | verified |
+| The blended ratio and the focus ring's 3:1 minimum are what's measured | "blended ratio is measured", "3:1 minimum applies to the focus ring" | pass | verified |
 
 ## Paths
 
 | Code | Path | Evidence |
 |---|---|---|
-| contrast loop | pair passes / fails / accepted / unknown token / translucent without `over` / translucent with `over` | clean run, cases 16 to 19 |
+| `contrast` and its loop | pass / fail / accepted / accepted worse / accepted now passing / missing key / unknown token / translucent without `over` / translucent `over` / translucent with `over` | clean run and the contrast cases; translucent `over`: none |
 | `min` | default 4.5 / explicit 3 (focus ring) | clean run (both kinds present) |
 
 ## Coverage
@@ -34,8 +36,8 @@ By reading, the contrast loop is about 30 lines with five branches; under 10 and
 `node Tools~/check.mjs`, exit 0:
 
 ```
-accepted: Button text: text on violet is 4.00:1, needs 4.5 (Palette from 0.1 (4.0:1); waits on the owner's choice in BACKLOG.md)
-accepted: Button text, hovered: text on violet-light is 2.47:1, needs 4.5 (Palette from 0.1 (2.5:1); waits on the owner's choice in BACKLOG.md)
+accepted: Button text: text on violet is 4.00:1, needs 4.5 (palette from 0.1, waits on the owner's choice in BACKLOG.md)
+accepted: Button text, hovered: text on violet-light is 2.47:1, needs 4.5 (palette from 0.1, waits on the owner's choice in BACKLOG.md)
 19 .meta files ok, 24 tokens match HHTheme, 10 contrast pairs checked
 ```
 
@@ -60,8 +62,13 @@ ok   .meta on disk but not committed
 ok   contrast below AA fails
 ok   accepted pair is reported, not failed
 ok   pair naming an unknown token fails
+ok   blended ratio is measured
+ok   3:1 minimum applies to the focus ring
+ok   accepted pair getting worse fails
+ok   accepted pair that now passes fails
+ok   pair missing a key fails readably
 ok   translucent background without over fails
-19/19 passed
+24/24 passed
 ```
 
 ## Captures
@@ -79,5 +86,6 @@ Title clipped, overlapping or missing counts as broken.
 ## Unverified
 
 - How the moved title renders: `top: auto` and `bottom: 100%` on the title container are
-  expected to lift it above the bar, but haven't been seen in Unity.
+  expected to lift it above the bar, left-aligned by `flex-direction: row`, but haven't been seen
+  in Unity. If Unity warns on `top: auto`, `top: initial` does the same.
 - The 0.1 button contrast, which waits on the owner's palette choice.
