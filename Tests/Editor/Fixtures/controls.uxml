@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:hh="HootonHeroics.DesignSystem">
+    <hh:HHProgressBar name="progress" title="Loading" value="40" />
+    <hh:HHButton name="ghost" text="Back" ghost="true" />
+    <hh:HHButton name="plain" text="Play" />
+</ui:UXML>
