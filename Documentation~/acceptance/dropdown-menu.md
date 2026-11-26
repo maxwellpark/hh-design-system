@@ -9,7 +9,7 @@ branch run against this one.
 |---|---|---|---|
 | Every class styled is one Unity 6000.0's `GenericDropdownMenu` defines | read with Mono.Cecil; the class-name check over this branch | 106 uses, all known | verified |
 | The new sheet parses and uses only known properties and tokens | `node Tools~/check.mjs` (stylesheet and reference checks) | exit 0 | verified |
-| The theme sheet imports it | `hh-theme.tss` | | verified (by reading) |
+| The theme sheet imports it | `grep -c hh-dropdown-menu.uss Runtime/Styles/hh-theme.tss` | 1 | verified |
 | List text and the checkmark read on the card | two new contrast pairs (15.2 and 9.3:1) | 40 pairs pass | verified |
 | An open list shows a rounded card, white items, a track hover and a teal checkmark | the rules | | unverified |
 
