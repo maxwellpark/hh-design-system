@@ -10,7 +10,6 @@ public class PauseMenu : MonoBehaviour
     private VisualElement menu;
     private HHButton pause;
     private HHButton resume;
-    private HHDialog quit;
     private HHToastStack toasts;
 
     private void OnEnable()
@@ -28,7 +27,6 @@ public class PauseMenu : MonoBehaviour
         pause.style.left = 24;
         root.Add(pause);
         root.Add(BuildMenu());
-        root.Add(BuildQuitDialog());
         toasts = new HHToastStack();
         root.Add(toasts);
         // Start unpaused without taking focus, which the game may want
@@ -42,7 +40,11 @@ public class PauseMenu : MonoBehaviour
         resume = MenuButton("Resume", Resume, ghost: false);
         card.Add(resume);
         card.Add(MenuButton("Settings", () => toasts.Show("Import the Settings sample for a settings screen"), ghost: true));
-        card.Add(MenuButton("Quit", () => quit.Open(), ghost: true));
+        // Holding, not a confirm dialog: one deliberate act, and nothing to dismiss
+        var quit = new HHHoldButton { text = "Hold to quit", HoldSeconds = 1.5f };
+        quit.style.marginTop = 8;
+        quit.Confirmed += () => toasts.Show("Quit chosen: a game would load its title scene here", HHToastTone.Warning);
+        card.Add(quit);
         menu = card;
         return card;
     }
@@ -52,15 +54,6 @@ public class PauseMenu : MonoBehaviour
         var button = new HHButton(onClick) { text = text, Ghost = ghost };
         button.style.marginTop = 8;
         return button;
-    }
-
-    private HHDialog BuildQuitDialog()
-    {
-        quit = new HHDialog { Title = "Quit to the title screen?", RequireChoice = true };
-        quit.Add(new Label("Progress since your last save will be lost."));
-        quit.AddAction("Stay", ghost: true);
-        quit.AddAction("Quit", () => toasts.Show("Quit chosen: a game would load its title scene here", HHToastTone.Warning));
-        return quit;
     }
 
     private void Pause()

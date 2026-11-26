@@ -109,7 +109,8 @@ namespace HootonHeroics.DesignSystem
             Release();
         }
 
-        internal void Begin()
+        /// Starts a hold, as a pointer or key press does; a game can call it from its own input, such as a pad button.
+        public void Begin()
         {
             if (IsHolding || awaitRelease || !enabledInHierarchy)
             {
@@ -160,8 +161,8 @@ namespace HootonHeroics.DesignSystem
             return true;
         }
 
-        /// The key or pointer let go: stops any hold, and allows the next.
-        internal void Release()
+        /// The key or pointer let go: stops any hold, and allows the next. Pair it with Begin for a game's own input.
+        public void Release()
         {
             awaitRelease = false;
             Cancel();

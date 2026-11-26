@@ -173,4 +173,4 @@
   `clicked` never fires (listen to `Confirmed`), and a gamepad's submit does nothing, since Unity sends
   submit as a single event with no release. Why: a second is
   long enough to be deliberate and short enough not to annoy; a pad hold would need the game's own
-  input binding. To change: `HoldSeconds`, or call `Begin` and `Cancel` from the game's input.
+  input binding. To change: `HoldSeconds`, or call `Begin` and `Release` from the game's own input binding.
