@@ -34,3 +34,14 @@
 - Default 2026-11-26 [needs-review]: the 0.1 button colours are accepted exceptions in the
   contrast check rather than changed. Why: they are the brand palette, so changing them is the
   owner's call (Blocked on owner in BACKLOG.md). To change: drop the two `accepted` entries.
+- Default 2026-11-26 [needs-review]: motion tokens only, no font tokens beyond sizes. Why: USS has
+  no `font-weight`, and whether a `var()` can carry `-unity-font-style` keywords is unverified.
+  To change: add `--hh-font-style-*` tokens once a capture shows the keyword resolving.
+- Default 2026-11-26 [needs-review]: 0.12s for state changes, 0.2s for the progress fill, ease-out.
+  Why: quick enough not to lag input, slow enough to read as motion. To change: the three tokens.
+- Default 2026-11-26 [needs-review]: badges use dark (`bg`) text on every tone, and violet badges
+  use `violet-light`. Why: white is 1.6 to 2.7:1 on the tones, dark is 6.5:1 or more. To change:
+  the `.hh-badge` rules.
+- Default 2026-11-26 [needs-review]: `HHIconButton` sets its icon as the element's tinted
+  background, not through `Button.iconImage`. Why: one tint rule colours any icon, and it works the
+  same in UXML through the `icon` attribute. To change: `HHIconButton.Icon`.

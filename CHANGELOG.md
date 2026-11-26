@@ -1,6 +1,13 @@
 # Changelog
 
 ## [Unreleased]
+- `HHIconButton`: an icon-only button tinted like ghost text, whose label becomes its tooltip.
+- `HHBadge`: a count (capped at `99+`) or a dot, in violet, teal, pink or peach, always with dark
+  text, since white is under 3:1 on every tone. `HHTone` names the tones.
+- Motion tokens `--hh-duration-fast` (0.12s), `--hh-duration-normal` (0.2s) and
+  `--hh-easing-standard` (ease-out), mirrored in `HHTheme`, `Brand~/tokens.json` (`motion`) and
+  the Godot constants, with `Tools~/check-tokens.mjs` checking the new group. Buttons and inputs
+  ease their colour changes, and the progress fill eases its width.
 - `Tools~/check.mjs` fails on a stylesheet using an undefined token, a control's class with no
   rule in `hh-components.uss`, or a control with no EditMode test.
 - `Brand~/`: the engine-neutral brand kit. `tokens.json` mirrors `hh-tokens.uss` for engines other than Unity and adds the studio splash timing; `hh-logo.png` is the studio mark; `README.md` has the splash, logo and credits rules.

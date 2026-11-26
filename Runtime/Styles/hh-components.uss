@@ -30,7 +30,9 @@
     border-width: 2px;
     border-color: rgba(0, 0, 0, 0);
     -unity-font-style: bold;
-    transition-duration: 0.12s;
+    transition-property: background-color, border-color;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
 }
 
 .hh-button:hover {
@@ -77,6 +79,9 @@
 }
 
 .hh-progress-bar .unity-progress-bar__progress {
+    transition-property: width;
+    transition-duration: var(--hh-duration-normal);
+    transition-timing-function: var(--hh-easing-standard);
     background-color: var(--hh-color-teal);
     border-width: 0;
     border-radius: var(--hh-radius-sm);
@@ -186,6 +191,9 @@
     border-color: var(--hh-color-violet-light);
     border-radius: var(--hh-radius-sm);
     padding: var(--hh-space-1) var(--hh-space-2);
+    transition-property: border-color;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
 }
 
 .hh-dropdown.unity-base-field .unity-base-popup-field__text {
@@ -221,7 +229,8 @@
     background-position-y: center;
     -unity-background-image-tint-color: var(--hh-color-violet-light);
     transition-property: background-color, border-color;
-    transition-duration: 0.12s;
+    transition-duration: var(--hh-duration-fast);
+    transition-timing-function: var(--hh-easing-standard);
 }
 
 .hh-icon-button:hover {
