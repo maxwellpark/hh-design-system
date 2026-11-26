@@ -84,5 +84,41 @@ namespace HootonHeroics.DesignSystem.Tests
             Assert.That(dialog.contentContainer.Q<Label>("dialog-body"), Is.Not.Null);
             Assert.That(dialog.contentContainer.ClassListContains(HHDialog.BodyUssClassName), Is.True);
         }
+
+        [Test]
+        public void FocusStopsAreEnabledFocusablesInOrderWithoutTheirParts()
+        {
+            var dialog = new HHDialog();
+            var field = new VisualElement { focusable = true };
+            field.Add(new VisualElement { focusable = true });
+            var skipped = new VisualElement { focusable = true, tabIndex = -1 };
+            dialog.Add(field);
+            dialog.Add(skipped);
+            var stay = dialog.AddAction("Stay");
+            var locked = dialog.AddAction("Locked");
+            locked.SetEnabled(false);
+            var quit = dialog.AddAction("Quit");
+
+            Assert.That(dialog.FocusStops(), Is.EqualTo(new VisualElement[] { field, stay, quit }));
+        }
+
+        [Test]
+        public void FocusLeavingAnOpenDialogWrapsBackInside()
+        {
+            var root = new VisualElement();
+            var outside = new HHButton { text = "Behind" };
+            var dialog = new HHDialog();
+            var first = dialog.AddAction("Stay");
+            var last = dialog.AddAction("Quit");
+            root.Add(outside);
+            root.Add(dialog);
+
+            Assert.That(dialog.RefocusTarget(last, outside), Is.Null, "closed");
+            dialog.Open();
+            Assert.That(dialog.RefocusTarget(last, outside), Is.SameAs(first), "Tab past the last stop");
+            Assert.That(dialog.RefocusTarget(first, outside), Is.SameAs(last), "Shift+Tab before the first stop");
+            Assert.That(dialog.RefocusTarget(first, last), Is.Null, "moving inside");
+            Assert.That(dialog.RefocusTarget(first, null), Is.Null, "the panel losing focus");
+        }
     }
 }

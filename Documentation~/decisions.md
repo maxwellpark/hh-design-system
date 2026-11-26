@@ -138,3 +138,7 @@
 - Default 2026-11-26 [needs-review]: the gallery previews a theme by swapping its token file on the
   page, not by changing a PanelSettings theme. Why: an editor window has no PanelSettings, and the
   tokens are the only thing that differs between themes. To change: `HHGallery.Style`.
+- Default 2026-11-26 [needs-review]: an open `HHDialog` pulls stray focus back on the next scheduler
+  tick, rather than cancelling the move. Why: `FocusOutEvent` fires mid-switch, and cancelling
+  navigation (`FocusController.IgnoreEvent`) wouldn't catch a pointer or code moving focus out.
+  For that one tick, focus sits on the element behind. To change: `HHDialog.OnFocusOut`.

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -55,6 +56,7 @@ namespace HootonHeroics.DesignSystem
                 }
             });
             RegisterCallback<PointerDownEvent>(e => HandleScrimPointer(e.target));
+            RegisterCallback<FocusOutEvent>(OnFocusOut);
         }
 
         public override VisualElement contentContainer => body;
@@ -130,6 +132,66 @@ namespace HootonHeroics.DesignSystem
             }
             Close();
             return true;
+        }
+
+        // Focus is mid-switch during FocusOut, so it comes back on the next tick
+        private void OnFocusOut(FocusOutEvent e)
+        {
+            var back = RefocusTarget(e.target as VisualElement, e.relatedTarget as VisualElement);
+            if (back != null)
+            {
+                schedule.Execute(() =>
+                {
+                    if (IsOpen)
+                    {
+                        back.Focus();
+                    }
+                });
+            }
+        }
+
+        /// While open, focus that leaves for an element outside comes back: to the last stop when it left
+        /// the first (Shift+Tab), otherwise to the first. Null when focus may go where it's going.
+        internal VisualElement RefocusTarget(VisualElement leaving, VisualElement arriving)
+        {
+            if (!IsOpen || arriving == null || Contains(arriving))
+            {
+                return null;
+            }
+            var stops = FocusStops();
+            if (stops.Count == 0)
+            {
+                return null;
+            }
+            var first = stops[0];
+            return leaving != null && (first == leaving || first.Contains(leaving)) ? stops[stops.Count - 1] : first;
+        }
+
+        /// The dialog's tab stops in order: enabled, displayed, focusable elements with a tab index of
+        /// zero or more, not counting the parts of a field that is itself a stop.
+        internal List<VisualElement> FocusStops()
+        {
+            var stops = new List<VisualElement>();
+            CollectStops(this, stops);
+            return stops;
+        }
+
+        private static void CollectStops(VisualElement element, List<VisualElement> stops)
+        {
+            for (var i = 0; i < element.hierarchy.childCount; i++)
+            {
+                var child = element.hierarchy[i];
+                if (!child.enabledInHierarchy || child.resolvedStyle.display == DisplayStyle.None)
+                {
+                    continue;
+                }
+                if (child.focusable && child.tabIndex >= 0)
+                {
+                    stops.Add(child);
+                    continue;
+                }
+                CollectStops(child, stops);
+            }
         }
 
         internal void HandleScrimPointer(IEventHandler target)

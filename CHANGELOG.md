@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- `HHDialog` keeps focus inside while open: Tab past the last action wraps to the first, and
+  Shift+Tab before the first wraps to the last. Focus that leaves by any route comes back.
 - Settings sample: a settings screen built from tabs, a toggle, a slider, a dropdown and a text field;
   Save shows a toast and Back asks through a dialog before throwing changes away.
 - Component gallery: Hooton Heroics > Design System > Gallery opens an editor window with every
