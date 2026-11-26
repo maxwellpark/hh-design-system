@@ -35,6 +35,7 @@ Goal: GOAL.md. Decisions: `Documentation~/decisions.md`. Acceptance packs: `Docu
 
 ## Done
 
+- 2026-11-26: engine-neutral brand kit in `Brand~/` (tokens mirror, studio mark, splash, logo and credits rules), the Godot studio splash in `Godot~/addons/hh_studio` with its headless tests, and `Tools~/check-tokens.mjs` (branch `max/brand-kit`).
 - 2026-11-26: `HHToggle`, `HHSlider`, `HHDropdown` and `HHTextField` with label, hover, focus,
   checked and disabled styles, a `--hh-color-track` token, and their tests (branch
   `max/form-controls`).
